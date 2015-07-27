@@ -212,7 +212,7 @@ AsyncProcess::Print(const wxString &s, bool doLog)
         else
             ::myLogTrace(MYTRACETAG, wxT("Sending (hidden): '************'"));
         wxString sbuf = s + wxT("\n");
-        const wxWX2MBbuf buf = wxConvCurrent->cWX2MB(static_cast<const wchar_t*>(sbuf.c_str()));
+        const wxWX2MBbuf buf = wxConvCurrent->cWX2MB(sbuf.wc_str());
         os->Write(buf, strlen(buf));
         return true;
     }

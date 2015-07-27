@@ -163,7 +163,7 @@ md5sum(const wxString &s)
     md5_byte_t digest[16];
 
     md5_init(&state);
-    const wxWX2MBbuf buf = wxConvCurrent->cWX2MB(s);
+    const wxWX2MBbuf buf = wxConvCurrent->cWX2MB(s.wc_str());
     const char *cc = wx_static_cast(const char*, buf);
     md5_append(&state, wx_reinterpret_cast(const md5_byte_t *, cc), s.Length());
     md5_finish(&state, digest);
@@ -185,7 +185,7 @@ Md5OfFile(const wxString &name)
     if (tf.Exists() && tf.Open()) {
         wxString line;
         for (line = tf.GetFirstLine(); !tf.Eof(); line = tf.GetNextLine()) {
-            const wxWX2MBbuf buf = wxConvCurrent->cWX2MB(line);
+            const wxWX2MBbuf buf = wxConvCurrent->cWX2MB(line.wc_str());
             const char *cc = wx_static_cast(const char*, buf);
             md5_append(&state, wx_reinterpret_cast(const md5_byte_t *, cc), line.Length());
         }
