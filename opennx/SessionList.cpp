@@ -108,8 +108,6 @@ class RmRfTraverser : public wxDirTraverser
         wxArrayString m_aFiles;
 };
 
-WX_DECLARE_STRING_HASH_MAP(MySession, SessionHash);
-
 SessionList::SessionList(wxString dir, wxEvtHandler* h)
     : wxThreadHelper()
     , m_dirName(dir)
