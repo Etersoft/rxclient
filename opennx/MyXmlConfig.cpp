@@ -557,7 +557,7 @@ MyXmlConfig::UrlEsc(const wxString &s)
     size_t len = s.Length();
     wxString ret;
     for (size_t i = 0; i < len; i++) {
-        switch (s[i]) {
+        switch (s[i].GetValue()) {
             case wxT(' '):
             case wxT(':'):
             case wxT('"'):

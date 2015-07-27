@@ -138,7 +138,7 @@ void MyWizard::CreateControls()
     if (!wxXmlResource::Get()->LoadObject(this, GetParent(), _T("ID_WIZARD"), wxT("wxWizard")))
         wxLogError(wxT("Missing wxXmlResource::Get()->Load() in OnInit()?"));
 
-    for (wxWindowList::Node* node = GetChildren().GetFirst(); node; node = node->GetNext())
+    for (wxWindowList::compatibility_iterator node = GetChildren().GetFirst(); node; node = node->GetNext())
     {
         wxWizardPage* page = wxDynamicCast(node->GetData(), wxWizardPage);
         if (page)
@@ -163,7 +163,7 @@ void MyWizard::CreateControls()
     m_pPageSecurity->Create(NULL);
     m_pPageFinish->Create(NULL);
 
-    for (wxWindowList::Node* n = GetChildren().GetFirst(); n; n = n->GetNext()) {
+    for (wxWindowList::compatibility_iterator n = GetChildren().GetFirst(); n; n = n->GetNext()) {
         wxWizardPage* p = wxDynamicCast(n->GetData(), wxWizardPage);
         if (p) {
             int w, h;
@@ -210,7 +210,7 @@ wxSize MyWizard::GetPageSize() const
 
 bool MyWizard::Run()
 {
-    wxWindowListNode* node = GetChildren().GetFirst();
+    wxWindowList::compatibility_iterator node = GetChildren().GetFirst();
     while (node)
     {
         wxWizardPage* startPage = wxDynamicCast(node->GetData(), wxWizardPage);

@@ -788,7 +788,7 @@ SessionProperties::InstallOnCharHandlers(wxWindow *w /* = NULL*/)
     if (!w)
         w = this;
     wxWindowList& children = w->GetChildren();
-    wxWindowList::Node *node;
+    wxWindowList::compatibility_iterator node;
     for (node = children.GetFirst(); node; node = node->GetNext()) {
         w = node->GetData();
         if (w->IsKindOf(CLASSINFO(wxTextCtrl)) || w->IsKindOf(CLASSINFO(wxSpinCtrl))) {
