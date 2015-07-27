@@ -204,7 +204,7 @@ ResumeDialog::AddSession(const wxString& name, const wxString& state, const wxSt
             m_sSelectedId = id;
         }
     } else {
-        ::wxLogError(_("Could not add session list item"));
+        wxLogError(_("Could not add session list item"));
     }
 }
 
@@ -308,7 +308,7 @@ void ResumeDialog::OnButtonResumeClick( wxCommandEvent& )
 
 void ResumeDialog::OnButtonTerminateClick( wxCommandEvent& )
 {
-    if (wxYES != ::wxMessageBox(_("Do you really want to terminate the selected session?"),
+    if (wxYES != wxMessageBox(_("Do you really want to terminate the selected session?"),
                 _("Terminate session - OpenNX"), wxYES_NO|wxICON_QUESTION, this))
         return;
     m_eMode = Terminate;

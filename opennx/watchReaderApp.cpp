@@ -78,12 +78,12 @@ watchReaderApp::watchReaderApp()
 
         // If KDE_LANG is set, then it has precedence over kdeglobals.
         wxString lang;
-        if (::wxGetEnv(wxT("KDE_LANG"), &lang)) {
+        if (wxGetEnv(wxT("KDE_LANG"), &lang)) {
             myLogDebug(wxT("Overriding LANG from KDE_LANG environment to: '%s'"), lang.c_str());
-            ::wxSetEnv(wxT("LANG"), lang);
+            wxSetEnv(wxT("LANG"), lang);
         } else {
             // Try to get KDE language settings and override locale accordingly
-            wxFileInputStream fis(::wxGetHomeDir() +
+            wxFileInputStream fis(wxGetHomeDir() +
                     wxFileName::GetPathSeparator() + wxT(".kde") + 
                     wxFileName::GetPathSeparator() + wxT("share") + 
                     wxFileName::GetPathSeparator() + wxT("config") + 
@@ -99,7 +99,7 @@ watchReaderApp::watchReaderApp()
                         lang << wxT("_") << country.Upper();
                     lang << wxT(".UTF-8");
                     myLogDebug(wxT("Overriding LANG from kdeglobals to: '%s'"), lang.c_str());
-                    ::wxSetEnv(wxT("LANG"), lang);
+                    wxSetEnv(wxT("LANG"), lang);
                 }
             }
         }
@@ -198,11 +198,11 @@ bool watchReaderApp::OnInit()
 
 #ifdef __WXMSW__
     wxString ldpath;
-    if (::wxGetEnv(wxT("PATH"), &ldpath))
+    if (wxGetEnv(wxT("PATH"), &ldpath))
         ldpath += wxT(";");
     ldpath = tmp + wxT("\\bin");
-    if (!::wxSetEnv(wxT("PATH"), ldpath)) {
-        ::wxLogSysError(wxT("Can not set PATH"));
+    if (!wxSetEnv(wxT("PATH"), ldpath)) {
+        wxLogSysError(wxT("Can not set PATH"));
         return false;
     }
 #endif
@@ -215,7 +215,7 @@ bool watchReaderApp::OnInit()
 # endif
 
     wxString ldpath;
-    if (::wxGetEnv(LD_LIBRARY_PATH, &ldpath))
+    if (wxGetEnv(LD_LIBRARY_PATH, &ldpath))
         ldpath += wxT(":");
 # if defined(__x86_64) || defined(__IA64__)
     ldpath += tmp + wxT("/lib64");
@@ -225,8 +225,8 @@ bool watchReaderApp::OnInit()
 # ifdef __WXMAC__
     ldpath += wxT(":/Library/OpenSC/lib");
 # endif
-    if (!::wxSetEnv(LD_LIBRARY_PATH, ldpath)) {
-        ::wxLogSysError(wxT("Can not set LD_LIBRARY_PATH"));
+    if (!wxSetEnv(LD_LIBRARY_PATH, ldpath)) {
+        wxLogSysError(wxT("Can not set LD_LIBRARY_PATH"));
         return false;
     }
 #endif
@@ -234,7 +234,7 @@ bool watchReaderApp::OnInit()
     if (!wxApp::OnInit())
         return false;
 
-    if (::wxGetEnv(wxT("WXTRACE"), &tmp)) {
+    if (wxGetEnv(wxT("WXTRACE"), &tmp)) {
         CheckAllTrace(tmp);
         wxStringTokenizer t(tmp, wxT(",:"));
         while (t.HasMoreTokens()) {
@@ -253,7 +253,7 @@ bool watchReaderApp::OnInit()
         wxConfigBase::Get()->Read(wxT("Config/SystemNxDir"), &tmp);
         tmp << wxFileName::GetPathSeparator() << wxT("Message.app");
         ::myLogTrace(MYTRACETAG, wxT("Executing %s"), tmp.c_str());
-        ::wxExecute(tmp);
+        wxExecute(tmp);
 #else
         ::myLogTrace(MYTRACETAG, wxT("Showing info dialog"));
         wxMessageBox(

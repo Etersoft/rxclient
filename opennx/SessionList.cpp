@@ -80,12 +80,12 @@ class RmRfTraverser : public wxDirTraverser
             int n = m_aFiles.GetCount() - 1;
             while (n >= 0) {
                 ::myLogTrace(MYTRACETAG, wxT("Removing file %s"), m_aFiles[n].c_str());
-                ::wxRemoveFile(m_aFiles[n--]);
+                wxRemoveFile(m_aFiles[n--]);
             }
             n = m_aDirs.GetCount() - 1;
             while (n >= 0) {
                 ::myLogTrace(MYTRACETAG, wxT("Removing dir %s"), m_aDirs[n].c_str());
-                ::wxRmdir(m_aDirs[n--]);
+                wxRmdir(m_aDirs[n--]);
             }
         }
 
@@ -290,7 +290,7 @@ SessionList::CleanupDir(wxString &dir)
             RmRfTraverser t;
             d.Traverse(t);
         }
-        ::wxRmdir(dir);
+        wxRmdir(dir);
     }
 }
 

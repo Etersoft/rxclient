@@ -22,9 +22,16 @@
 #ifndef _MYSESSION_H_
 #define _MYSESSION_H_
 
+#include <wx/protocol/http.h>
 #include <wx/regex.h>
 
 #include "MyXmlConfig.h"
+
+//  wxWidgets lib > 3.0
+#define wxHTTP_Req wxString
+#define wxHTTP_GET wxString("GET")
+#define wxHTTP_POST wxString("POST")
+//  end wxWidgets lib > 3.0
 
 class ConnectDialog;
 class MyIPC;

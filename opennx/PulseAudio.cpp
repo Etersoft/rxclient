@@ -174,7 +174,7 @@ class pawrapper {
                 if (0 <= Ppa_context_connect(m_pContext, NULL /* server */, PA_CONTEXT_NOAUTOSPAWN, NULL)) {
                     Ppa_threaded_mainloop_start(m_pLoop);
                     while (!(m_bConnected || m_bError))
-                        ::wxGetApp().Yield(true);
+                        wxGetApp().Yield(true);
                 }
                 if (m_bConnected)
                     break;
@@ -232,7 +232,7 @@ class pawrapper {
 
         bool waitcmd() {
             while (!(m_bError || m_bComplete)) {
-                ::wxGetApp().Yield(true);
+                wxGetApp().Yield(true);
             }
             return !m_bError;
         }
@@ -424,7 +424,7 @@ extern "C" {
 
 static wxString MachineID() {
 #  ifdef __WXMSW__
-    return ::wxGetHostName().Lower();
+    return wxGetHostName().Lower();
 #  else
     return wxString(getMacMachineID(), wxConvUTF8);
 #  endif
@@ -439,7 +439,7 @@ bool PulseAudio::AutoSpawn()
     int papid;
     int retry = 3;
     // On windows and mac, we do our own autospawn
-    wxString piddir = ::wxGetHomeDir() + wxFileName::GetPathSeparator()
+    wxString piddir = wxGetHomeDir() + wxFileName::GetPathSeparator()
         + wxT(".pulse") + wxFileName::GetPathSeparator()
         + MachineID() + wxT("-runtime");
     wxString pidfile = piddir + wxFileName::GetPathSeparator() + wxT("pid");
@@ -451,7 +451,7 @@ bool PulseAudio::AutoSpawn()
             wxTextInputStream tis(sPid);
             tis >> papid;
             ::myLogTrace(MYTRACETAG, wxT("PulseAudio::AutoSpawn: PID=%d"), papid);
-            if ((papid != 0) && ::wxProcess::Exists(papid)) {
+            if ((papid != 0) && wxProcess::Exists(papid)) {
                 ::myLogTrace(MYTRACETAG, wxT("PulseAudio::AutoSpawn: process %d is running"), papid);
                 return true;
             }
@@ -470,7 +470,7 @@ bool PulseAudio::AutoSpawn()
         // Don't report an error here, as CreateDetachedProcess may
         // fail if pulseaudio is already running
 #  else
-        ::wxExecute(pacmd, wxEXEC_ASYNC|wxEXEC_MAKE_GROUP_LEADER);
+        wxExecute(pacmd, wxEXEC_ASYNC|wxEXEC_MAKE_GROUP_LEADER);
 #  endif
         wxThread::Sleep(500);
     } while (retry-- > 0);

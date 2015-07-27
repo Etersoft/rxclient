@@ -890,7 +890,7 @@ bool WizardPageSecurity::Create( wxWizard* parent )
     m_pCtrlUseSmartCard = NULL;
     m_pCtrlEnableSSL = NULL;
     ////@end WizardPageSecurity member initialisation
-    m_bUseSmartCard = ::wxGetApp().NxSmartCardSupport();
+    m_bUseSmartCard = wxGetApp().NxSmartCardSupport();
 
     ////@begin WizardPageSecurity creation
     SetExtraStyle(wxWS_EX_VALIDATE_RECURSIVELY);
@@ -920,8 +920,8 @@ void WizardPageSecurity::CreateControls()
 
     ////@begin WizardPageSecurity content initialisation
     ////@end WizardPageSecurity content initialisation
-    m_pCtrlUseSmartCard->Enable(::wxGetApp().NxSmartCardSupport());
-    if (m_bUseSmartCard || (!::wxGetApp().NxProxyAvailable())) {
+    m_pCtrlUseSmartCard->Enable(wxGetApp().NxSmartCardSupport());
+    if (m_bUseSmartCard || (!wxGetApp().NxProxyAvailable())) {
         m_pCtrlEnableSSL->SetValue(true);
         m_pCtrlEnableSSL->Enable(false);
     }
@@ -1128,7 +1128,7 @@ void WizardPageDesktop::OnComboboxDisptypeSelected( wxCommandEvent& event )
 
 void WizardPageSecurity::OnCheckboxScardClick( wxCommandEvent& event )
 {
-    if (event.IsChecked() || (!::wxGetApp().NxProxyAvailable())) {
+    if (event.IsChecked() || (!wxGetApp().NxProxyAvailable())) {
         m_pCtrlEnableSSL->SetValue(true);
         m_pCtrlEnableSSL->Enable(false);
     } else
@@ -1357,7 +1357,7 @@ void WizardPageFinish::OnWizardpageFinishPageChanging( wxWizardEvent& event )
                     break;
                 case wxID_CLEAR:
                     ::myLogTrace(MYTRACETAG, _T("deleting '%s'"), fn.c_str());
-                    ::wxRemoveFile(fn);
+                    wxRemoveFile(fn);
                     // actually we were not cancelled but we want to behave
                     // as if we were, because the just created session has
                     // been deleted.
@@ -1378,7 +1378,7 @@ void WizardPageFinish::OnWizardpageFinishPageChanging( wxWizardEvent& event )
             }
         }
         if (m_bCreateShortcut)
-            ::wxGetApp().CreateDesktopEntry(cfg);
+            wxGetApp().CreateDesktopEntry(cfg);
     }
     event.Skip();
 }

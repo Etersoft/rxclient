@@ -543,9 +543,9 @@ MyXmlConfig::sGetListParams(const long protocolVersion)
             break;
     }
     int w, h;
-    ::wxDisplaySize(&w, &h);
+    wxDisplaySize(&w, &h);
     ret << wxT(" --geometry=\"") << w << wxT("x") << h << wxT("x")
-        << ::wxDisplayDepth() << (m_bDisableRender ? wxEmptyString : wxT("+render"))
+        << wxDisplayDepth() << (m_bDisableRender ? wxEmptyString : wxT("+render"))
         << ((m_eDisplayType == DPTYPE_FULLSCREEN) ? wxT("+fullscreen") : wxEmptyString)
         << wxT("\"");
     return ret;
@@ -581,9 +581,9 @@ MyXmlConfig::getDesktopSize(int &dw, int &dh, int &ww, int &wh)
     // Fetch the size of the display and the workarea
     // (workarea == display size reduced by the size of the taskbar and window
     // decorations) where our toplevel dialog are shown.
-    wxWindow *tlw = ::wxGetApp().GetTopWindow();
+    wxWindow *tlw = wxGetApp().GetTopWindow();
     if (NULL == tlw) {
-        ::wxLogError(_("Could not find application window"));
+        wxLogError(_("Could not find application window"));
         return;
     }
     int dspidx = wxDisplay::GetFromWindow(tlw);
@@ -854,7 +854,7 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
     }
     if (m_eSessionType != STYPE_SHADOW) {
         ret << wxT(" --screeninfo=\"") << dspw << wxT("x") << dsph << wxT("x")
-            << ::wxDisplayDepth() << (m_bDisableRender ? wxEmptyString : wxT("+render"))
+            << wxDisplayDepth() << (m_bDisableRender ? wxEmptyString : wxT("+render"))
             << ((m_eDisplayType == DPTYPE_FULLSCREEN) ? wxT("+fullscreen") : wxEmptyString)
             << wxT("\"");
     }
@@ -908,7 +908,7 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
         ret << wxT(" --aux=\"1\"");
     }
     
-    m_bNumLockEnabled = wxGetKeyState (::WXK_NUMLOCK);
+    m_bNumLockEnabled = wxGetKeyState (WXK_NUMLOCK);
     if(m_bNumLockEnabled){
 	ret << wxT(" --numlock=\"on\"");
     }
@@ -1216,8 +1216,8 @@ MyXmlConfig::LoadFromURL(const wxString &filename)
     curl_easy_setopt(c, CURLOPT_TIMEOUT, 10);
     curl_easy_setopt(c, CURLOPT_SSL_VERIFYPEER, 1);
     curl_easy_setopt(c, CURLOPT_SSL_VERIFYHOST, 2);
-    if (!::wxGetApp().GetCaCert().IsEmpty())
-        curl_easy_setopt(c, CURLOPT_CAINFO, (const char *)::wxGetApp().GetCaCert().mb_str());
+    if (!wxGetApp().GetCaCert().IsEmpty())
+        curl_easy_setopt(c, CURLOPT_CAINFO, (const char *)wxGetApp().GetCaCert().mb_str());
     curl_easy_setopt(c, CURLOPT_WRITEDATA, &mos);
     curl_easy_setopt(c, CURLOPT_ERRORBUFFER, ebuf);
     curl_easy_setopt(c, CURLOPT_WRITEFUNCTION, CurlWriteCallback);
@@ -1250,12 +1250,12 @@ MyXmlConfig::LoadFromURL(const wxString &filename)
                 }
                 delete data;
             } else {
-                ::wxLogError(_("Error %d while fetching session configuration"), rcode);
+                wxLogError(_("Error %d while fetching session configuration"), rcode);
             }
         }
     } else {
         wxString msg(ebuf, *wxConvCurrent);
-        ::wxLogError(_("Error while fetching session configuration:\n%s"), msg.c_str());
+        wxLogError(_("Error while fetching session configuration:\n%s"), msg.c_str());
     }
     curl_easy_cleanup(c);
 # else

@@ -60,7 +60,7 @@ bool MyDynamicLibrary::Load(const wxString& name, int flags /* = wxDL_DEFAULT */
     return wxDynamicLibrary::Load(name, flags);
 #else
     wxString ldpath;
-    if (::wxGetEnv(LD_LIBRARY_PATH, &ldpath)) {
+    if (wxGetEnv(LD_LIBRARY_PATH, &ldpath)) {
         wxStringTokenizer t(ldpath, wxT(":"));
         while (t.HasMoreTokens()) {
             wxString abslib = t.GetNextToken() + wxFileName::GetPathSeparator() + name;

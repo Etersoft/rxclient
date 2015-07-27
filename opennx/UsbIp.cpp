@@ -157,7 +157,7 @@ bool UsbIp::WaitForSession(int secs /* = 10 */)
     wxStopWatch sw;
     ::myLogTrace(MYTRACETAG, wxT("waiting for session ..."));
     while (!findsession(m_sSid)) {
-        ::wxGetApp().Yield(true);
+        wxGetApp().Yield(true);
         wxLog::FlushActive();
         m_pSocketClient->Wait(0, 1000);
         if (0 < timeout) {
@@ -191,7 +191,7 @@ bool UsbIp::ExportDevice(const wxString &busid)
     if (!waitforstate(Exported)) {
         m_eState = Idle;
         if (404 == m_iLastError) {
-            ::wxLogWarning(_("USB device is already exported in another session"));
+            wxLogWarning(_("USB device is already exported in another session"));
             return true; // Prevent calling app from showing an error.
         }
         return false;
@@ -319,7 +319,7 @@ bool UsbIp::waitforstate(tStates state, long timeout /* = 5000 */)
 {
     wxStopWatch watch;
     while (m_eState != state) {
-        ::wxGetApp().Yield(true);
+        wxGetApp().Yield(true);
         wxLog::FlushActive();
         m_pSocketClient->Wait(0, 100);
         if (0 < timeout) {
@@ -336,7 +336,7 @@ void UsbIp::parsehev(const wxString &line)
     wxRegEx re(wxT("([a-f\\d]+)\\s+(\\d+-[\\d\\.]+)\\s+(\\d+)\\s+(\\d+)\\s+([a-f\\d]+)\\s+([a-f\\d]+)"),
             wxRE_ADVANCED);
     if (!re.IsValid()) {
-        ::wxLogFatalError(_("Invalid regular expression in %s %d"), __FILE__, __LINE__);
+        wxLogFatalError(_("Invalid regular expression in %s %d"), __FILE__, __LINE__);
         return;
     }
     if (re.Matches(line)) {
@@ -368,7 +368,7 @@ void UsbIp::parsesession(const wxString &line)
     wxRegEx re(wxT("\\[\\d+\\.\\d+\\.\\d+\\.\\d+\\]:\\d+\\s+\\(SID:\\s+([0-9,A-F]+)\\)"),
             wxRE_ADVANCED);
     if (!re.IsValid()) {
-        ::wxLogFatalError(_("Invalid regular expression %s %d"), __FILE__, __LINE__);
+        wxLogFatalError(_("Invalid regular expression %s %d"), __FILE__, __LINE__);
         return;
     }
     if (re.Matches(line))
