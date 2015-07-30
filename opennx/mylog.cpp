@@ -99,3 +99,12 @@ void myLogTrace(wxString mask, const wxChar *szFormat, ...)
     myVLogTrace(mask, szFormat, argptr);
     va_end(argptr);
 }
+
+const char* to_c_str(wxString str)
+{
+#if wxCHECK_VERSION(2,9,0)
+	return str.c_str().AsChar();
+#else
+	return str.c_str();
+#endif
+}
