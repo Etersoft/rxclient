@@ -105,6 +105,6 @@ const char* to_c_str(wxString str)
 #if wxCHECK_VERSION(2,9,0)
 	return str.c_str().AsChar();
 #else
-	return str.c_str();
+	return str.mb_str();
 #endif
 }
