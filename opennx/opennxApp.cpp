@@ -1404,6 +1404,7 @@ bool opennxApp::OnInit()
     if (!ret) {
         wxLogNull lognull;
         wxMemoryFSHandler::RemoveFile(wxT("memrsc"));
+        exitApp();
     }
     return ret;
 }
@@ -1418,6 +1419,8 @@ int opennxApp::OnExit()
         wxLogNull lognull;
         wxMemoryFSHandler::RemoveFile(wxT("memrsc"));
     }
+    exitApp();
+
     return wxApp::OnExit();
 }
 
@@ -1445,3 +1448,13 @@ void opennxApp::MacOpenFile(const wxString& filename)
     }
 }
 #endif
+
+void opennxApp::exitApp()
+{
+    unsigned long procId = ::wxGetProcessId();
+    if(procId)
+    {
+        fprintf(stderr, "Login dialog closed, exiting\n");
+        ::wxKill(procId);
+    }
+}
