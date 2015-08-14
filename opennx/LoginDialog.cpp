@@ -193,7 +193,7 @@ void LoginDialog::ReadConfigDirectory()
         MyXmlConfig cfg(m_aConfigFiles[i]);
         if (cfg.IsValid()) {
 #if wxCHECK_VERSION(2,9,0)
-			m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(m_aConfigFiles[i].wc_str().data()));
+            m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(m_aConfigFiles[i].wc_str().data()));
 #else
             m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(m_aConfigFiles[i].c_str()));
 #endif
@@ -397,16 +397,16 @@ wxIcon LoginDialog::GetIconResource( const wxString& name )
 
 void LoginDialog::OnButtonWizardClick( wxCommandEvent& event )
 {
-	MyWizard wz(NULL);
-	if(!wz.Run())
-	     return;
-	ReadConfigDirectory();
-	m_sSessionName = wz.sGetConfigName();
-	MyXmlConfig cfg(m_sSessionName);
+    MyWizard wz(NULL);
+    if(!wz.Run())
+         return;
+    ReadConfigDirectory();
+    m_sSessionName = wz.sGetConfigName();
+    MyXmlConfig cfg(m_sSessionName);
 #if wxCHECK_VERSION(2,9,0)
-	m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(m_sSessionName.wc_str().data()));
+    m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(m_sSessionName.wc_str().data()));
 #else
-	m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(m_sSessionName.c_str()));
+    m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(m_sSessionName.c_str()));
 #endif
     m_pCtrlSessionName->SetStringSelection(cfg.sGetName());
     wxCommandEvent event2;

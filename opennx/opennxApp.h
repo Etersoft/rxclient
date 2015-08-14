@@ -129,6 +129,7 @@ class opennxApp : public wxApp
         void checkLibUSB();
         void checkNxProxy();
         wxString findExecutable(wxString name);
+        void exitApp();
 };
 
 DECLARE_APP(opennxApp)
