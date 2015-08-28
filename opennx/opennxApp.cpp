@@ -864,14 +864,17 @@ void opennxApp::OnInitCmdLine(wxCmdLineParser& parser)
     // On Unix, --display is a toolkit option
     wxRegEx re(wxT("^--((exportres)|(cacert)|(caption)|(style)|(dialog)|(message)|(parent)|(session)|(window)|(trace))$"));
 #endif
-    //  wxWidgets > 3.0
+
+#if wxCHECK_VERSION(2,9,0)
     wxArrayString as;
     for(int i = 0; i < argc; i++)
     {
         wxString str(argv[i]);
         as.Add(str);
     }
-    //  end wxWidgets > 3.0
+#else
+    wxArrayString as(argc, (const wxChar **)argv);
+#endif
 
     for (i = 1; i < as.GetCount(); i++) {
         if (re.Matches(as[i])) {
