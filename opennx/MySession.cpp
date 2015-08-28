@@ -398,10 +398,10 @@ class MyHTTP : public wxHTTP {
             return ret;
         }
 private:
-    //  wxWidgets lib > 3.0
+#if wxCHECK_VERSION(2,9,0)
     wxProtocolError m_perr;
     wxString m_post_buf;
-    //  end wxWidgets lib > 3.0
+#endif
 
 };
 
