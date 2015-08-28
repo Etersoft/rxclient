@@ -167,11 +167,13 @@ void LoginDialog::ReadConfigDirectory()
     m_aConfigFiles.Empty();
 
     wxArrayString c;
+    for(int i = 0; i < m_aConfigFiles.GetCount(); i++)
+    {
+        wxString x(m_aConfigFiles[i]);
+        c.Add(x);
+    }
+
     wxDir::GetAllFiles(cfgdir, &c, wxT("*.nxs"), wxDIR_FILES);
-
-    for(int i = 0; i < c.GetCount(); i++)
-        m_aConfigFiles.Add(c[i]);
-
     size_t i;
     m_sSessionName.Empty();
     if (m_pCurrentCfg)
