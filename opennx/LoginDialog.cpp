@@ -190,11 +190,7 @@ void LoginDialog::ReadConfigDirectory()
     for (i = 0; i < m_aConfigFiles.GetCount(); i++) {
         MyXmlConfig cfg(m_aConfigFiles[i]);
         if (cfg.IsValid()) {
-#if wxCHECK_VERSION(2,9,0)
-            m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(m_aConfigFiles[i].wc_str().data()));
-#else
-            m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(m_aConfigFiles[i].c_str()));
-#endif
+            m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(&m_aConfigFiles[i]));
             if ((cfg.sGetFileName() == m_sLastSessionFilename) ||
                     (cfg.sGetName() == m_sLastSessionFilename)) {
                 m_pCurrentCfg = new MyXmlConfig(m_aConfigFiles[i]);
@@ -232,7 +228,7 @@ void LoginDialog::SelectSession(wxString name)
 {
     MyXmlConfig cfg(name);
     if (cfg.IsValid()) {
-        m_pCtrlSessionName->Append(cfg.sGetName(), (void *)name.c_str());
+        m_pCtrlSessionName->Append(cfg.sGetName(), (void *)&name);
         m_pCtrlSessionName->SetStringSelection(cfg.sGetName());
         wxCommandEvent event;
         OnComboboxSessionSelected(event);
@@ -401,11 +397,7 @@ void LoginDialog::OnButtonWizardClick( wxCommandEvent& event )
     ReadConfigDirectory();
     m_sSessionName = wz.sGetConfigName();
     MyXmlConfig cfg(m_sSessionName);
-#if wxCHECK_VERSION(2,9,0)
-    m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(m_sSessionName.wc_str().data()));
-#else
-    m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(m_sSessionName.c_str()));
-#endif
+    m_pCtrlSessionName->Append(cfg.sGetName(), (void*)(&m_sSessionName));
     m_pCtrlSessionName->SetStringSelection(cfg.sGetName());
     wxCommandEvent event2;
     OnComboboxSessionSelected(event2);
@@ -471,8 +463,8 @@ void LoginDialog::OnComboboxSessionSelected( wxCommandEvent& event )
     m_pCurrentCfg = NULL;
     int i = m_pCtrlSessionName->GetSelection();
     if (i != wxNOT_FOUND) {
-        wxString fn = (wxChar *)m_pCtrlSessionName->GetClientData(i);
-        MyXmlConfig cfg(fn);
+        wxString* pfn = (wxString*)m_pCtrlSessionName->GetClientData(i);
+        MyXmlConfig cfg(*pfn);
         if (cfg.IsValid()) {
             m_pCurrentCfg = new MyXmlConfig(cfg.sGetFileName());
             m_bGuestLogin = cfg.bGetGuestMode();
