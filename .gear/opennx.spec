@@ -3,7 +3,7 @@
 
 Name: opennx
 Version: 0.16.e
-Release: alt30
+Release: alt31
 
 Summary: An OpenSource NX client
 
@@ -106,6 +106,9 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 %changelog
+* Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 0.16.e-alt31
+- fix using string in login dialogs combobox
+
 * Mon Oct 05 2015 Vitaly Lipatov <lav@altlinux.ru> 0.16.e-alt30
 - fixed exit message: exit function now accept exit message
 - fixed 'no sessions' bug
