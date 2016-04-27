@@ -399,7 +399,7 @@ private:
     wxTextCtrl* m_pCtrlUserNxDir;
     wxTextCtrl* m_pCtrlSystemNxDir;
     wxTextCtrl* m_pCtrlCupsPath;
-    wxButton* m_pCtrlCupsBrowse;
+//    wxButton* m_pCtrlCupsBrowse;
     wxPanel* m_pCtrlUsbipdDaemon;
     wxTextCtrl* m_pCtrlUsbIpdSocket;
     wxButton* m_pCtrlUsbipdSocketBrowse;
