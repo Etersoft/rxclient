@@ -3,7 +3,7 @@
 
 Name: opennx
 Version: 0.16.e
-Release: alt31
+Release: alt32
 
 Summary: An OpenSource NX client
 
@@ -106,6 +106,11 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 %changelog
+* Fri May 20 2016 Vitaly Lipatov <lav@altlinux.ru> 0.16.e-alt32
+- fix big using d instead ld at config session window
+- append to commit "Now all paths write to config after start." ( 47816fbff3e6f4aee4142ae843fa3edda529ac77 )
+- merge branch 'mainline' into sisyphus
+
 * Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 0.16.e-alt31
 - fix using string in login dialogs combobox
 
