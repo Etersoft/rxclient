@@ -1990,7 +1990,7 @@ MyXmlConfig::iAddOption(wxXmlNode *group, const wxString &name, const long val)
 {
     wxXmlNode *n = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("option"));
     n->AddProperty(new wxXmlProperty(wxT("key"), name, NULL));
-    n->AddProperty(new wxXmlProperty(wxT("value"), wxString::Format(wxT("%d"), val), NULL));
+    n->AddProperty(new wxXmlProperty(wxT("value"), wxString::Format(wxT("%ld"), val), NULL));
     group->AddChild(n);
 }
 

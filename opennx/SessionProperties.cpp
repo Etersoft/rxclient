@@ -472,7 +472,7 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
     m_pCtrlUserNxDir = NULL;
     m_pCtrlSystemNxDir = NULL;
     m_pCtrlCupsPath = NULL;
-    m_pCtrlCupsBrowse = NULL;
+//    m_pCtrlCupsBrowse = NULL;
     m_pCtrlUsbipdDaemon = NULL;
     m_pCtrlUsbIpdSocket = NULL;
     m_pCtrlUsbipdSocketBrowse = NULL;
@@ -719,7 +719,7 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
     m_pCtrlCupsEnable->Enable(false);
     m_pCtrlCupsPort->Enable(false);
     m_pCtrlCupsPath->Enable(false);
-    m_pCtrlCupsBrowse->Enable(false);
+//    m_pCtrlCupsBrowse->Enable(false);
 #endif
 #ifdef HAVE_PULSE_PULSEAUDIO_H
     m_pCtrlEnableMultimedia->Enable(pa.IsAvailable());
@@ -1016,7 +1016,7 @@ void SessionProperties::CreateControls()
     //m_pCtrlUserNxDir = XRCCTRL(*this, "ID_TEXTCTRL_USERDIR", wxTextCtrl);
     //m_pCtrlSystemNxDir = XRCCTRL(*this, "ID_TEXTCTRL_SYSDIR", wxTextCtrl);
     //m_pCtrlCupsPath = XRCCTRL(*this, "ID_TEXTCTRL_CUPSPATH", wxTextCtrl);
-    m_pCtrlCupsBrowse = XRCCTRL(*this, "ID_BUTTON_BROWSE_CUPSPATH", wxButton);
+//    m_pCtrlCupsBrowse = XRCCTRL(*this, "ID_BUTTON_BROWSE_CUPSPATH", wxButton);
     m_pCtrlUsbipdDaemon = XRCCTRL(*this, "ID_PANEL_USBIP_DAEMON", wxPanel);
     m_pCtrlUsbIpdSocket = XRCCTRL(*this, "ID_TEXTCTRL_USBIPD_SOCKET", wxTextCtrl);
     m_pCtrlUsbipdSocketBrowse = XRCCTRL(*this, "ID_BUTTON_BROWSE_USBIPD_SOCKET", wxButton);
