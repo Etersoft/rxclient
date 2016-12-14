@@ -1561,6 +1561,10 @@ msgstr "&Удалить"
 msgid "&Apply"
 msgstr "&Применить"
 
+#: SessionProperties_symbols.h:116
+msgid "Enable smart card sharing"
+msgstr "Пробрасывать службу смарт-карт (PC/SC)"
+
 #: ShareProperties.cpp:259
 msgid "Modify shared resource - OpenNX"
 msgstr "Изменить общий сетевой ресурс - OpenNX"

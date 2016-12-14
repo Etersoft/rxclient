@@ -1504,6 +1504,10 @@ msgstr ""
 msgid "&Apply"
 msgstr ""
 
+#: SessionProperties_symbols.h:116
+msgid "Enable smart card sharing"
+msgstr ""
+
 #: ShareProperties.cpp:259
 msgid "Modify shared resource - OpenNX"
 msgstr ""

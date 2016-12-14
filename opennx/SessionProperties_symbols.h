@@ -113,3 +113,4 @@
 #define ID_DIALOG_PROPERTIES_SYMBOL_91 _("&Apply")
 #define ID_DIALOG_PROPERTIES_SYMBOL_92 _("&OK")
 #define ID_DIALOG_PROPERTIES_SYMBOL_93 _("&Cancel")
+#define ID_DIALOG_PROPERTIES_SYMBOL_94 _("Enable smart card sharing")
