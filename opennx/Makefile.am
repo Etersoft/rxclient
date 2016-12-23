@@ -9,14 +9,14 @@ noinst_PROGRAMS = bin2hdr pulsetest $(TESTXAUTH) $(MACTESTKBD)
 bin2hdr_SOURCES = bin2hdr.cpp
 bin2hdr_LDFLAGS = -all-static
 
-bin_PROGRAMS = opennx pconnect $(TRACELOG) $(WATCHREADER) $(WATCHUSBIP) \
+bin_PROGRAMS = rxclient pconnect $(TRACELOG) $(WATCHREADER) $(WATCHUSBIP) \
 	       $(MACFINDREADER) $(MACUNINSTALL)
 
 EXTRA_PROGRAMS = tracelog$(EXEEXT) watchreader$(EXEEXT) \
 	watchusbip$(EXEEXT) macfindreader$(EXEEXT) macuninstall$(EXEEXT) \
 	mactestkbd$(EXEEXT) testxauth$(EXEEXT)
 
-opennx_SOURCES = AboutDialog.cpp AsyncProcess.cpp LibOpenSC.cpp \
+rxclient_SOURCES = AboutDialog.cpp AsyncProcess.cpp LibOpenSC.cpp \
 	CardWaiterDialog.cpp ConnectDialog.cpp ExtHtmlWindow.cpp \
 	ForeignFrame.cpp Icon.cpp LogDialog.cpp KeyDialog.cpp LibUSB.cpp \
 	LoginDialog.cpp mylog.cpp md5.c MyIPC.cpp MyDynlib.cpp MySession.cpp \
@@ -122,16 +122,16 @@ mactestkbd_CFLAGS = $(WX_CFLAGS) -DAPP_MACTESTKBD
 
 EXTRA_HEADERS = res/opennx.rc
 
-EXTRA_opennx_SOURCES = opennx.rc
+EXTRA_rxclient_SOURCES = opennx.rc
 EXTRA_tracelog_SOURCES = tracelog.rc
 EXTRA_watchreader_SOURCES = watchreader.rc
 
-opennx_LDADD = $(OPENNX_RES) $(WX_LIBS) $(X_LIBS) $(X_PRE_LIBS) \
+rxclient_LDADD = $(OPENNX_RES) $(WX_LIBS) $(X_LIBS) $(X_PRE_LIBS) \
 	$(X_EXTRA_LIBS) $(APP_LDADD) $(LIBCURL)
-opennx_DEPENDENCIES = $(OPENNX_RES) $(PLATFORM_DEPENDENCIES)
-opennx_CPPFLAGS = $(WX_CPPFLAGS) $(PLATFORM_INCLUDES) $(X_CFLAGS) -DAPP_OPENNX
-opennx_CXXFLAGS = $(WX_CXXFLAGS)
-opennx_CFLAGS = $(WX_CFLAGS)
+rxclient_DEPENDENCIES = $(OPENNX_RES) $(PLATFORM_DEPENDENCIES)
+rxclient_CPPFLAGS = $(WX_CPPFLAGS) $(PLATFORM_INCLUDES) $(X_CFLAGS) -DAPP_OPENNX
+rxclient_CXXFLAGS = $(WX_CXXFLAGS)
+rxclient_CFLAGS = $(WX_CFLAGS)
 
 
 GETTEXTIZE = $(shell which gettextize)

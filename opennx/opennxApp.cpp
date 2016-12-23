@@ -572,7 +572,7 @@ opennxApp::preInit()
             + wxT("share") + wxFileName::GetPathSeparator() + wxT("locale"));
     m_cLocale.AddCatalogLookupPathPrefix(wxT("locale"));
     m_cLocale.Init();
-    m_cLocale.AddCatalog(wxT("opennx"));
+    m_cLocale.AddCatalog(wxT("rxclient"));
 
    //sergeym
   //  if (!wxConfigBase::Get()->Read(wxT("Config/CupsPath"), &tmp)) {
