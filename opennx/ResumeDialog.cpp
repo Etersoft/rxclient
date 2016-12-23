@@ -309,7 +309,7 @@ void ResumeDialog::OnButtonResumeClick( wxCommandEvent& )
 void ResumeDialog::OnButtonTerminateClick( wxCommandEvent& )
 {
     if (wxYES != wxMessageBox(_("Do you really want to terminate the selected session?"),
-                _("Terminate session - OpenNX"), wxYES_NO|wxICON_QUESTION, this))
+                _("Terminate session - RX Client"), wxYES_NO|wxICON_QUESTION, this))
         return;
     m_eMode = Terminate;
     EndModal(wxID_OK);

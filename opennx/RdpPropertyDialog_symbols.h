@@ -19,7 +19,7 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_DIALOG_SETTINGS_RDP_SYMBOL_0 _("RDP Session Settings - OpenNX")
+#define ID_DIALOG_SETTINGS_RDP_SYMBOL_0 _("RDP Session Settings - RX Client")
 #define ID_DIALOG_SETTINGS_RDP_SYMBOL_1 _("Server")
 #define ID_DIALOG_SETTINGS_RDP_SYMBOL_2 _("Domain")
 #define ID_DIALOG_SETTINGS_RDP_SYMBOL_3 _("Authentication")

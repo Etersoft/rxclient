@@ -19,7 +19,7 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_PROXYPROPERTYDIALOG_SYMBOL_0 _("Proxy settings - OpenNX")
+#define ID_PROXYPROPERTYDIALOG_SYMBOL_0 _("Proxy settings - RX Client")
 #define ID_PROXYPROPERTYDIALOG_SYMBOL_1 _("Connect through internal (NoMachine) HTTP proxy")
 #define ID_PROXYPROPERTYDIALOG_SYMBOL_2 _("Host")
 #define ID_PROXYPROPERTYDIALOG_SYMBOL_3 _("Port")

@@ -256,7 +256,7 @@ void ShareProperties::CreateControls()
         m_pCtrlLocalShares->Append(sg.m_sShareName, bm, &sg);
         m_pCtrlLocalShares->SetSelection(0);
         m_pCtrlLocalShares->Enable(false);
-        SetTitle(_("Modify shared resource - OpenNX"));
+        SetTitle(_("Modify shared resource - RX Client"));
         switch (sg.m_eType) {
             case SharedResource::SHARE_UNKNOWN:
                 break;

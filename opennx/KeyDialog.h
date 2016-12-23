@@ -51,7 +51,7 @@
 ////@begin control identifiers
 #define ID_KEYDIALOG 10122
 #define SYMBOL_KEYDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_KEYDIALOG_TITLE _("Key Management - OpenNX")
+#define SYMBOL_KEYDIALOG_TITLE _("Key Management - RX Client")
 #define SYMBOL_KEYDIALOG_IDNAME ID_KEYDIALOG
 #define SYMBOL_KEYDIALOG_SIZE wxSize(400, 300)
 #define SYMBOL_KEYDIALOG_POSITION wxDefaultPosition

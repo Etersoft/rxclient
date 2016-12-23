@@ -156,7 +156,7 @@ bool MacUninstallApp::OnInit()
     m_cLocale.AddCatalogLookupPathPrefix(fn.GetPath());
     m_cLocale.Init();
     m_cLocale.AddCatalog(wxT("opennx"));
-    wxString targetPkg = wxT("OpenNX");
+    wxString targetPkg = wxT("RX Client");
     wxString targetPkgId = wxT("org.opennx.OpenNX");
 
     // Call to base class needed for initializing command line processing

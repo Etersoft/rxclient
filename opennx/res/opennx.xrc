@@ -4,7 +4,7 @@
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP</exstyle>
         <size>200,150d</size>
-        <title>Login - OpenNX</title>
+        <title>Login - RX Client</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -160,7 +160,7 @@
     <object class="wxDialog" name="ID_DIALOG_PROPERTIES" subclass="SessionProperties">
         <style>wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_VALIDATE_RECURSIVELY|wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP</exstyle>
-        <title>Session properties - OpenNX</title>
+        <title>Session properties - RX Client</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -1237,7 +1237,7 @@
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP</exstyle>
         <size>200,150d</size>
-        <title>VNC Session Settings - OpenNX</title>
+        <title>VNC Session Settings - RX Client</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -1381,7 +1381,7 @@ remote VNC server</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP</exstyle>
         <size>200,150d</size>
-        <title>RDP Session Settings - OpenNX</title>
+        <title>RDP Session Settings - RX Client</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -1586,7 +1586,7 @@ remote VNC server</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP</exstyle>
         <size>114,75d</size>
-        <title>X11 Session Settings - OpenNX</title>
+        <title>X11 Session Settings - RX Client</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBitmapButton" name="ID_BITMAPBUTTON_DUMMY0">
@@ -1743,7 +1743,7 @@ remote VNC server</label>
     <object class="wxDialog" name="ID_DIALOG_IMAGE_VNC" subclass="VncImageSettingsDialog">
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP</exstyle>
-        <title>VNC Image Settings - OpenNX</title>
+        <title>VNC Image Settings - RX Client</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBitmapButton" name="ID_BITMAPBUTTON_DUMMY0">
@@ -1870,7 +1870,7 @@ remote VNC server</label>
     <object class="wxDialog" name="ID_DIALOG_IMAGE_RDP" subclass="RdpImageSettingsDialog">
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_VALIDATE_RECURSIVELY|wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP</exstyle>
-        <title>RDP Image Settings - OpenNX</title>
+        <title>RDP Image Settings - RX Client</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -2074,7 +2074,7 @@ remote VNC server</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_VALIDATE_RECURSIVELY|wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP</exstyle>
         <size>114,75d</size>
-        <title>Unix Image Settings - OpenNX</title>
+        <title>Unix Image Settings - RX Client</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBitmapButton" name="ID_BITMAPBUTTON_DUMMY0">
@@ -2249,7 +2249,7 @@ remote VNC server</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_VALIDATE_RECURSIVELY|wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP</exstyle>
         <size>114,75d</size>
-        <title>New shared resource - OpenNX</title>
+        <title>New shared resource - RX Client</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -2668,7 +2668,7 @@ this share.</label>
     </object>
     <object class="wxFrame" name="ID_FRAME_ADMIN" subclass="SessionAdmin">
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMINIMIZE_BOX|wxMAXIMIZE_BOX|wxCLOSE_BOX</style>
-        <title>Session Administrator - OpenNX</title>
+        <title>Session Administrator - RX Client</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/opennx-admin.png</icon>
         <object class="wxMenuBar" name="ID_MENUBAR">
@@ -2728,7 +2728,7 @@ this share.</label>
             <object class="wxMenu">
                 <label>Help</label>
                 <object class="wxMenuItem" name="wxID_ABOUT">
-                    <label>About OpenNX client...</label>
+                    <label>About RX Client ...</label>
                 </object>
             </object>
         </object>
@@ -2790,7 +2790,7 @@ this share.</label>
     <object class="wxWizard" name="ID_WIZARD" subclass="MyWizard">
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS</exstyle>
-        <title>Connection Wizard - OpenNX</title>
+        <title>Connection Wizard - RX Client</title>
         <bitmap>memory:memrsc#zip:res/wizard.png</bitmap>
         <icon>memory:memrsc#zip:res/opennx-wizard.png</icon>
         <object class="wxWizardPageSimple" name="ID_WIZARDPAGE_WELCOME" subclass="WizardPageWelcome">
@@ -2802,7 +2802,7 @@ this share.</label>
                     <border>5</border>
                     <object class="wxStaticText" name="wxID_STATIC" subclass="WrappedStaticText">
                         <size>200,-1</size>
-                        <label>Welcome to the OpenNX Client Connection Wizard which will guide you through the steps needed to setup your login. Please select the 'Next' button to start.</label>
+                        <label>Welcome to the RX Client Connection Wizard which will guide you through the steps needed to setup your login. Please select the 'Next' button to start.</label>
                         <wrap>999</wrap>
                     </object>
                 </object>
@@ -2980,7 +2980,7 @@ this share.</label>
                     <border>5</border>
                     <object class="wxStaticText" name="wxID_STATIC" subclass="WrappedStaticText">
                         <size>200,-1</size>
-                        <label>Using OpenNX Client, you can run RDP, VNC and X desktops, depending on what your service provider has made available.</label>
+                        <label>Using RX Client, you can run RDP, VNC and X desktops, depending on what your service provider has made available.</label>
                         <wrap>9999</wrap>
                     </object>
                 </object>
@@ -3130,7 +3130,7 @@ this share.</label>
                     <border>5</border>
                     <object class="wxStaticText" name="wxID_STATIC" subclass="WrappedStaticText">
                         <size>200,-1</size>
-                        <label>OpenNX Client supports authentication using a variety of USB SmartCard tokens. Enable this option if you intend to use such a token.</label>
+                        <label>RX Client supports authentication using a variety of USB SmartCard tokens. Enable this option if you intend to use such a token.</label>
                         <wrap>9999</wrap>
                     </object>
                 </object>
@@ -3241,7 +3241,7 @@ this share.</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS</exstyle>
         <size>200,150d</size>
-        <title>Session Log - OpenNX</title>
+        <title>Session Log - RXClient</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -3272,7 +3272,7 @@ this share.</label>
     <object class="wxDialog" name="ID_DIALOG_ABOUT" subclass="AboutDialog">
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS</exstyle>
-        <title>About OpenNX</title>
+        <title>About RXClient</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -3305,7 +3305,7 @@ this share.</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS</exstyle>
         <size>200,150d</size>
-        <title>Connecting - OpenNX</title>
+        <title>Connecting - RXClient</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -3353,7 +3353,7 @@ this share.</label>
     <object class="wxDialog" name="ID_TEXTVIEWER" subclass="TextViewer">
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxDIALOG_NO_PARENT|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS</exstyle>
-        <title>Text Viewer - OpenNX</title>
+        <title>Text Viewer - RXClient</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -3395,7 +3395,7 @@ this share.</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP</exstyle>
         <size>400,300d</size>
-        <title>Key Management - OpenNX</title>
+        <title>Key Management - RXClient</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -3463,7 +3463,7 @@ this share.</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS</exstyle>
         <size>400,300d</size>
-        <title>Select session - OpenNX</title>
+        <title>Select session - RXClient</title>
         <centered>1</centered>
         <object class="wxBoxSizer">
             <orient>wxVERTICAL</orient>
@@ -3668,7 +3668,7 @@ this share.</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxTAB_TRAVERSAL</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS</exstyle>
         <size>400,300d</size>
-        <title>Insert card - OpenNX</title>
+        <title>Insert card - RXClient</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -3714,7 +3714,7 @@ this share.</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxTAB_TRAVERSAL</style>
         <exstyle>wxWS_EX_VALIDATE_RECURSIVELY|wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP</exstyle>
         <size>400,300d</size>
-        <title>USB Filter Details - OpenNX</title>
+        <title>USB Filter Details - RXClient</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -3921,7 +3921,7 @@ enter the filter specification directly.</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxSTAY_ON_TOP|wxCLOSE_BOX|wxTAB_TRAVERSAL</style>
         <exstyle>wxWS_EX_VALIDATE_RECURSIVELY|wxWS_EX_BLOCK_EVENTS</exstyle>
         <size>400,300d</size>
-        <title>HTTP proxy password - OpenNX</title>
+        <title>HTTP proxy password - RXClient</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxBoxSizer">
@@ -3998,7 +3998,7 @@ enter the filter specification directly.</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxTAB_TRAVERSAL</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP</exstyle>
         <size>400,300d</size>
-        <title>Proxy settings - OpenNX</title>
+        <title>Proxy settings - RXClient</title>
         <centered>1</centered>
         <object class="wxBoxSizer">
             <orient>wxVERTICAL</orient>
@@ -4249,7 +4249,7 @@ enter the filter specification directly.</label>
         <style>wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxTAB_TRAVERSAL</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS</exstyle>
         <size>400,300d</size>
-        <title>XDM Session Settings - OpenNX</title>
+        <title>XDM Session Settings - RXClient</title>
         <centered>1</centered>
         <icon>memory:memrsc#zip:res/nx.png</icon>
         <object class="wxStaticBoxSizer" name="wxID_ANY">

@@ -19,7 +19,7 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_DIALOG_IMAGE_X11_SYMBOL_0 _("Unix Image Settings - OpenNX")
+#define ID_DIALOG_IMAGE_X11_SYMBOL_0 _("Unix Image Settings - RX Client")
 #define ID_DIALOG_IMAGE_X11_SYMBOL_1 _("Encoding")
 #define ID_DIALOG_IMAGE_X11_SYMBOL_2 _("Use JPEG and RGB image compression")
 #define ID_DIALOG_IMAGE_X11_SYMBOL_3 _("Use JPEG image compression only")

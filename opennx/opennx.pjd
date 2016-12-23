@@ -366,7 +366,7 @@
           <string name="proxy-Implementation filename">"LoginDialog.cpp"</string>
           <string name="proxy-Header filename">"LoginDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Login - OpenNX"</string>
+          <string name="proxy-Title">"Login - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -1641,7 +1641,7 @@
           <string name="proxy-Implementation filename">"SessionProperties.cpp"</string>
           <string name="proxy-Header filename">"SessionProperties.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Session properties - OpenNX"</string>
+          <string name="proxy-Title">"Session properties - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -9336,7 +9336,7 @@
           <string name="proxy-Implementation filename">"VncPropertyDialog.cpp"</string>
           <string name="proxy-Header filename">"VncPropertyDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"VNC Session Settings - OpenNX"</string>
+          <string name="proxy-Title">"VNC Session Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -10471,7 +10471,7 @@ remote VNC server"</string>
           <string name="proxy-Implementation filename">"RdpPropertyDialog.cpp"</string>
           <string name="proxy-Header filename">"RdpPropertyDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"RDP Session Settings - OpenNX"</string>
+          <string name="proxy-Title">"RDP Session Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -12066,7 +12066,7 @@ remote VNC server"</string>
           <string name="proxy-Implementation filename">"X11PropertyDialog.cpp"</string>
           <string name="proxy-Header filename">"X11PropertyDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"X11 Session Settings - OpenNX"</string>
+          <string name="proxy-Title">"X11 Session Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -13173,7 +13173,7 @@ remote VNC server"</string>
           <string name="proxy-Implementation filename">"VncImageSettingsDialog.cpp"</string>
           <string name="proxy-Header filename">"VncImageSettingsDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"VNC Image Settings - OpenNX"</string>
+          <string name="proxy-Title">"VNC Image Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -14082,7 +14082,7 @@ remote VNC server"</string>
           <string name="proxy-Implementation filename">"RdpImageSettingsDialog.cpp"</string>
           <string name="proxy-Header filename">"RdpImageSettingsDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"RDP Image Settings - OpenNX"</string>
+          <string name="proxy-Title">"RDP Image Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -15482,7 +15482,7 @@ remote VNC server"</string>
           <string name="proxy-Implementation filename">"UnixImageSettingsDialog.cpp"</string>
           <string name="proxy-Header filename">"UnixImageSettingsDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Unix Image Settings - OpenNX"</string>
+          <string name="proxy-Title">"Unix Image Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -16760,7 +16760,7 @@ remote VNC server"</string>
           <string name="proxy-Implementation filename">"ShareProperties.cpp"</string>
           <string name="proxy-Header filename">"ShareProperties.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"New shared resource - OpenNX"</string>
+          <string name="proxy-Title">"New shared resource - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -19870,7 +19870,7 @@ this share."</string>
           <string name="proxy-Implementation filename">"SessionAdmin.cpp"</string>
           <string name="proxy-Header filename">"SessionAdmin.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Session Administrator - OpenNX"</string>
+          <string name="proxy-Title">"Session Administrator - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/opennx-admin.png"</string>
           <bool name="proxy-Dialog units">0</bool>
@@ -20252,7 +20252,7 @@ this share."</string>
               <string name="proxy-Member variable name">""</string>
               <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
               <document>
-                <string name="title">"About OpenNX client...: wxID_ABOUT"</string>
+                <string name="title">"About RX Client ...: wxID_ABOUT"</string>
                 <string name="type">"dialog-control-document"</string>
                 <string name="filename">""</string>
                 <string name="icon-name">"menuitem"</string>
@@ -20264,7 +20264,7 @@ this share."</string>
                 <string name="event-handler-0">"wxEVT_COMMAND_MENU_SELECTED|OnABOUTClick|||SessionAdmin"</string>
                 <string name="proxy-Id name">"wxID_ABOUT"</string>
                 <long name="proxy-Id value">5013</long>
-                <string name="proxy-Label">"About OpenNX client..."</string>
+                <string name="proxy-Label">"About RX Client ..."</string>
                 <string name="proxy-Kind">"Normal"</string>
                 <bool name="proxy-Checked">0</bool>
                 <bool name="proxy-Enabled">1</bool>
@@ -20707,7 +20707,7 @@ this share."</string>
           <string name="proxy-Implementation filename">"MyWizard.cpp"</string>
           <string name="proxy-Header filename">"MyWizard.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Connection Wizard - OpenNX"</string>
+          <string name="proxy-Title">"Connection Wizard - RX Client"</string>
           <string name="proxy-Bitmap">"res/wizard.png"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/opennx-wizard.png"</string>
@@ -20851,7 +20851,7 @@ this share."</string>
                 <string name="proxy-Implementation filename">""</string>
                 <string name="proxy-Header filename">""</string>
                 <string name="proxy-Member variable name">""</string>
-                <string name="proxy-Label">"Welcome to the OpenNX Client Connection Wizard which will guide you through the steps needed to setup your login. Please select the 'Next' button to start."</string>
+                <string name="proxy-Label">"Welcome to the RX Client Connection Wizard which will guide you through the steps needed to setup your login. Please select the 'Next' button to start."</string>
                 <long name="proxy-Wrapping width">999</long>
                 <string name="proxy-Help text">""</string>
                 <string name="proxy-Tooltip text">""</string>
@@ -22322,7 +22322,7 @@ this share."</string>
                 <string name="proxy-Implementation filename">""</string>
                 <string name="proxy-Header filename">""</string>
                 <string name="proxy-Member variable name">""</string>
-                <string name="proxy-Label">"Using OpenNX Client, you can run RDP, VNC and X desktops, depending on what your service provider has made available."</string>
+                <string name="proxy-Label">"Using RX Client, you can run RDP, VNC and X desktops, depending on what your service provider has made available."</string>
                 <long name="proxy-Wrapping width">9999</long>
                 <string name="proxy-Help text">""</string>
                 <string name="proxy-Tooltip text">""</string>
@@ -23192,7 +23192,7 @@ this share."</string>
                 <string name="proxy-Implementation filename">""</string>
                 <string name="proxy-Header filename">""</string>
                 <string name="proxy-Member variable name">""</string>
-                <string name="proxy-Label">"OpenNX Client supports authentication using a variety of USB SmartCard tokens. Enable this option if you intend to use such a token."</string>
+                <string name="proxy-Label">"RX Client supports authentication using a variety of USB SmartCard tokens. Enable this option if you intend to use such a token."</string>
                 <long name="proxy-Wrapping width">9999</long>
                 <string name="proxy-Help text">""</string>
                 <string name="proxy-Tooltip text">""</string>
@@ -23915,7 +23915,7 @@ this share."</string>
           <string name="proxy-Implementation filename">"LogDialog.cpp"</string>
           <string name="proxy-Header filename">"LogDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Session Log - OpenNX"</string>
+          <string name="proxy-Title">"Session Log - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -24135,7 +24135,7 @@ this share."</string>
           </document>
         </document>
         <document>
-          <string name="title">"About OpenNX"</string>
+          <string name="title">"About RX Client"</string>
           <string name="type">"dialog-document"</string>
           <string name="filename">""</string>
           <string name="icon-name">"dialog"</string>
@@ -24161,7 +24161,7 @@ this share."</string>
           <string name="proxy-Implementation filename">"AboutDialog.cpp"</string>
           <string name="proxy-Header filename">"AboutDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"About OpenNX"</string>
+          <string name="proxy-Title">"About RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -24429,7 +24429,7 @@ this share."</string>
           <string name="proxy-Implementation filename">"ConnectDialog.cpp"</string>
           <string name="proxy-Header filename">"ConnectDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Connecting - OpenNX"</string>
+          <string name="proxy-Title">"Connecting - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -24828,7 +24828,7 @@ this share."</string>
           <string name="proxy-Implementation filename">"TextViewer.cpp"</string>
           <string name="proxy-Header filename">"TextViewer.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Text Viewer - OpenNX"</string>
+          <string name="proxy-Title">"Text Viewer - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">0</bool>
@@ -25146,7 +25146,7 @@ this share."</string>
           <string name="proxy-Implementation filename">"KeyDialog.cpp"</string>
           <string name="proxy-Header filename">"KeyDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Key Management - OpenNX"</string>
+          <string name="proxy-Title">"Key Management - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -25685,7 +25685,7 @@ this share."</string>
           <string name="proxy-Implementation filename">"ResumeDialog.cpp"</string>
           <string name="proxy-Header filename">"ResumeDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Select session - OpenNX"</string>
+          <string name="proxy-Title">"Select session - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">""</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -27456,7 +27456,7 @@ this share."</string>
           <string name="proxy-Implementation filename">"CardWaiterDialog.cpp"</string>
           <string name="proxy-Header filename">"CardWaiterDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Insert card - OpenNX"</string>
+          <string name="proxy-Title">"Insert card - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -27825,7 +27825,7 @@ this share."</string>
           <string name="proxy-Implementation filename">"UsbFilterDetailsDialog.cpp"</string>
           <string name="proxy-Header filename">"UsbFilterDetailsDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"USB Filter Details - OpenNX"</string>
+          <string name="proxy-Title">"USB Filter Details - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -29688,7 +29688,7 @@ enter the filter specification directly."</string>
           <string name="proxy-Implementation filename">"ProxyPasswordDialog.cpp"</string>
           <string name="proxy-Header filename">"ProxyPasswordDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"HTTP proxy password - OpenNX"</string>
+          <string name="proxy-Title">"HTTP proxy password - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -30285,7 +30285,7 @@ enter the filter specification directly."</string>
           <string name="proxy-Implementation filename">"ProxyPropertyDialog.cpp"</string>
           <string name="proxy-Header filename">"ProxyPropertyDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Proxy settings - OpenNX"</string>
+          <string name="proxy-Title">"Proxy settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">""</string>
           <bool name="proxy-Dialog units">1</bool>
@@ -32169,7 +32169,7 @@ enter the filter specification directly."</string>
           <string name="proxy-Implementation filename">"XdmPropertyDialog.cpp"</string>
           <string name="proxy-Header filename">"XdmPropertyDialog.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"XDM Session Settings - OpenNX"</string>
+          <string name="proxy-Title">"XDM Session Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">"res/nx.png"</string>
           <bool name="proxy-Dialog units">1</bool>

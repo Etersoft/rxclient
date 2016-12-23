@@ -1367,7 +1367,7 @@ void WizardPageFinish::OnWizardpageFinishPageChanging( wxWizardEvent& event )
                 case wxID_OK:
                     if (!cfg->SaveToFile())
                         wxMessageBox(wxString::Format(_("Could not save session to\n%s"),
-                                    fn.c_str()), _("Error saving - OpenNX"), wxICON_ERROR | wxOK);
+                                    fn.c_str()), _("Error saving - RX Client"), wxICON_ERROR | wxOK);
                     wxConfigBase::Get()->Write(wxT("Config/UserNxDir"), d.GetsUserNxDir());
                     wxConfigBase::Get()->Write(wxT("Config/SystemNxDir"), d.GetsSystemNxDir());
 #ifdef SUPPORT_USBIP

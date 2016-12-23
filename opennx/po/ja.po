@@ -22,7 +22,7 @@ msgid "Version"
 msgstr ""
 
 #: AboutDialog.h:54 AboutDialog_symbols.h:22
-msgid "About OpenNX"
+msgid "About RX Client"
 msgstr ""
 
 #: AboutDialog_symbols.h:23 ProxyPasswordDialog_symbols.h:25
@@ -36,7 +36,7 @@ msgid "&OK"
 msgstr ""
 
 #: CardWaiterDialog.h:52 CardWaiterDialog_symbols.h:22
-msgid "Insert card - OpenNX"
+msgid "Insert card - RX Client"
 msgstr ""
 
 #: CardWaiterDialog_symbols.h:23
@@ -56,7 +56,7 @@ msgid "&Cancel"
 msgstr ""
 
 #: ConnectDialog.h:52 ConnectDialog_symbols.h:22
-msgid "Connecting - OpenNX"
+msgid "Connecting - RX Client"
 msgstr ""
 
 #: ConnectDialog_symbols.h:23
@@ -76,7 +76,7 @@ msgid "SSh key files (*.key)|*.key|All files (*)|*"
 msgstr ""
 
 #: KeyDialog.h:54 KeyDialog_symbols.h:22
-msgid "Key Management - OpenNX"
+msgid "Key Management - RX Client"
 msgstr ""
 
 #: KeyDialog_symbols.h:23
@@ -92,7 +92,7 @@ msgid "&Save"
 msgstr ""
 
 #: LogDialog.h:52 LogDialog_symbols.h:22
-msgid "Session Log - OpenNX"
+msgid "Session Log - RX Client"
 msgstr ""
 
 #: LogDialog_symbols.h:23 TraceLogFrame_symbols.h:25
@@ -107,7 +107,7 @@ msgid ""
 msgstr ""
 
 #: LoginDialog.cpp:434 LoginDialog.cpp:560 MyWizard.cpp:1370
-msgid "Error saving - OpenNX"
+msgid "Error saving - RX Client"
 msgstr ""
 
 #: LoginDialog.cpp:495
@@ -127,11 +127,11 @@ msgid ""
 msgstr ""
 
 #: LoginDialog.cpp:501 MySession.cpp:797 MySession.cpp:809 MySession.cpp:823
-msgid "Warning - OpenNX"
+msgid "Warning - RX Client"
 msgstr ""
 
 #: LoginDialog.h:56 LoginDialog_symbols.h:22
-msgid "Login - OpenNX"
+msgid "Login - RX Client"
 msgstr ""
 
 #: LoginDialog_symbols.h:23 XdmPropertyDialog_symbols.h:23
@@ -556,7 +556,7 @@ msgid "There are no sessions which can be attached to."
 msgstr ""
 
 #: MySession.cpp:1302 MySession.cpp:1312
-msgid "Error - OpenNX"
+msgid "Error - RX Client"
 msgstr ""
 
 #: MySession.cpp:1311
@@ -669,12 +669,12 @@ msgid ""
 msgstr ""
 
 #: MyWizard_symbols.h:22
-msgid "Connection Wizard - OpenNX"
+msgid "Connection Wizard - RX Client"
 msgstr ""
 
 #: MyWizard_symbols.h:23
 msgid ""
-"Welcome to the OpenNX Client Connection Wizard which will guide you through "
+"Welcome to the RX Client Connection Wizard which will guide you through "
 "the steps needed to setup your login. Please select the 'Next' button to "
 "start."
 msgstr ""
@@ -727,7 +727,7 @@ msgstr ""
 
 #: MyWizard_symbols.h:35
 msgid ""
-"Using OpenNX Client, you can run RDP, VNC and X desktops, depending on what "
+"Using RX Client, you can run RDP, VNC and X desktops, depending on what "
 "your service provider has made available."
 msgstr ""
 
@@ -809,7 +809,7 @@ msgstr ""
 
 #: MyWizard_symbols.h:55
 msgid ""
-"OpenNX Client supports authentication using a variety of USB SmartCard "
+"RX Client supports authentication using a variety of USB SmartCard "
 "tokens. Enable this option if you intend to use such a token."
 msgstr ""
 
@@ -864,7 +864,7 @@ msgid "&Terminate"
 msgstr ""
 
 #: ProxyPasswordDialog.h:53 ProxyPasswordDialog_symbols.h:22
-msgid "HTTP proxy password - OpenNX"
+msgid "HTTP proxy password - RX Client"
 msgstr ""
 
 #: ProxyPasswordDialog_symbols.h:23
@@ -872,7 +872,7 @@ msgid "Please enter your HTTP proxy password"
 msgstr ""
 
 #: ProxyPropertyDialog.h:59 ProxyPropertyDialog_symbols.h:22
-msgid "Proxy settings - OpenNX"
+msgid "Proxy settings - RX Client"
 msgstr ""
 
 #: ProxyPropertyDialog_symbols.h:23
@@ -904,7 +904,7 @@ msgid "&Quit"
 msgstr ""
 
 #: RdpImageSettingsDialog.h:55 RdpImageSettingsDialog_symbols.h:22
-msgid "RDP Image Settings - OpenNX"
+msgid "RDP Image Settings - RX Client"
 msgstr ""
 
 #: RdpImageSettingsDialog_symbols.h:23
@@ -966,7 +966,7 @@ msgid "Enable RDP image cache"
 msgstr ""
 
 #: RdpPropertyDialog.h:57 RdpPropertyDialog_symbols.h:22
-msgid "RDP Session Settings - OpenNX"
+msgid "RDP Session Settings - RX Client"
 msgstr ""
 
 #: RdpPropertyDialog_symbols.h:24
@@ -1052,11 +1052,11 @@ msgid "Do you really want to terminate the selected session?"
 msgstr ""
 
 #: ResumeDialog.cpp:312
-msgid "Terminate session - OpenNX"
+msgid "Terminate session - RX Client"
 msgstr ""
 
 #: ResumeDialog.h:55 ResumeDialog_symbols.h:22
-msgid "Select session - OpenNX"
+msgid "Select session - RX Client"
 msgstr ""
 
 #: ResumeDialog_symbols.h:23
@@ -1094,11 +1094,11 @@ msgid "Status"
 msgstr ""
 
 #: SessionAdmin.cpp:288
-msgid "Full session statistics - OpenNX"
+msgid "Full session statistics - RX Client"
 msgstr ""
 
 #: SessionAdmin.cpp:289
-msgid "Partial session statistics - OpenNX"
+msgid "Partial session statistics - RX Client"
 msgstr ""
 
 #: SessionAdmin.cpp:372
@@ -1106,7 +1106,7 @@ msgid "Choose new NX session directory."
 msgstr ""
 
 #: SessionAdmin.h:57 SessionAdmin_symbols.h:22
-msgid "Session Administrator - OpenNX"
+msgid "Session Administrator - RX Client"
 msgstr ""
 
 #: SessionAdmin_symbols.h:23 TraceLogFrame_symbols.h:24
@@ -1162,7 +1162,7 @@ msgid "Help"
 msgstr ""
 
 #: SessionAdmin_symbols.h:37
-msgid "About OpenNX client..."
+msgid "About RX Client ..."
 msgstr ""
 
 #: SessionAdmin_symbols.h:38
@@ -1224,7 +1224,7 @@ msgid "Do you really want to delete all cache directories?"
 msgstr ""
 
 #: SessionProperties.cpp:1394
-msgid "Clean cache - OpenNX"
+msgid "Clean cache - RX Client"
 msgstr ""
 
 #: SessionProperties.cpp:1420
@@ -1273,7 +1273,7 @@ msgid "Select path of USBIPD socket"
 msgstr ""
 
 #: SessionProperties.h:65 SessionProperties_symbols.h:22
-msgid "Session properties - OpenNX"
+msgid "Session properties - RX Client"
 msgstr ""
 
 #: SessionProperties_symbols.h:23
@@ -1521,7 +1521,7 @@ msgid "Enable smart card sharing"
 msgstr ""
 
 #: ShareProperties.cpp:259
-msgid "Modify shared resource - OpenNX"
+msgid "Modify shared resource - RX Client"
 msgstr ""
 
 #: ShareProperties.cpp:370
@@ -1549,7 +1549,7 @@ msgid "Invalid mountpoint"
 msgstr ""
 
 #: ShareProperties.h:61 ShareProperties_symbols.h:22
-msgid "New shared resource - OpenNX"
+msgid "New shared resource - RX Client"
 msgstr ""
 
 #: ShareProperties_symbols.h:23
@@ -1669,7 +1669,7 @@ msgid "File couldn't be loaded."
 msgstr ""
 
 #: TextViewer.h:55 TextViewer_symbols.h:22
-msgid "Text Viewer - OpenNX"
+msgid "Text Viewer - RX Client"
 msgstr ""
 
 #: TextViewer_symbols.h:23
@@ -1709,7 +1709,7 @@ msgid "&Exit"
 msgstr ""
 
 #: UnixImageSettingsDialog.h:55 UnixImageSettingsDialog_symbols.h:22
-msgid "Unix Image Settings - OpenNX"
+msgid "Unix Image Settings - RX Client"
 msgstr ""
 
 #: UnixImageSettingsDialog_symbols.h:29
@@ -1737,11 +1737,11 @@ msgid "Disable shared pixmap emulation"
 msgstr ""
 
 #: UsbFilterDetailsDialog.cpp:209
-msgid "New USB device - OpenNX"
+msgid "New USB device - RX Client"
 msgstr ""
 
 #: UsbFilterDetailsDialog.h:58 UsbFilterDetailsDialog_symbols.h:22
-msgid "USB Filter Details - OpenNX"
+msgid "USB Filter Details - RX Client"
 msgstr ""
 
 #: UsbFilterDetailsDialog_symbols.h:23
@@ -1814,11 +1814,11 @@ msgid "Invalid regular expression %s %d"
 msgstr ""
 
 #: VncImageSettingsDialog.h:55 VncImageSettingsDialog_symbols.h:22
-msgid "VNC Image Settings - OpenNX"
+msgid "VNC Image Settings - RX Client"
 msgstr ""
 
 #: VncPropertyDialog.h:56 VncPropertyDialog_symbols.h:22
-msgid "VNC Session Settings - OpenNX"
+msgid "VNC Session Settings - RX Client"
 msgstr ""
 
 #: VncPropertyDialog_symbols.h:24
@@ -1838,7 +1838,7 @@ msgid ""
 msgstr ""
 
 #: X11PropertyDialog.h:55 X11PropertyDialog_symbols.h:22
-msgid "X11 Session Settings - OpenNX"
+msgid "X11 Session Settings - RX Client"
 msgstr ""
 
 #: X11PropertyDialog_symbols.h:23
@@ -1874,7 +1874,7 @@ msgid "Disable taint of X replies"
 msgstr ""
 
 #: XdmPropertyDialog.h:56 XdmPropertyDialog_symbols.h:22
-msgid "XDM Session Settings - OpenNX"
+msgid "XDM Session Settings - RX Client"
 msgstr ""
 
 #: XdmPropertyDialog_symbols.h:24
@@ -2018,7 +2018,7 @@ msgstr ""
 
 #: opennxApp.cpp:925 watchReaderApp.cpp:269
 msgid ""
-"OpenNX session has been suspended, because\n"
+"RX Client session has been suspended, because\n"
 "the authenticating smart card has been removed."
 msgstr ""
 
@@ -2048,7 +2048,7 @@ msgid "E&xit"
 msgstr ""
 
 #: tracelogApp.cpp:249
-msgid "OpenNX"
+msgid "RX Client"
 msgstr ""
 
 #: watchReaderApp.cpp:127

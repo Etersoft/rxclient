@@ -19,7 +19,7 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_DIALOG_PROPERTIES_SYMBOL_0 _("Session properties - OpenNX")
+#define ID_DIALOG_PROPERTIES_SYMBOL_0 _("Session properties - RX Client")
 #define ID_DIALOG_PROPERTIES_SYMBOL_1 _("General")
 #define ID_DIALOG_PROPERTIES_SYMBOL_2 _("Server")
 #define ID_DIALOG_PROPERTIES_SYMBOL_3 _("Host")

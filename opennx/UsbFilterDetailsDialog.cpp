@@ -206,7 +206,7 @@ void UsbFilterDetailsDialog::SetDialogMode(eDialogMode mode)
                 m_pCtrlHotplug->Show();
             if (m_pCtrlDevSelect)
                 m_pCtrlDevSelect->Hide();
-            SetTitle(_("New USB device - OpenNX"));
+            SetTitle(_("New USB device - RX Client"));
             break;
     }
     Fit();

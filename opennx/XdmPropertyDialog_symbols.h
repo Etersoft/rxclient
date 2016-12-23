@@ -19,7 +19,7 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_XDMPROPERTYDIALOG_SYMBOL_0 _("XDM Session Settings - OpenNX")
+#define ID_XDMPROPERTYDIALOG_SYMBOL_0 _("XDM Session Settings - RX Client")
 #define ID_XDMPROPERTYDIALOG_SYMBOL_1 _("Login")
 #define ID_XDMPROPERTYDIALOG_SYMBOL_2 _("Let the NX server decide")
 #define ID_XDMPROPERTYDIALOG_SYMBOL_3 _("Query a remote X desktop manager")

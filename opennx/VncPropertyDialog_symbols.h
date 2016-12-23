@@ -19,7 +19,7 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_DIALOG_SETTINGS_VNC_SYMBOL_0 _("VNC Session Settings - OpenNX")
+#define ID_DIALOG_SETTINGS_VNC_SYMBOL_0 _("VNC Session Settings - RX Client")
 #define ID_DIALOG_SETTINGS_VNC_SYMBOL_1 _("Server")
 #define ID_DIALOG_SETTINGS_VNC_SYMBOL_2 _("Please specify the name and the display number of the\nremote VNC computer connected to the NX server")
 #define ID_DIALOG_SETTINGS_VNC_SYMBOL_3 _("Host")

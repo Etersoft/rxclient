@@ -165,7 +165,7 @@ class pawrapper {
             m_bConnected = false;
             m_pLoop = Ppa_threaded_mainloop_new();
             m_pApi = Ppa_threaded_mainloop_get_api(m_pLoop);
-            m_pContext = Ppa_context_new(m_pApi, "OpenNX");
+            m_pContext = Ppa_context_new(m_pApi, "RX Client");
             Ppa_context_set_state_callback(m_pContext, context_state_callback_if, this);
             int retry = 3;
             do {

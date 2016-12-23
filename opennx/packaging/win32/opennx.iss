@@ -3,7 +3,7 @@
 ;
 #undef DEBUG
 
-#define APPNAME "OpenNX"
+#define APPNAME "RX Client"
 ; Automatically get version from executable resp. dll
 #define APPEXE "setupdir\bin\opennx.exe"
 #include "version.iss"
@@ -58,17 +58,17 @@ Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"
 [CustomMessages]
 dticon=Create a &desktop icon
 dticon_group=Additional icons:
-cwizard=OpenNX Connection Wizard
-sadmin=OpenNX Session Administrator
-uninst_opennx=Uninstall OpenNX
+cwizard=RX Client Connection Wizard
+sadmin=RX Client Session Administrator
+uninst_opennx=Uninstall RX Client
 fwadd=Adding firewall rules
 doc_pconnect=Pconnect Manual
 
 de.dticon=Desktop-Verknüpfung &anlegen
 de.dticon_group=Zusätzliche Verknüpfungen:
-de.cwizard=OpenNX Verbindungs-Assistent
-de.sadmin=OpenNX Sitzungsverwaltung
-de.uninst_opennx=Deinstalliere OpenNX
+de.cwizard=RX Client Verbindungs-Assistent
+de.sadmin=RX Client Sitzungsverwaltung
+de.uninst_opennx=Deinstalliere RX Client
 de.fwadd=Erstelle Firewall-Regeln
 de.doc_pconnect=Pconnect Handbuch
 
@@ -82,12 +82,12 @@ Source: setupdir\bin\opennx.exe; DestDir: {app}; DestName: nxclient.exe; Flags: 
 #endif
 
 [Icons]
-Name: "{group}\OpenNX"; Filename: "{app}\bin\opennx.exe";
+Name: "{group}\RX Client"; Filename: "{app}\bin\opennx.exe";
 Name: "{group}\{cm:cwizard}"; Filename: "{app}\bin\opennx.exe"; Parameters: "--wizard"; IconFilename: "{app}\bin\opennx.exe"; IconIndex: 2;
 Name: "{group}\{cm:sadmin}"; Filename: "{app}\bin\opennx.exe"; Parameters: "--admin"; IconFilename: "{app}\bin\opennx.exe"; IconIndex: 3
 Name: "{group}\{cm:doc_pconnect}"; Filename: "{app}\share\pconnect.html";
 Name: "{group}\{cm:uninst_opennx}"; Filename: "{uninstallexe}";
-Name: "{commondesktop}\OpenNX"; Filename: "{app}\bin\opennx.exe"; Tasks: "desktopicon";
+Name: "{commondesktop}\RX Client"; Filename: "{app}\bin\opennx.exe"; Tasks: "desktopicon";
 
 [Registry]
 ; Delete original NXClient file global associations
@@ -109,22 +109,22 @@ Root: HKCU; Subkey: "Software\Classes\OpenNX.session\shell\open\command"; ValueT
 [Run]
 ; Allow nxssh, nxesd, pulseaudio, Xming and NXWin in Windows firewall
 #if FileExists("setupdir\bin\nxssh.exe")
-Filename: "{sys}\netsh.exe"; Parameters: "firewall add allowedprogram ""{app}\bin\nxssh.exe"" ""OpenNX nxssh"" ENABLE"; StatusMsg: {cm:fwadd}; Flags: runhidden skipifdoesntexist
+Filename: "{sys}\netsh.exe"; Parameters: "firewall add allowedprogram ""{app}\bin\nxssh.exe"" ""RX Client nxssh"" ENABLE"; StatusMsg: {cm:fwadd}; Flags: runhidden skipifdoesntexist
 #endif
 #if FileExists("setupdir\bin\nxesd.exe")
-Filename: "{sys}\netsh.exe"; Parameters: "firewall add allowedprogram ""{app}\bin\nxesd.exe"" ""OpenNX nxesd"" ENABLE"; StatusMsg: {cm:fwadd}; Flags: runhidden skipifdoesntexist
+Filename: "{sys}\netsh.exe"; Parameters: "firewall add allowedprogram ""{app}\bin\nxesd.exe"" ""RX Client nxesd"" ENABLE"; StatusMsg: {cm:fwadd}; Flags: runhidden skipifdoesntexist
 #endif
 #if FileExists("setupdir\bin\tracelog.exe")
-Filename: "{sys}\netsh.exe"; Parameters: "firewall add allowedprogram ""{app}\bin\tracelog.exe"" ""OpenNX tracelog"" ENABLE"; StatusMsg: {cm:fwadd}; Flags: runhidden skipifdoesntexist
+Filename: "{sys}\netsh.exe"; Parameters: "firewall add allowedprogram ""{app}\bin\tracelog.exe"" ""RX Client tracelog"" ENABLE"; StatusMsg: {cm:fwadd}; Flags: runhidden skipifdoesntexist
 #endif
 #if FileExists("setupdir\bin\pulseaudio.exe")
-Filename: "{sys}\netsh.exe"; Parameters: "firewall add allowedprogram ""{app}\bin\pulseaudio.exe"" ""OpenNX pulseaudio"" ENABLE"; StatusMsg: {cm:fwadd}; Flags: runhidden skipifdoesntexist
+Filename: "{sys}\netsh.exe"; Parameters: "firewall add allowedprogram ""{app}\bin\pulseaudio.exe"" ""RX Client pulseaudio"" ENABLE"; StatusMsg: {cm:fwadd}; Flags: runhidden skipifdoesntexist
 #endif
 #if FileExists("setupdir\bin\Xming.exe")
-Filename: "{sys}\netsh.exe"; Parameters: "firewall add allowedprogram ""{app}\bin\Xming.exe"" ""OpenNX Xming"" ENABLE"; StatusMsg: {cm:fwadd}; Flags: runhidden skipifdoesntexist
+Filename: "{sys}\netsh.exe"; Parameters: "firewall add allowedprogram ""{app}\bin\Xming.exe"" ""RX Client Xming"" ENABLE"; StatusMsg: {cm:fwadd}; Flags: runhidden skipifdoesntexist
 #endif
 #if FileExists("setupdir\bin\NXWin.exe")
-Filename: "{sys}\netsh.exe"; Parameters: "firewall add allowedprogram ""{app}\bin\NXWin.exe"" ""OpenNX NXWin"" ENABLE"; StatusMsg: {cm:fwadd}; Flags: runhidden skipifdoesntexist
+Filename: "{sys}\netsh.exe"; Parameters: "firewall add allowedprogram ""{app}\bin\NXWin.exe"" ""RX Client NXWin"" ENABLE"; StatusMsg: {cm:fwadd}; Flags: runhidden skipifdoesntexist
 #endif
 
 [UninstallRun]

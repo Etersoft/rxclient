@@ -52,7 +52,7 @@ class wxListCtrl;
 ////@begin control identifiers
 #define ID_RESUMEDIALOG 10050
 #define SYMBOL_RESUMEDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_RESUMEDIALOG_TITLE _("Select session - OpenNX")
+#define SYMBOL_RESUMEDIALOG_TITLE _("Select session - RX Client")
 #define SYMBOL_RESUMEDIALOG_IDNAME ID_RESUMEDIALOG
 #define SYMBOL_RESUMEDIALOG_SIZE wxSize(400, 300)
 #define SYMBOL_RESUMEDIALOG_POSITION wxDefaultPosition

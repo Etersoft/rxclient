@@ -1395,7 +1395,7 @@ void SessionProperties::OnButtonCachecleanClick( wxCommandEvent& event )
 {
     wxUnusedVar(event);
     wxMessageDialog d(this, _("Do you really want to delete all cache directories?"),
-            _("Clean cache - OpenNX"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION);
+            _("Clean cache - RX Client"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION);
     if (d.ShowModal() == wxID_YES) {
         wxString userDir;
         if (wxConfigBase::Get()->Read(wxT("Config/UserNxDir"), &userDir)) {

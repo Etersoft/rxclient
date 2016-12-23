@@ -19,7 +19,7 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_RESUMEDIALOG_SYMBOL_0 _("Select session - OpenNX")
+#define ID_RESUMEDIALOG_SYMBOL_0 _("Select session - RX Client")
 #define ID_RESUMEDIALOG_SYMBOL_1 _("There are multiple sessions available, please select one or click New to create a session.")
 #define ID_RESUMEDIALOG_SYMBOL_2 _("Refresh")
 #define ID_RESUMEDIALOG_SYMBOL_3 _("Ter&minate")
