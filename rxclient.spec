@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.17
-Release: alt1
+Release: alt2
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -31,6 +31,9 @@ BuildRequires: libwxGTK3.1-devel
 BuildRequires: nx
 
 #Requires: nxssh
+
+Provides: opennx = %version
+Obsoletes: opennx
 
 # dynamic loading
 Requires: libcups libsmbclient
@@ -62,6 +65,7 @@ install -D -m0755 bin/nxssh.sh %buildroot%_bindir/nxssh.sh
 #rm -f %buildroot%_bindir/pconnect %buildroot%_datadir/pconnect.html
 
 rm -f %buildroot%_desktopdir/*.directory
+install -D -m0644 docs/pconnect.1 %buildroot%_man1dir/pconnect.1
 
 %if_with usbip
 install -d -m 755 %buildroot%_sysconfdir/udev/rules.d
@@ -80,6 +84,7 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %_bindir/nxssh.sh
 %_bindir/pconnect
 %_bindir/watchreader
+%_man1dir/pconnect.*
 %_datadir/%name
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/16x16/apps/*.png
@@ -96,6 +101,14 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 %changelog
+* Fri Dec 23 2016 Vitaly Lipatov <lav@altlinux.ru> 0.17-alt2
+- update license files, localize about dialog
+- add 64x64 icons and fix packing
+- do not warning about CUPS
+- cleanup install dir
+- rename desktop files
+- replace opennx logo with rxclient logo
+
 * Fri Dec 23 2016 Vitaly Lipatov <lav@altlinux.ru> 0.17-alt1
 - initial build RX Client 0.17 for RX@Etersoft Terminal Server 1.1.4
 - update russian translation
