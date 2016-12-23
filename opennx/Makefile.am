@@ -240,7 +240,7 @@ install-data-local:
 	$(MAKE) -C po stamp-po install-data-yes
 	$(INSTALL) -d $(DESTDIR)$(datadir)/icons/hicolor
 	cd $(top_srcdir)/extres && \
-		for d in 16x16 32x32 48x48 128x128 256x256 512x512 scalable ; do \
+		for d in 16x16 32x32 48x48 64x64 128x128 256x256 512x512 scalable ; do \
 			$(INSTALL) -d $(DESTDIR)$(datadir)/icons/hicolor/$$d ; \
 			( \
 				cd $$d && \
