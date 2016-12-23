@@ -71,6 +71,7 @@
 #include "opennxApp.h"
 #include "osdep.h"
 #include "PulseAudio.h"
+#include "FakeModule.h"
 
 ////@begin XPM images
 ////@end XPM images
@@ -226,6 +227,8 @@ BEGIN_EVENT_TABLE( SessionProperties, wxDialog )
 
     EVT_CHECKBOX( XRCID("ID_CHECKBOX_MMEDIA"), SessionProperties::OnCheckboxMmediaClick )
 
+    EVT_CHECKBOX( XRCID("ID_CHECKBOX_SHRSMARDCARD"), SessionProperties::OnCheckboxShrsmartcardClick )
+
     EVT_CHECKBOX( XRCID("ID_CHECKBOX_USBENABLE"), SessionProperties::OnCHECKBOXUSBENABLEClick )
 
     EVT_LIST_ITEM_SELECTED( XRCID("ID_LISTCTRL_USBFILTER"), SessionProperties::OnListctrlUsbfilterSelected )
@@ -380,6 +383,7 @@ SessionProperties::CheckChanged()
         // variables on 'Services' tab
         m_pCfg->bSetEnableSmbSharing(m_bEnableSmbSharing);
         m_pCfg->bSetEnableMultimedia(m_bEnableMultimedia);
+        m_pCfg->bSetEnableSharedSmartCard(m_bEnableSharedSmartCard);
         m_pCfg->bSetUseCups(m_bUseCups);
         m_pCfg->iSetCupsPort(m_iCupsPort);
         m_pCfg->iSetSmbPort(m_iSmbPort);
@@ -537,6 +541,7 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
             m_pCfg->bSetEnableMultimedia(false);
         }
 #endif
+        m_bEnableSharedSmartCard = m_pCfg->bGetEnableSharedSmartCard();
 #ifdef __UNIX__
         m_bUseCups = m_pCfg->bGetUseCups();
 #else
@@ -599,6 +604,9 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
     removePage(_("USB"));
     m_pCtrlUsbipdDaemon->Hide();
 #endif
+
+    //Hide shared smart card flag if bash module not exists
+    FindWindow(XRCID("ID_CHECKBOX_SHRSMARDCARD"))->Show(FakeModule::instance().exists());
 
     // Populate keyboard layout combobox
     size_t idx1 = (size_t)-1;
@@ -1086,6 +1094,8 @@ void SessionProperties::CreateControls()
         FindWindow(XRCID("ID_SPINCTRL_CUPSPORT"))->SetValidator( MyValidator(MyValidator::MYVAL_NUMERIC, & m_iCupsPort) );
     if (FindWindow(XRCID("ID_CHECKBOX_MMEDIA")))
         FindWindow(XRCID("ID_CHECKBOX_MMEDIA"))->SetValidator( wxGenericValidator(& m_bEnableMultimedia) );
+    if (FindWindow(XRCID("ID_CHECKBOX_SHRSMARDCARD")))
+        FindWindow(XRCID("ID_CHECKBOX_SHRSMARDCARD"))->SetValidator( wxGenericValidator(& m_bEnableSharedSmartCard) );
     if (FindWindow(XRCID("ID_CHECKBOX_USBENABLE")))
         FindWindow(XRCID("ID_CHECKBOX_USBENABLE"))->SetValidator( wxGenericValidator(& m_bEnableUSBIP) );
 //    if (FindWindow(XRCID("ID_TEXTCTRL_USERDIR")))
@@ -1897,6 +1907,17 @@ void SessionProperties::OnButtonKeymanageClick( wxCommandEvent& event )
  */
 
 void SessionProperties::OnCheckboxMmediaClick( wxCommandEvent& event )
+{
+    wxUnusedVar(event);
+    UpdateDialogConstraints(true);
+    CheckChanged();
+}
+
+/*!
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SHRSMARDCARD
+ */
+
+void SessionProperties::OnCheckboxShrsmartcardClick( wxCommandEvent& event )
 {
     wxUnusedVar(event);
     UpdateDialogConstraints(true);

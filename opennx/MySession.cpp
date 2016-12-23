@@ -53,6 +53,7 @@
 #include "Icon.h"
 #include "SupressibleMessageDialog.h"
 #include "PulseAudio.h"
+#include "FakeModule.h"
 
 #include <wx/filename.h>
 #include <wx/regex.h>
@@ -881,7 +882,19 @@ MySession::OnSshEvent(wxCommandEvent &event)
                     break;
                 case STATE_AUTHMODE:
                     printSsh(wxT("SET AUTH_MODE PASSWORD"));
-                    m_eConnectState = STATE_LOGIN;
+                    m_eConnectState = STATE_SSH_SHARED_SETTING;
+                    break;
+                case STATE_SSH_SHARED_SETTING:
+                    {
+                        wxString pssh = wxT("sshsharing");
+                        if(m_pCfg->bGetEnableSharedSmartCard() && FakeModule::instance().exists()) {
+                            pssh << wxT(" --pcscd=\"1\"");
+                        } else {
+                            pssh << wxT(" --pcscd=\"0\"");
+                        }
+                        printSsh(pssh);
+                        m_eConnectState = STATE_LOGIN;
+                    }
                     break;
                 case STATE_LOGIN:
                     printSsh(wxT("login"));
@@ -2082,12 +2095,20 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 
         wxFileName fn(m_sSysDir, wxEmptyString);
         fn.AppendDir(wxT("bin"));
+
+        wxString appendcmd = wxEmptyString;
 #ifdef __WXMSW__
         fn.SetName(wxT("nxssh.exe"));
 #else
+        if (m_pCfg->bGetEnableSharedSmartCard() && FakeModule::instance().exists()) {
+            fn.SetName(FakeModule::fileName);
+            appendcmd << " pcsc " << m_pCfg->sGetUsername();
+        } else {
         fn.SetName(wxT("nxssh"));
+        }
 #endif
         wxString nxsshcmd = fn.GetShortPath();
+        nxsshcmd << appendcmd;
         nxsshcmd << wxT(" -nx -x -2")
             << wxT(" -p ") << m_pCfg->iGetServerPort()
             << wxT(" -o 'RhostsAuthentication no'")
@@ -2180,6 +2201,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 
         if (m_pCfg->bGetEnableSSL())
             nxsshcmd << wxT(" -B");
+
         nxsshcmd << wxT(" -E") << wxT(" nx@") << m_pCfg->sGetServerHost();
         m_sHost = m_pCfg->sGetServerHost();
 
