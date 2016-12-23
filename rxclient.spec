@@ -54,6 +54,10 @@ RX Client is a NX 3.5 compatible client based on OpenNX code.
 
 %install
 %makeinstall_std
+
+# install workaround for eterbug #11493
+install -D -m0755 bin/nxssh.sh %buildroot%_bindir/nxssh.sh
+
 # socks support
 #rm -f %buildroot%_bindir/pconnect %buildroot%_datadir/pconnect.html
 
@@ -73,6 +77,7 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 
 %files -f %name.lang
 %_bindir/%name
+%_bindir/nxssh.sh
 %_bindir/pconnect
 %_bindir/watchreader
 %_datadir/%name

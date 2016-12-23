@@ -2105,7 +2105,11 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
             fn.SetName(FakeModule::fileName);
             appendcmd << " pcsc " << m_pCfg->sGetUsername();
         } else {
+#if wxCHECK_VERSION(3,0,0)
         fn.SetName(wxT("nxssh"));
+#else
+        fn.SetName(wxT("nxssh.sh"));
+#endif
         }
 #endif
         wxString nxsshcmd = fn.GetShortPath();
