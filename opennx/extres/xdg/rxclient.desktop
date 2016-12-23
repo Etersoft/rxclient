@@ -1,0 +1,16 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=Application
+Exec=rxclient
+Icon=rxclient
+Comment=Connect to a remote RX@Etersoft server
+Comment[de]=Mit einem RX@Etersoft Server verbinden
+Comment[ru]=Подключение к удаленному серверу RX@Etersfot
+Name=RX@Etersoft client
+Name[de]=RX@Etersoft client
+Name[ru]=Клиент RX@Etersoft
+GenericName=RX Client
+GenericName[de]=RX Client
+GenericName[ru]=RX Client
+Categories=Network;RemoteAccess;
