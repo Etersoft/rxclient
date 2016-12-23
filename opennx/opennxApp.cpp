@@ -306,14 +306,14 @@ opennxApp::CreateDesktopEntry(MyXmlConfig *cfg)
     dtEntry += wxT("StartupNotify=true\n");
     dtEntry += wxT("Terminal=false\n");
     dtEntry += wxT("TerminalOptions=\n");
-    dtEntry += wxT("Comment=Launch NX Session\n");
-    dtEntry += wxT("Comment[de]=Starte NX Sitzung\n");
+    dtEntry += wxT("Comment=Launch RX Session\n");
+    dtEntry += wxT("Comment[de]=Starte RX Sitzung\n");
     dtEntry += wxT("Name=") + cfg->sGetName() + wxT("\n");
-    dtEntry += wxT("GenericName=NX Client\n");
-    dtEntry += wxT("GenericName[de]=NX Client\n");
+    dtEntry += wxT("GenericName=RX Client\n");
+    dtEntry += wxT("GenericName[de]=RX Client\n");
     dtEntry += wxT("Exec=\"") + GetSelfPath() + wxT("\" --session=\"")
         + cfg->sGetFileName() + wxT("\"\n");
-    dtEntry += wxT("Icon=nx-desktop\n");
+    dtEntry += wxT("Icon=rx-desktop\n");
 
     const wxChar **p = desktopDirs;
     while (*p) {
