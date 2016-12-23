@@ -1870,7 +1870,8 @@ MySession::prepareCups()
     }
 
     tmp = m_sSysDir;
-    tmp << wxFileName::GetPathSeparator() << wxT("share")
+    tmp << wxFileName::GetPathSeparator() << wxT("rxclient")
+        << wxFileName::GetPathSeparator() << wxT("share")
         << wxFileName::GetPathSeparator() << wxT("cups")
         << wxFileName::GetPathSeparator();
     wxCopyFile(tmp + wxT("mime.convs"), sCupsDir + wxT("mime.convs"));
@@ -2157,6 +2158,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
             if (m_pCfg->sGetSshKey().IsEmpty()) {
                 fn.Assign(m_sSysDir, wxT("server.id_dsa.key"));
                 fn.AppendDir(wxT("share"));
+                fn.AppendDir(wxT("rxclient"));
                 fn.AppendDir(wxT("keys"));
             } else {
                 fn.Assign(m_sTempDir, wxT("keylog"));

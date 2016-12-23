@@ -1246,6 +1246,7 @@ SessionProperties::readKbdLayouts()
     wxString kbdCfg;
     wxConfigBase::Get()->Read(wxT("Config/SystemNxDir"), &kbdCfg);
     kbdCfg << wxFileName::GetPathSeparator() << wxT("share")
+        << wxFileName::GetPathSeparator() << wxT("rxclient")
         << wxFileName::GetPathSeparator() << wxT("keyboards");
     wxFileInputStream fis(kbdCfg);
     if (!fis.IsOk()) {

@@ -32,6 +32,9 @@ BuildRequires: nx
 
 #Requires: nxssh
 
+# dynamic loading
+Requires: libcups libsmbclient
+
 %description
 RX Client is a NX 3.5 compatible client based on OpenNX code.
 
@@ -41,8 +44,6 @@ RX Client is a NX 3.5 compatible client based on OpenNX code.
 %build
 %autoreconf
 %configure \
-    --bindir=%_libdir/%name/bin \
-    --datadir=%_datadir/%name \
     --localedir=%_datadir/locale \
 %if_with usbip
     --enable-usbip \
@@ -53,39 +54,10 @@ RX Client is a NX 3.5 compatible client based on OpenNX code.
 
 %install
 %makeinstall_std
+# socks support
+#rm -f %buildroot%_bindir/pconnect %buildroot%_datadir/pconnect.html
 
-mkdir -p %buildroot{%_bindir,%_desktopdir}
-
-# FIXME: drop using these symlinks
-ln -s %_libdir/%name/bin/%name %buildroot%_bindir/%name
-ln -s %_datadir/%name %buildroot%_libdir/%name/share
-for f in nxesd nxssh nxservice nxproxy ; do
-    ln -s  %_bindir/$f %buildroot%_libdir/%name/bin/$f
-done
-
-mkdir -p %buildroot%_libdir/%name/%_lib
-
-for lib in libsmbclient.so libcups.so ; do
-    test -r %_libdir/$lib.? || exit
-    ln -s %_libdir/$lib.? %buildroot%_libdir/%name/%_lib/$lib
-done
-
-cp %buildroot%_datadir/%name/applnk/xdg/*.desktop %buildroot%_desktopdir
-rm -rf %buildroot%_datadir/%name/applnk
-rm -rf %buildroot%_datadir/%name/icons
-%__subst "s|/usr/NX/bin|%_bindir|g" %buildroot%_desktopdir/*
-
-install -d %buildroot{%_niconsdir,%_miconsdir,%_liconsdir}
-for f in nx opennx-admin opennx-wizard ; do
-    install -m 644 ./extres/16x16/apps/$f.png %buildroot%_miconsdir/$f.png
-    install -m 644 ./extres/32x32/apps/$f.png %buildroot%_niconsdir/$f.png
-    install -m 644 ./extres/48x48/apps/$f.png %buildroot%_liconsdir/$f.png
-done
-
-install -d %buildroot%_iconsdir/hicolor/{16x16,32x32,48x48}/mimetypes/
-install -m 644 ./extres/16x16/mimetypes/nx-desktop.png %buildroot%_iconsdir/hicolor/16x16/mimetypes/nx-desktop.png
-install -m 644 ./extres/32x32/mimetypes/nx-desktop.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/nx-desktop.png
-install -m 644 ./extres/48x48/mimetypes/nx-desktop.png %buildroot%_iconsdir/hicolor/48x48/mimetypes/nx-desktop.png
+rm -f %buildroot%_desktopdir/*.directory
 
 %if_with usbip
 install -d -m 755 %buildroot%_sysconfdir/udev/rules.d
@@ -101,13 +73,18 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 
 %files -f %name.lang
 %_bindir/%name
-%_libdir/%name
+%_bindir/pconnect
+%_bindir/watchreader
 %_datadir/%name
 %_desktopdir/*.desktop
 %_liconsdir/*.png
 %_niconsdir/*.png
 %_miconsdir/*.png
-%_iconsdir/hicolor/*/mimetypes/nx-desktop.png
+%_iconsdir/hicolor/128x128/apps/*.png
+%_iconsdir/hicolor/256x256/apps/*.png
+%_iconsdir/hicolor/512x512/apps/*.png
+%_iconsdir/hicolor/scalable/apps/*.svg
+%_iconsdir/hicolor/*/mimetypes/rx-desktop.*
 %if_with usbip
 %_sysconfdir/udev
 %endif
