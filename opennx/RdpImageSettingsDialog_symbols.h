@@ -19,7 +19,7 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_DIALOG_IMAGE_RDP_SYMBOL_0 _("RDP Image Settings - OpenNX")
+#define ID_DIALOG_IMAGE_RDP_SYMBOL_0 _("RDP Image Settings - RX Client")
 #define ID_DIALOG_IMAGE_RDP_SYMBOL_1 _("Allowed colors")
 #define ID_DIALOG_IMAGE_RDP_SYMBOL_2 _("256")
 #define ID_DIALOG_IMAGE_RDP_SYMBOL_3 _("32K")

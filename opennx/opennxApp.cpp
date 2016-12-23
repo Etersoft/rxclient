@@ -108,14 +108,14 @@ IMPLEMENT_APP(opennxApp);
     ,m_bNoGui(false)
     ,m_pLoginDialog(NULL)
 {
-    SetAppName(wxT("OpenNX"));
+    SetAppName(wxT("RX Client"));
 #ifdef __WXMSW__
-    m_pCfg = new wxConfig(wxT("OpenNX"), wxT("InnoviData"));
+    m_pCfg = new wxConfig(wxT("RX Client"), wxT("Etersoft"));
 #else
 # ifdef __WXMAC__
-    m_pCfg = new wxConfig(wxT("OpenNX"), wxT("InnoviData"), wxT("OpenNX Preferences"), wxT("OpenNX Preferences"));
+    m_pCfg = new wxConfig(wxT("RX Client"), wxT("Etersoft"), wxT("RX Client Preferences"), wxT("RX Client Preferences"));
 # else
-    m_pCfg = new wxConfig(wxT("OpenNX"), wxT("InnoviData"), wxT(".opennx"), wxT("opennx.conf"));
+    m_pCfg = new wxConfig(wxT("RX Client"), wxT("Etersoft"), wxT(".opennx"), wxT("opennx.conf"));
 # endif 
 #endif
     wxConfigBase::Set(m_pCfg);
@@ -542,7 +542,7 @@ opennxApp::preInit()
             if (!thissysdir.IsSameAs(cfgsysdir)) {
                 if (!m_bNoGui) {
                     wxString msg(wxString::Format(_("Your System NX directory setting (%s)\nappears to be incorrect.\nDo you want to change it to the correct default value\n(%s)?"), cfgsysdir.c_str(), thissysdir.c_str()));
-                    int response = wxMessageBox(msg, _("Update System NX directory? - OpenNX"), wxYES_NO|wxICON_QUESTION);
+                    int response = wxMessageBox(msg, _("Update System NX directory? - RX Client"), wxYES_NO|wxICON_QUESTION);
                     if (wxYES == response) {
                         wxConfigBase::Get()->Write(wxT("Config/SystemNxDir"), thissysdir);
                         wxConfigBase::Get()->Flush();
@@ -922,7 +922,7 @@ bool opennxApp::OnCmdLineParsed(wxCmdLineParser& parser)
         if (m_sDialogCaption.IsSameAs(wxT("CARDREMOVED")))
             m_sDialogCaption = _("Smart card removed");
         if (m_sDialogMessage.IsSameAs(wxT("CARDREMOVED")))
-            m_sDialogMessage = _("OpenNX session has been suspended, because\nthe authenticating smart card has been removed.");
+            m_sDialogMessage = _("RX Client session has been suspended, because\nthe authenticating smart card has been removed.");
 #endif
         (void)parser.Found(wxT("style"), &tmp);
         m_sDialogMessage.Replace(wxT("\\r\\n"), wxT("\n"));

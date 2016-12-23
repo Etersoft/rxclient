@@ -19,7 +19,7 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_FRAME_ADMIN_SYMBOL_0 _("Session Administrator - OpenNX")
+#define ID_FRAME_ADMIN_SYMBOL_0 _("Session Administrator - RX Client")
 #define ID_FRAME_ADMIN_SYMBOL_1 _("&File")
 #define ID_FRAME_ADMIN_SYMBOL_2 _("New NX Session...")
 #define ID_FRAME_ADMIN_SYMBOL_3 _("Change NX directory...")
@@ -34,5 +34,5 @@
 #define ID_FRAME_ADMIN_SYMBOL_12 _("Options")
 #define ID_FRAME_ADMIN_SYMBOL_13 _("Refresh session list")
 #define ID_FRAME_ADMIN_SYMBOL_14 _("Help")
-#define ID_FRAME_ADMIN_SYMBOL_15 _("About OpenNX client...")
+#define ID_FRAME_ADMIN_SYMBOL_15 _("About RX Client ...")
 #define ID_FRAME_ADMIN_SYMBOL_16 _("New NX session")

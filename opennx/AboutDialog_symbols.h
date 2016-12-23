@@ -19,5 +19,5 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_DIALOG_ABOUT_SYMBOL_0 _("About OpenNX")
+#define ID_DIALOG_ABOUT_SYMBOL_0 _("About RX Client")
 #define ID_DIALOG_ABOUT_SYMBOL_1 _("&OK")

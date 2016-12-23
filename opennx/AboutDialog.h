@@ -51,7 +51,7 @@ class extHtmlWindow;
 ////@begin control identifiers
 #define ID_DIALOG_ABOUT 10036
 #define SYMBOL_ABOUTDIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_ABOUTDIALOG_TITLE _("About OpenNX")
+#define SYMBOL_ABOUTDIALOG_TITLE _("About RX Client")
 #define SYMBOL_ABOUTDIALOG_IDNAME ID_DIALOG_ABOUT
 #define SYMBOL_ABOUTDIALOG_SIZE wxDefaultSize
 #define SYMBOL_ABOUTDIALOG_POSITION wxDefaultPosition

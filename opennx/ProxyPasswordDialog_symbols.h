@@ -19,7 +19,7 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_PROXYPASSWORDDIALOG_SYMBOL_0 _("HTTP proxy password - OpenNX")
+#define ID_PROXYPASSWORDDIALOG_SYMBOL_0 _("HTTP proxy password - RX Client")
 #define ID_PROXYPASSWORDDIALOG_SYMBOL_1 _("Please enter your HTTP proxy password")
 #define ID_PROXYPASSWORDDIALOG_SYMBOL_2 _("Password")
 #define ID_PROXYPASSWORDDIALOG_SYMBOL_3 _("&OK")

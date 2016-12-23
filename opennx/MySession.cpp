@@ -795,7 +795,7 @@ MySession::OnSshEvent(wxCommandEvent &event)
             {
                 wxString cfgid(wxT("sshwarn."));
                 SupressibleMessageDialog d(m_pParent, msg,
-                        _("Warning - OpenNX"), wxOK|wxICON_EXCLAMATION);
+                        _("Warning - RX Client"), wxOK|wxICON_EXCLAMATION);
                 d.ShowConditional(cfgid.Append(msg.Left(15)), wxID_OK);
             }
             break;
@@ -807,7 +807,7 @@ MySession::OnSshEvent(wxCommandEvent &event)
             {
                 wxString cfgid(wxT("sshyesno."));
                 SupressibleMessageDialog d(m_pParent, msg,
-                        _("Warning - OpenNX"), wxYES_NO|wxICON_EXCLAMATION);
+                        _("Warning - RX Client"), wxYES_NO|wxICON_EXCLAMATION);
                 if (d.ShowConditional(cfgid.Append(msg.Left(15)), wxID_YES) == wxID_YES)
                     printSsh(wxT("yes"));
                 else {
@@ -821,7 +821,7 @@ MySession::OnSshEvent(wxCommandEvent &event)
                 wxString cfgid(wxT("sshkeychanged."));
                 msg << _("\nDo you want to delete the key and retry ?");
                 SupressibleMessageDialog d(m_pParent, msg,
-                        _("Warning - OpenNX"), wxYES_NO|wxICON_EXCLAMATION);
+                        _("Warning - RX Client"), wxYES_NO|wxICON_EXCLAMATION);
                 if (d.ShowConditional(cfgid.Append(msg.Left(15)), wxID_YES) == wxID_YES)
                     m_bRemoveKey = true;
                 m_bGotError = true;
@@ -1312,7 +1312,7 @@ MySession::parseSessions(bool moreAllowed)
             printSsh(wxT("bye"), true, wxT("No sessions to attach, "));
             wxMessageDialog d(m_pParent,
                     _("There are no sessions which can be attached to."),
-                    _("Error - OpenNX"), wxOK);
+                    _("Error - RX Client"), wxOK);
             d.SetIcon(CreateIconFromFile(wxT("res/nx.png")));
             d.ShowModal();
         } else {
@@ -1322,7 +1322,7 @@ MySession::parseSessions(bool moreAllowed)
                 printSsh(wxT("bye"), true, wxT("No more sessions allowed, "));
                 wxMessageDialog d(m_pParent,
                         _("You have reached your session limit. No more sessions allowed"),
-                        _("Error - OpenNX"), wxOK);
+                        _("Error - RX Client"), wxOK);
                 d.SetIcon(CreateIconFromFile(wxT("res/nx.png")));
                 d.ShowModal();
                 m_bGotError = true;

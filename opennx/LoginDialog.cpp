@@ -431,7 +431,7 @@ void LoginDialog::OnButtonConfigureClick( wxCommandEvent& event )
                 m_pCtrlUseSmartCard->SetValue(m_bUseSmartCard);
                 if (!m_pCurrentCfg->SaveToFile())
                     wxMessageBox(wxString::Format(_("Could not save session to\n%s"),
-                                m_pCurrentCfg->sGetFileName().c_str()), _("Error saving - OpenNX"),
+                                m_pCurrentCfg->sGetFileName().c_str()), _("Error saving - RX Client"),
                             wxICON_ERROR | wxOK);
                 wxConfigBase::Get()->Write(wxT("Config/UserNxDir"), d.GetsUserNxDir());
                 wxConfigBase::Get()->Write(wxT("Config/SystemNxDir"), d.GetsSystemNxDir());
@@ -498,7 +498,7 @@ void LoginDialog::OnComboboxSessionSelected( wxCommandEvent& event )
         }
         wxString cfgid(wxT("oldcfg."));
         SupressibleMessageDialog d(this, wxString::Format(msg, m_pCurrentCfg->sGetName().c_str()),
-                _("Warning - OpenNX"), wxOK|wxICON_EXCLAMATION);
+                _("Warning - RX Client"), wxOK|wxICON_EXCLAMATION);
         d.ShowConditional(cfgid.Append(msg.Left(15)), wxID_OK);
     }
     if (!m_bGuestLogin)
@@ -557,7 +557,7 @@ void LoginDialog::OnOkClick(wxCommandEvent& event)
         if (m_pCurrentCfg->IsWritable()) {
             if (!m_pCurrentCfg->SaveToFile())
                 wxMessageBox(wxString::Format(_("Could not save session to\n%s"),
-                            m_pCurrentCfg->sGetFileName().c_str()), _("Error saving - OpenNX"),
+                            m_pCurrentCfg->sGetFileName().c_str()), _("Error saving - RX Client"),
                         wxICON_ERROR | wxOK);
 
         }

@@ -57,15 +57,15 @@ END_EVENT_TABLE()
 
 pulseTest::pulseTest()
 {
-    SetAppName(wxT("OpenNX"));
+    SetAppName(wxT("RX Client"));
     wxConfig *cfg;
 #ifdef __WXMSW__
-    cfg = new wxConfig(wxT("OpenNX"), wxT("InnoviData"));
+    cfg = new wxConfig(wxT("RX Client"), wxT("Etersoft"));
 #else
 # ifdef __WXMAC__
-    cfg = new wxConfig(wxT("OpenNX"), wxT("InnoviData"), wxT("OpenNX Preferences"), wxT("OpenNX Preferences"));
+    cfg = new wxConfig(wxT("RX Client"), wxT("Etersoft"), wxT("RX Client Preferences"), wxT("RX Client Preferences"));
 # else
-    cfg = new wxConfig(wxT("OpenNX"), wxT("InnoviData"), wxT(".opennx"), wxT("opennx.conf"));
+    cfg = new wxConfig(wxT("RX Client"), wxT("Etersoft"), wxT(".opennx"), wxT("opennx.conf"));
 # endif 
 #endif
     wxConfigBase::Set(cfg);

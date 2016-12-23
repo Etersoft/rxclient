@@ -54,7 +54,7 @@ class wxListCtrl;
 ////@begin control identifiers
 #define ID_FRAME_ADMIN 10103
 #define SYMBOL_SESSIONADMIN_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMINIMIZE_BOX|wxMAXIMIZE_BOX|wxCLOSE_BOX
-#define SYMBOL_SESSIONADMIN_TITLE _("Session Administrator - OpenNX")
+#define SYMBOL_SESSIONADMIN_TITLE _("Session Administrator - RX Client")
 #define SYMBOL_SESSIONADMIN_IDNAME ID_FRAME_ADMIN
 #define SYMBOL_SESSIONADMIN_SIZE wxDefaultSize
 #define SYMBOL_SESSIONADMIN_POSITION wxDefaultPosition

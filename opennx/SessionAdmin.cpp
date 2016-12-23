@@ -285,8 +285,8 @@ void SessionAdmin::ShowSessionStats(long item, bool full)
             if (ok) {
                 LogDialog d(NULL);
                 d.SetTitle(full ?
-                        _("Full session statistics - OpenNX") :
-                        _("Partial session statistics - OpenNX"));
+                        _("Full session statistics - RX Client") :
+                        _("Partial session statistics - RX Client"));
                 d.ReadLogFile(s->sGetDir() + wxFileName::GetPathSeparator() + wxT("stats"));
                 d.ShowModal();
             }

@@ -545,7 +545,7 @@ static void fatal(const char *fmt, ...) {
     FILE *p = popen("osascript", "w");
     fprintf(p, "display dialog \"");
     vfprintf(p, fmt, ap);
-    fprintf(p, "\" buttons {\"OK\"} default button \"OK\" with icon stop with title \"OpenNX Error\"\n");
+    fprintf(p, "\" buttons {\"OK\"} default button \"OK\" with icon stop with title \"RX Client Error\"\n");
     pclose(p);
     vfprintf(stderr, fmt, ap);
     va_end(ap);

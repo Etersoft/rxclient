@@ -19,7 +19,7 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_KEYDIALOG_SYMBOL_0 _("Key Management - OpenNX")
+#define ID_KEYDIALOG_SYMBOL_0 _("Key Management - RX Client")
 #define ID_KEYDIALOG_SYMBOL_1 _("&Import")
 #define ID_KEYDIALOG_SYMBOL_2 _("&Default")
 #define ID_KEYDIALOG_SYMBOL_3 _("&Save")

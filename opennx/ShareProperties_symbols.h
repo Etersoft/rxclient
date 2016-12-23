@@ -19,7 +19,7 @@
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-#define ID_DIALOG_SHARE_ADD_SYMBOL_0 _("New shared resource - OpenNX")
+#define ID_DIALOG_SHARE_ADD_SYMBOL_0 _("New shared resource - RX Client")
 #define ID_DIALOG_SHARE_ADD_SYMBOL_1 _("Please select the name of the shared resource on the\nlocal computer.")
 #define ID_DIALOG_SHARE_ADD_SYMBOL_2 _("Share")
 #define ID_DIALOG_SHARE_ADD_SYMBOL_3 _("SMB printer options")

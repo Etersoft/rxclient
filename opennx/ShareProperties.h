@@ -58,7 +58,7 @@ class SharedResource;
 ////@begin control identifiers
 #define ID_DIALOG_SHARE_ADD 10098
 #define SYMBOL_SHAREPROPERTIES_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_SHAREPROPERTIES_TITLE _("New shared resource - OpenNX")
+#define SYMBOL_SHAREPROPERTIES_TITLE _("New shared resource - RX Client")
 #define SYMBOL_SHAREPROPERTIES_IDNAME ID_DIALOG_SHARE_ADD
 #define SYMBOL_SHAREPROPERTIES_SIZE wxSize(114, 75)
 #define SYMBOL_SHAREPROPERTIES_POSITION wxDefaultPosition
