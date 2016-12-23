@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=Application
+Exec=opennx --admin
+Icon=rxclient-admin
+Comment=Manage RX@Etersoft sessions
+Comment[de]=Verwalte RX@Etersoft Sitzungen
+Comment[ru]=Управление сессиями RX@Etersoft
+Name=RX@Etersoft Session Administrator
+Name[de]=RX@Etersoft Sitzungs-Administrator
+Name[ru]=Администратор сессий RX@Etersoft
+Categories=Network;RemoteAccess;
