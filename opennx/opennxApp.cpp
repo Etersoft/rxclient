@@ -753,7 +753,11 @@ void opennxApp::checkNxSmartCardSupport()
 #ifdef __WXMSW__
     fn.SetName(wxT("nxssh.exe"));
 #else
-    fn.SetName(wxT("nxssh"));
+#if wxCHECK_VERSION(3,0,0)
+        fn.SetName(wxT("nxssh"));
+#else
+        fn.SetName(wxT("nxssh.sh"));        
+#endif
 #endif
     if (!fn.FileExists())
         return;
