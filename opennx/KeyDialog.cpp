@@ -225,6 +225,7 @@ void KeyDialog::OnDEFAULTClick( wxCommandEvent& event )
     wxString fn;
     wxConfigBase::Get()->Read(wxT("Config/SystemNxDir"), &fn);
     fn << wxFileName::GetPathSeparator() << wxT("share")
+       << wxFileName::GetPathSeparator() << wxT("rxclient")
        << wxFileName::GetPathSeparator() << wxT("keys")
        << wxFileName::GetPathSeparator() << wxT("server.id_dsa.key");
     m_pCtrlSshKey->LoadFile(fn);

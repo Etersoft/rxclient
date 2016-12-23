@@ -114,6 +114,7 @@ bool ProxyPropertyDialog::Create( wxWindow* parent, wxWindowID, const wxString&,
     wxConfigBase::Get()->Read(wxT("Config/SystemNxDir"), &d);
     wxFileName hfile(d, wxT("pconnect.html"));
     hfile.AppendDir(wxT("share"));
+    hfile.AppendDir(wxT("rxclient"));
     hfile.MakeAbsolute();
     m_pProxyCmdHelp->SetURL(hfile.GetFullPath().Prepend(wxT("file://")));
     return true;

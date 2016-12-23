@@ -227,43 +227,43 @@ DISTCLEANFILES = mingw32-config.cache res/*.prv.*
 
 man_MANS = docs/pconnect.1
 
-data_DATA = share/keyboards
+keyboardsdir = $(datadir)/$(PACKAGE)
+keyboards_DATA = share/keyboards
 
-keydir = $(datadir)/keys
+keydir = $(datadir)/$(PACKAGE)/keys
 key_DATA = $(top_srcdir)/share/keys/*
 
-cupsdir = $(datadir)/cups
+cupsdir = $(datadir)/$(PACKAGE)/cups
 cups_DATA = $(top_srcdir)/share/cups/*
 
 install-data-local:
 	$(MAKE) -C po stamp-po install-data-yes
-	$(INSTALL) -d $(DESTDIR)$(datadir)/icons
+	$(INSTALL) -d $(DESTDIR)$(datadir)/icons/hicolor
 	cd $(top_srcdir)/extres && \
 		for d in 16x16 32x32 48x48 128x128 256x256 512x512 scalable ; do \
-			$(INSTALL) -d $(DESTDIR)$(datadir)/icons/$$d ; \
+			$(INSTALL) -d $(DESTDIR)$(datadir)/icons/hicolor/$$d ; \
 			( \
 				cd $$d && \
 				for subd in * ; do \
-					$(INSTALL) -d $(DESTDIR)$(datadir)/icons/$$d/$$subd ; \
+					$(INSTALL) -d $(DESTDIR)$(datadir)/icons/hicolor/$$d/$$subd ; \
 					for f in $$subd/* ; do \
-						$(INSTALL_DATA) $$f $(DESTDIR)$(datadir)/icons/$$d/$$subd ; \
+						$(INSTALL_DATA) $$f $(DESTDIR)$(datadir)/icons/hicolor/$$d/$$subd ; \
 					done \
 				done \
 			) \
 		done
-	$(INSTALL) -d $(DESTDIR)$(datadir)/applnk/xdg
+	$(INSTALL) -d $(DESTDIR)$(datadir)/applications
 	cd $(top_srcdir)/extres/xdg && \
 	for d in * ; do \
-		$(INSTALL_DATA) $$d $(DESTDIR)$(datadir)/applnk/xdg ; \
+		$(INSTALL_DATA) $$d $(DESTDIR)$(datadir)/applications ; \
 	done
 
 uninstall-local:
 	cd $(top_srcdir)/extres/xdg && \
 	for d in * ; do \
-		$(RM) -r $(DESTDIR)$(datadir)/applnk/xdg/$$d ; \
+		$(RM) -r $(DESTDIR)$(datadir)/applications/$$d ; \
 	done
-	-rmdir $(DESTDIR)$(datadir)/applnk/xdg
-	-rmdir $(DESTDIR)$(datadir)/applnk
+	-rmdir $(DESTDIR)$(datadir)/applications
 	cd $(top_srcdir)/extres && \
 		for d in 16x16 32x32 48x48 128x128 256x256 512x512 scalable ; do \
 			( \
