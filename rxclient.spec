@@ -77,9 +77,10 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %_bindir/watchreader
 %_datadir/%name
 %_desktopdir/*.desktop
-%_liconsdir/*.png
-%_niconsdir/*.png
-%_miconsdir/*.png
+%_iconsdir/hicolor/16x16/apps/*.png
+%_iconsdir/hicolor/32x32/apps/*.png
+%_iconsdir/hicolor/48x48/apps/*.png
+%_iconsdir/hicolor/64x64/apps/*.png
 %_iconsdir/hicolor/128x128/apps/*.png
 %_iconsdir/hicolor/256x256/apps/*.png
 %_iconsdir/hicolor/512x512/apps/*.png
