@@ -329,5 +329,5 @@ packaging/win32/pulse/include/pulse/pulseaudio.h:
 EXTRA_DIST = conf/mkinstalldirs  conf/mkinstalldirs  conf/mkinstalldirs  conf/mkinstalldirs  conf/mkinstalldirs  conf/mkinstalldirs conf/config.rpath conf/authors.xml \
 	INSTALL INSTALL.generic COPYING share etc/60-opennx.rules \
 	opennx.pjd opennx.rc tracelog.rc watchreader.rc \
-	opennx.spec patches getnxsrcpkg $(RESDEPS) ChangeLog extres debian \
+	patches getnxsrcpkg $(RESDEPS) ChangeLog extres debian \
 	$(wildcard m4/*.m4) $(man_MANS)
