@@ -1,16 +1,16 @@
 # translation of ru.po to Russian
 # Shakirov Lenar <snejok@altlinux.org>, 2010.
-# translation of ru.po to
 # Boris Savelev <boris.savelev@gmail.com>
 # Djelf from linuxforum.ru
 # based on http://linuxforum.ru/index.php?showtopic=100412
+# Vitaly Lipatov <lav@etersoft.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: felfert@users.sf.net\n"
 "POT-Creation-Date: 2016-12-12 18:49+0300\n"
-"PO-Revision-Date: 2010-08-27 12:21+0400\n"
-"Last-Translator: Shakirov Lenar <snejok@altlinux.org>\n"
+"PO-Revision-Date: 2016-12-23 15:21+0300\n"
+"Last-Translator: Vitaly Lipatov <lav@etersoft.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -124,7 +124,7 @@ msgid ""
 "The session '%s' has been converted to the new format.\n"
 "Please verify the custom image compression settings."
 msgstr ""
-"Была обнаружен страый файл конфигурации сессии\n"
+"Была обнаружен старый файл конфигурации сессии\n"
 "Конфигурационный файл '%s' был преобразован к новому формату.\n"
 "Пожалуйста, проверьте настройки сжатия изображения"
 
@@ -135,7 +135,7 @@ msgid ""
 "The session '%s' has been converted but could not be saved.\n"
 "Please verify the custom image compression settings."
 msgstr ""
-"Была обнаружен страый файл конфигурации сессии\n"
+"Была обнаружен старый файл конфигурации сессии\n"
 "Конфигурационный файл '%s' был преобразован но не был сохранён.\n"
 "Пожалуйста, проверьте настройки сжатия изображения"
 
@@ -176,7 +176,7 @@ msgstr "Настройка..."
 
 #: LoginDialog_symbols.h:29
 msgid "L&ogin"
-msgstr "Подк2222"
+msgstr "Подключиться"
 
 #: LoginDialog_symbols.h:31
 msgid "&Wizard"
@@ -185,12 +185,12 @@ msgstr "Добавить"
 #: MacUninstallApp.cpp:60 MacUninstallApp.cpp:508
 #, c-format
 msgid "TEST: Would delete file: %s"
-msgstr "ТЕСТ: Будет удален файл %s"
+msgstr "ТЕСТ: Будет удалён файл %s"
 
 #: MacUninstallApp.cpp:63 MacUninstallApp.cpp:512
 #, c-format
 msgid "Deleted file: %s"
-msgstr "Удаленный файл: %s"
+msgstr "Удалённый файл: %s"
 
 #: MacUninstallApp.cpp:66 MacUninstallApp.cpp:515
 #, c-format
@@ -200,21 +200,21 @@ msgstr "Не удалось удалить файл %s"
 #: MacUninstallApp.cpp:74
 #, c-format
 msgid "TEST: Would delete diretory %s"
-msgstr "ТЕСТ: Будет удалена директория %s"
+msgstr "ТЕСТ: Будет удалён каталог %s"
 
 #: MacUninstallApp.cpp:77
 #, c-format
 msgid "Deleted diretory %s"
-msgstr "Удаленная директория: %s"
+msgstr "Удалённый каталог: %s"
 
 #: MacUninstallApp.cpp:80 MacUninstallApp.cpp:546 MacUninstallApp.cpp:565
 #, c-format
 msgid "Could not delete directory %s"
-msgstr "Не удалось удалить директорию %s"
+msgstr "Не удалось удалить каталог %s"
 
 #: MacUninstallApp.cpp:132
 msgid "Test mode. Just create log file reporting what would happen."
-msgstr "Тестовый режим. Просто создастся отчет о том, что произойдет."
+msgstr "Тестовый режим. Просто создастся отчёт о том, что произойдёт."
 
 #: MacUninstallApp.cpp:134
 msgid "Uninstall without asking the user (needs admin rights)."
@@ -493,7 +493,7 @@ msgstr "неизвестно"
 
 #: MySession.cpp:545
 msgid "terminated"
-msgstr "завершенная"
+msgstr "завершённая"
 
 #: MySession.cpp:548
 msgid "failed"
@@ -522,7 +522,7 @@ msgid ""
 "Do you want to delete the key and retry ?"
 msgstr ""
 "\n"
-"Удалить ключ и попробовать еще раз ? "
+"Удалить ключ и попробовать ещё раз? "
 
 #: MySession.cpp:841
 msgid "Sending username"
@@ -613,7 +613,7 @@ msgid ""
 "Could not create session directory\n"
 "%s\n"
 msgstr ""
-"Не удалось создать директорию для сессий\n"
+"Не удалось создать каталог для сессий\n"
 "%s\n"
 
 #: MySession.cpp:1715
@@ -622,7 +622,7 @@ msgid ""
 "Could not write session options\n"
 "%s\n"
 msgstr ""
-"Не удалось сохранить опции сессии в\n"
+"Не удалось сохранить параметры сессии в\n"
 "%s\n"
 
 #: MySession.cpp:1803 MySession.cpp:1817
@@ -770,7 +770,7 @@ msgid ""
 "your service provider has made available."
 msgstr ""
 "Использую OpenNX, вы можете использовать подключение по RDP, VNC и X, в "
-"зависимости от того, что вам предоставил провайдер услуги удаленного "
+"зависимости от того, что вам предоставил провайдер услуги удалённого "
 "доступа. "
 
 #: MyWizard_symbols.h:36 SessionProperties_symbols.h:31
@@ -807,7 +807,7 @@ msgstr "XFCE"
 
 #: MyWizard_symbols.h:44 SessionProperties_symbols.h:39
 msgid "XDMCP"
-msgstr ""
+msgstr "XDMCP"
 
 #: MyWizard_symbols.h:45 SessionProperties_symbols.h:40
 msgid "Custom"
@@ -819,7 +819,7 @@ msgstr "Настройка..."
 
 #: MyWizard_symbols.h:47
 msgid "Select the size of your remote desktop."
-msgstr "Выберите размер удаленного рабочего стола."
+msgstr "Выберите размер удалённого рабочего стола."
 
 #: MyWizard_symbols.h:48 SessionProperties_symbols.h:48
 msgid "640x480"
@@ -863,11 +863,11 @@ msgid ""
 "connection. For increased security, you can enable the following option."
 msgstr ""
 "Данные авторизации всегда передаются по зашифрованному каналу. Для "
-"увеличения безопасности, вы можете шифровать весь трафик, включив эту опцию."
+"увеличения безопасности, вы можете шифровать весь трафик, включив этот параметр."
 
 #: MyWizard_symbols.h:58 SessionProperties_symbols.h:62
 msgid "Enable SSL encryption of all traffic"
-msgstr "Шифровать весь трафик используя SSL"
+msgstr "Шифровать весь трафик, используя SSL"
 
 #: MyWizard_symbols.h:59
 msgid "Create shortcut on desktop"
@@ -896,7 +896,7 @@ msgstr "Окно приложения не найдено"
 #: MyXmlConfig.cpp:1263
 #, c-format
 msgid "Error %d while fetching session configuration"
-msgstr ""
+msgstr "Ошибка %d при получении настроек сессии"
 
 #: MyXmlConfig.cpp:1268
 #, c-format
@@ -904,6 +904,8 @@ msgid ""
 "Error while fetching session configuration:\n"
 "%s"
 msgstr ""
+"Ошибка при получении настроек сессии:\n"
+"%s"
 
 #: PanicDialog_symbols.h:22
 msgid "&Terminate"
@@ -923,7 +925,7 @@ msgstr "Настройки прокси"
 
 #: ProxyPropertyDialog_symbols.h:23
 msgid "Connect through internal (NoMachine) HTTP proxy"
-msgstr "Соединятся через внутренний (NoMachine) HTTP прокси"
+msgstr "Соединяться через внутренний (NoMachine) HTTP прокси"
 
 #: ProxyPropertyDialog_symbols.h:26 ResumeDialog.cpp:160
 msgid "User"
@@ -943,7 +945,7 @@ msgstr "Команда"
 
 #: ProxyPropertyDialog_symbols.h:31
 msgid "?"
-msgstr ""
+msgstr "?"
 
 #: QuitDialog_symbols.h:22
 msgid "&Quit"
@@ -1115,7 +1117,7 @@ msgstr ""
 
 #: ResumeDialog_symbols.h:24
 msgid "Refresh"
-msgstr ""
+msgstr "Обновить"
 
 #: ResumeDialog_symbols.h:25
 msgid "Ter&minate"
@@ -2024,7 +2026,7 @@ msgstr "Автоматически входить в указанную сесс
 
 #: opennxApp.cpp:821
 msgid "Automatically resume/takeover a session with the same name."
-msgstr ""
+msgstr "Автоматически возобновлять сессию с таким же названием."
 
 #: opennxApp.cpp:823
 msgid "Automatically destroy error dialogs at termination."
@@ -2036,7 +2038,7 @@ msgstr "Запустить утилиту администрирования с�
 
 #: opennxApp.cpp:827
 msgid "Specify alternate CA cert for fetching configuration via https."
-msgstr ""
+msgstr "Указать другой CA-сертификат для получения настроек по https."
 
 #: opennxApp.cpp:829
 msgid "Specify window title for dialog mode."
@@ -2122,7 +2124,7 @@ msgstr "Показать лог трассировки"
 
 #: tracelogApp.cpp:83
 msgid "Enable remote debug"
-msgstr ""
+msgstr "Включить удалённую отладку"
 
 #: tracelogApp.cpp:84
 msgid "E&xit"
@@ -2180,61 +2182,3 @@ msgstr "Не удалось сохранить конфигурацию сесс
 msgid "Could not export USB device"
 msgstr "Не удалось экспортировать USB устройство"
 
-#~ msgid "Could not terminate nxssh"
-#~ msgstr "Не удалось завершить nxssh"
-
-#~ msgid "Update System NX directory? - OpenNX"
-#~ msgstr "Системный каталог NX"
-
-#~ msgid "Use RDP image encoding"
-#~ msgstr "Использовать кодирование изображений RDP"
-
-#~ msgid "Use compressed RDP bitmaps"
-#~ msgstr "Использовать сжатые растры RDP"
-
-#~ msgid "Use RGB image encoding"
-#~ msgstr "Использовать сжатие изображений RGB"
-
-#~ msgid "Use RFB Hextile encoding"
-#~ msgstr "Использовать кодирование RFB Hextile"
-
-#~ msgid "Use RFB Tight encoding"
-#~ msgstr "Использовать кодирование RFB Tight"
-
-#~ msgid "Enable JPEG encoding"
-#~ msgstr "Включить кодирование JPEG"
-
-#, fuzzy
-#~ msgid "XDM Session Settings"
-#~ msgstr "Настройка RDP сессии - OpenNX"
-
-#, fuzzy
-#~ msgid "Query server-side capabilities"
-#~ msgstr "Запрос сессий"
-
-#~ msgid "Enable SMB printer and file sharing"
-#~ msgstr "Включить проброс SMB ресурсов"
-
-#~ msgid "Display"
-#~ msgstr "Дисплей"
-
-#~ msgid "Use default image encoding"
-#~ msgstr "Стандартные настройки"
-
-#~ msgid "Keyboard"
-#~ msgstr "Клавиатура"
-
-#~ msgid "Keep current keyboard settings"
-#~ msgstr "Использовать текущие настройки"
-
-#~ msgid "Font"
-#~ msgstr "Шрифт"
-
-#~ msgid "Select NX fonts"
-#~ msgstr "Шрифты NX"
-
-#~ msgid "Default"
-#~ msgstr "По умолчанию"
-
-#~ msgid "Fixed"
-#~ msgstr "Исправлено"
