@@ -26,6 +26,10 @@ msgstr ""
 msgid "Version"
 msgstr "Версия"
 
+#: AboutDialog.cpp:121 SessionProperties.cpp:1162
+msgid "res/about.html"
+msgstr "res/ru_about.html"
+
 #: AboutDialog.h:54 AboutDialog_symbols.h:22
 msgid "About RX Client"
 msgstr "О RX Client"
