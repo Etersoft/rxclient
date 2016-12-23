@@ -118,7 +118,7 @@ bool AboutDialog::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const wxStr
     version += wxT(" (RELEASE)");
 #endif
 
-    wxString content = wxGetApp().LoadFileFromResource(wxT("res/about.html"));
+    wxString content = wxGetApp().LoadFileFromResource(_("res/about.html"));
     content.Replace(wxT("<VERSION>"), version);
     content.Replace(wxT("<WXVERSION>"), wxVERSION_STRING);
     content.Replace(wxT("\"res:"), wxT("\"") + wxGetApp().GetResourcePrefix());
