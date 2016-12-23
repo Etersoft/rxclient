@@ -237,6 +237,7 @@ MyXmlConfig::init()
     m_bDisableXagent = false;
     m_bDisableZlibCompression = false;
     m_bEnableMultimedia = false;
+    m_bEnableSharedSmartCard = false;
     m_bEnableSmbSharing = false;
     m_bEnableSSL = true;
     m_bEnableUSBIP = false;
@@ -367,6 +368,7 @@ MyXmlConfig::operator =(const MyXmlConfig &other)
     m_bDisableXagent = other.m_bDisableXagent;
     m_bDisableZlibCompression = other.m_bDisableZlibCompression;
     m_bEnableMultimedia = other.m_bEnableMultimedia;
+    m_bEnableSharedSmartCard = other.m_bEnableSharedSmartCard;
     m_bEnableSmbSharing = other.m_bEnableSmbSharing;
     m_bEnableSSL = other.m_bEnableSSL;
     m_bEnableUSBIP = other.m_bEnableUSBIP;
@@ -904,6 +906,9 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
     if (m_bEnableMultimedia) {
         ret << wxT(" --mediahelper=\"esd\"");
     }
+    if (m_bEnableSharedSmartCard) {
+        ret << wxT(" --pcscd=\"1\"");
+    }
     // Original always uses those?!
     ret << wxT(" --strict=\"0\"");
     if (bNew) {
@@ -1063,6 +1068,7 @@ MyXmlConfig::operator ==(const MyXmlConfig &other)
     if (m_bDisableXagent != other.m_bDisableXagent) return false;
     if (m_bDisableZlibCompression != other.m_bDisableZlibCompression) return false;
     if (m_bEnableMultimedia != other.m_bEnableMultimedia) return false;
+    if (m_bEnableSharedSmartCard != other.m_bEnableSharedSmartCard) return false;
     if (m_bEnableSmbSharing != other.m_bEnableSmbSharing) return false;
     if (m_bEnableSSL != other.m_bEnableSSL) return false;
     if (m_bEnableUSBIP != other.m_bEnableUSBIP) return false;
@@ -1708,6 +1714,7 @@ MyXmlConfig::loadFromStream(wxInputStream &is, bool isPush)
                     wxXmlNode *opt = cfgnode->GetChildren();
                     while (opt) {
                         m_bEnableMultimedia = getBool(opt, wxT("Audio"), m_bEnableMultimedia);
+                        m_bEnableSharedSmartCard = getBool(opt, wxT("SharingSmartCard"), m_bEnableSharedSmartCard);
                         m_iCupsPort = getLong(opt, wxT("IPPPort"), m_iCupsPort);
                         m_iSmbPort = getLong(opt, wxT("SmbDefaultPort"), m_iSmbPort);
                         m_bUseCups = getBool(opt, wxT("IPPPrinting"), m_bUseCups);
@@ -2234,6 +2241,7 @@ MyXmlConfig::SaveToFile()
 
     g = AddGroup(r, wxT("Services"));
     bAddOption(g, wxT("Audio"), m_bEnableMultimedia);
+    bAddOption(g, wxT("SharingSmartCard"), m_bEnableSharedSmartCard);
     bAddOption(g, wxT("Shares"), m_bEnableSmbSharing);
     bAddOption(g, wxT("IPPPrinting"), m_bUseCups);
     iAddOption(g, wxT("IPPPort"), m_iCupsPort);

@@ -97,6 +97,7 @@ private:
         STATE_HELLO,
         STATE_SHELLMODE,
         STATE_AUTHMODE,
+        STATE_SSH_SHARED_SETTING,
         STATE_LOGIN,
         STATE_LIST_SESSIONS,
         STATE_PARSE_SESSIONS,

@@ -263,6 +263,9 @@ public:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_MMEDIA
     void OnCheckboxMmediaClick( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SHRSMARDCARD
+    void OnCheckboxShrsmartcardClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_USBENABLE
     void OnCHECKBOXUSBENABLEClick( wxCommandEvent& event );
 
@@ -417,6 +420,7 @@ private:
     bool m_bDisableTcpNoDelay;
     bool m_bDisableZlibCompression;
     bool m_bEnableMultimedia;
+    bool m_bEnableSharedSmartCard;
     bool m_bEnableSSL;
     bool m_bEnableSmbSharing;
     bool m_bEnableUSBIP;

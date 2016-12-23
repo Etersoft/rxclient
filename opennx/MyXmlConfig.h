@@ -197,6 +197,7 @@ class MyXmlConfig
         bool bGetDisableXagent() { return m_bDisableXagent; }
         bool bGetDisableZlibCompression() { return m_bDisableZlibCompression; }
         bool bGetEnableMultimedia() { return m_bEnableMultimedia; }
+        bool bGetEnableSharedSmartCard() { return m_bEnableSharedSmartCard; }
         bool bGetEnableSmbSharing() { return m_bEnableSmbSharing; }
         bool bGetEnableSSL() { return m_bEnableSSL; }
         bool bGetExternalProxy() { return m_bExternalProxy; }
@@ -294,6 +295,7 @@ class MyXmlConfig
         void bSetDisableXagent(const bool b) { m_bDisableXagent = b; }
         void bSetDisableZlibCompression(const bool b) { m_bDisableZlibCompression = b; }
         void bSetEnableMultimedia(const bool b) { m_bEnableMultimedia = b; }
+        void bSetEnableSharedSmartCard(const bool b) { m_bEnableSharedSmartCard = b; }
         void bSetEnableSmbSharing(const bool b) { m_bEnableSmbSharing = b; }
         void bSetEnableSSL(const bool b) { m_bEnableSSL = b; }
         void bSetExternalProxy(const bool b) { m_bExternalProxy = b; }
@@ -421,6 +423,7 @@ class MyXmlConfig
         bool m_bDisableXagent;
         bool m_bDisableZlibCompression;
         bool m_bEnableMultimedia;
+        bool m_bEnableSharedSmartCard;
         bool m_bEnableSmbSharing;
         bool m_bEnableSSL;
         bool m_bEnableUSBIP;
