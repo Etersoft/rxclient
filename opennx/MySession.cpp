@@ -2103,7 +2103,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 #else
         if (m_pCfg->bGetEnableSharedSmartCard() && FakeModule::instance().exists()) {
             fn.SetName(FakeModule::fileName);
-            appendcmd << " pcsc " << m_pCfg->sGetUsername();
+            appendcmd << wxT(" pcsc ") << m_pCfg->sGetUsername();
         } else {
 #if wxCHECK_VERSION(3,0,0)
         fn.SetName(wxT("nxssh"));
