@@ -1267,11 +1267,12 @@ bool opennxApp::realInit()
     m_pLoginDialog = &d;
     int result = d.ShowModal();
     m_pLoginDialog = NULL;
-    if (result == wxID_OK) {
+//    if (result == wxID_OK) {
+//    save not only successfull login
         m_sSessionName = d.GetLastSessionFilename();
         if (!m_sSessionName.IsEmpty())
             wxConfigBase::Get()->Write(wxT("Config/LastSession"), m_sSessionName);
-    }
+//    }
 
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. We returne FALSE here, so that the
