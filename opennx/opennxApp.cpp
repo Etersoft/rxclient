@@ -1270,8 +1270,10 @@ bool opennxApp::realInit()
 //    if (result == wxID_OK) {
 //    save not only successfull login
         m_sSessionName = d.GetLastSessionFilename();
-        if (!m_sSessionName.IsEmpty())
+        if (!m_sSessionName.IsEmpty()) {
             wxConfigBase::Get()->Write(wxT("Config/LastSession"), m_sSessionName);
+            wxConfigBase::Get()->Flush();
+        }
 //    }
 
     // success: wxApp::OnRun() will be called which will enter the main message
