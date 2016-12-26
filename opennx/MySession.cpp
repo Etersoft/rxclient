@@ -2176,6 +2176,11 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
                     return false;
                 }
             }
+            fn.SetFullName(wxT("server.id_rsa.key"));
+            nxsshcmd << wxT(" -i ") << cygPath(fn.GetFullPath());
+            fn.SetFullName(wxT("server.id_dsa.key"));
+            nxsshcmd << wxT(" -i ") << cygPath(fn.GetFullPath());
+            fn.SetFullName(wxT("server.id_ed25519.key"));
             nxsshcmd << wxT(" -i ") << cygPath(fn.GetFullPath());
         }
 
