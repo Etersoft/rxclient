@@ -311,8 +311,9 @@
                                                                 <content>
                                                                     <item>KDE</item>
                                                                     <item>GNOME</item>
-                                                                    <item>CDE</item>
                                                                     <item>XFCE</item>
+                                                                    <item>LXDE</item>
+                                                                    <item>MATE</item>
                                                                     <item>XDMCP</item>
                                                                     <item>Custom</item>
                                                                 </content>
@@ -3013,8 +3014,9 @@ this share.</label>
                                 <content>
                                     <item>KDE</item>
                                     <item>GNOME</item>
-                                    <item>CDE</item>
                                     <item>XFCE</item>
+                                    <item>LXDE</item>
+                                    <item>MATE</item>
                                     <item>XDMCP</item>
                                     <item>Custom</item>
                                 </content>
