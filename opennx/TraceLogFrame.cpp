@@ -100,7 +100,7 @@ bool TraceLogFrame::Create( wxWindow* parent, wxWindowID id, const wxString& cap
 ////@begin TraceLogFrame creation
     SetParent(parent);
     CreateControls();
-    SetIcon(GetIconResource(wxT("res/nx.png")));
+    SetIcon(GetIconResource(wxT("res/rxclient.png")));
     Centre();
 ////@end TraceLogFrame creation
     return true;

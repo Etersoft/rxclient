@@ -123,7 +123,7 @@ bool MyWizard::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const wxPoint&
     SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
     SetParent(parent);
     CreateControls();
-    SetIcon(GetIconResource(wxT("res/opennx-wizard.png")));
+    SetIcon(GetIconResource(wxT("res/rxclient.png")));
     ////@end MyWizard creation
     return TRUE;
 }

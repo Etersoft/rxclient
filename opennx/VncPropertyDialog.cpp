@@ -124,7 +124,7 @@ bool VncPropertyDialog::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
     SetExtraStyle(wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP);
     SetParent(parent);
     CreateControls();
-    SetIcon(GetIconResource(wxT("res/nx.png")));
+    SetIcon(GetIconResource(wxT("res/rxclient.png")));
     if (GetSizer())
     {
         GetSizer()->SetSizeHints(this);

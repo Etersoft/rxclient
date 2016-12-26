@@ -170,7 +170,7 @@ bool UnixImageSettingsDialog::Create( wxWindow* parent, wxWindowID WXUNUSED(id),
     SetExtraStyle(wxWS_EX_VALIDATE_RECURSIVELY|wxWS_EX_BLOCK_EVENTS|wxDIALOG_EX_CONTEXTHELP);
     SetParent(parent);
     CreateControls();
-    SetIcon(GetIconResource(wxT("res/nx.png")));
+    SetIcon(GetIconResource(wxT("res/rxclient.png")));
     Centre();
     ////@end UnixImageSettingsDialog creation
     wxGetApp().EnableContextHelp(this);

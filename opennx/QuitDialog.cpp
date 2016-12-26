@@ -89,7 +89,7 @@ bool QuitDialog::Create( wxWindow* parent, wxWindowID id, const wxString& captio
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     SetParent(parent);
     CreateControls();
-    SetIcon(GetIconResource(wxT("res/nx.png")));
+    SetIcon(GetIconResource(wxT("res/rxclient.png")));
     if (GetSizer())
     {
         GetSizer()->SetSizeHints(this);

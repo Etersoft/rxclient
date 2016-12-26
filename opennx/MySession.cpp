@@ -1313,7 +1313,7 @@ MySession::parseSessions(bool moreAllowed)
             wxMessageDialog d(m_pParent,
                     _("There are no sessions which can be attached to."),
                     _("Error - RX Client"), wxOK);
-            d.SetIcon(CreateIconFromFile(wxT("res/nx.png")));
+            d.SetIcon(CreateIconFromFile(wxT("res/rxclient.png")));
             d.ShowModal();
         } else {
             if (moreAllowed)
@@ -1323,7 +1323,7 @@ MySession::parseSessions(bool moreAllowed)
                 wxMessageDialog d(m_pParent,
                         _("You have reached your session limit. No more sessions allowed"),
                         _("Error - RX Client"), wxOK);
-                d.SetIcon(CreateIconFromFile(wxT("res/nx.png")));
+                d.SetIcon(CreateIconFromFile(wxT("res/rxclient.png")));
                 d.ShowModal();
                 m_bGotError = true;
             }

@@ -368,7 +368,7 @@
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"Login - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -555,7 +555,7 @@
                   <string name="proxy-Implementation filename">""</string>
                   <string name="proxy-Header filename">""</string>
                   <string name="proxy-Member variable name">""</string>
-                  <string name="proxy-Bitmap">"res/opennx.png"</string>
+                  <string name="proxy-Bitmap">"res/rxlogo.png"</string>
                   <string name="proxy-Help text">""</string>
                   <string name="proxy-Tooltip text">""</string>
                   <string name="proxy-Data variable">""</string>
@@ -1643,7 +1643,7 @@
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"Session properties - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -9338,7 +9338,7 @@
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"VNC Session Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -10473,7 +10473,7 @@ remote VNC server"</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"RDP Session Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -12068,7 +12068,7 @@ remote VNC server"</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"X11 Session Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -13175,7 +13175,7 @@ remote VNC server"</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"VNC Image Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -14084,7 +14084,7 @@ remote VNC server"</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"RDP Image Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -15484,7 +15484,7 @@ remote VNC server"</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"Unix Image Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -16762,7 +16762,7 @@ remote VNC server"</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"New shared resource - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -19872,7 +19872,7 @@ this share."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"Session Administrator - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/opennx-admin.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">0</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -20710,7 +20710,7 @@ this share."</string>
           <string name="proxy-Title">"Connection Wizard - RX Client"</string>
           <string name="proxy-Bitmap">"res/wizard.png"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/opennx-wizard.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
           <string name="proxy-Background colour">""</string>
@@ -23917,7 +23917,7 @@ this share."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"Session Log - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -24163,7 +24163,7 @@ this share."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"About RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -24431,7 +24431,7 @@ this share."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"Connecting - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -24544,7 +24544,7 @@ this share."</string>
                 <string name="proxy-Implementation filename">""</string>
                 <string name="proxy-Header filename">""</string>
                 <string name="proxy-Member variable name">""</string>
-                <string name="proxy-Bitmap">"res/opennx.png"</string>
+                <string name="proxy-Bitmap">"res/rxlogo.png"</string>
                 <string name="proxy-Help text">""</string>
                 <string name="proxy-Tooltip text">""</string>
                 <string name="proxy-Data variable">""</string>
@@ -24830,7 +24830,7 @@ this share."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"Text Viewer - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">0</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -25148,7 +25148,7 @@ this share."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"Key Management - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -26448,7 +26448,7 @@ this share."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">""</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -26869,7 +26869,7 @@ this share."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">""</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -27458,7 +27458,7 @@ this share."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"Insert card - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -27827,7 +27827,7 @@ this share."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"USB Filter Details - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -29690,7 +29690,7 @@ enter the filter specification directly."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"HTTP proxy password - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -31846,7 +31846,7 @@ enter the filter specification directly."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"SupressibleMessageDialog"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -32171,7 +32171,7 @@ enter the filter specification directly."</string>
           <string name="proxy-XRC filename">""</string>
           <string name="proxy-Title">"XDM Session Settings - RX Client"</string>
           <bool name="proxy-Centre">1</bool>
-          <string name="proxy-Icon">"res/nx.png"</string>
+          <string name="proxy-Icon">"res/rxclient.png"</string>
           <bool name="proxy-Dialog units">1</bool>
           <string name="proxy-Help text">""</string>
           <string name="proxy-Tooltip text">""</string>
@@ -33614,9 +33614,9 @@ enter the filter specification directly."</string>
           <long name="zoom-level">100</long>
         </document>
         <document>
-          <string name="title">"nx.png"</string>
+          <string name="title">"rxclient.png"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"res/nx.png"</string>
+          <string name="filename">"res/rxclient.png"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -33626,9 +33626,9 @@ enter the filter specification directly."</string>
           <long name="zoom-level">100</long>
         </document>
         <document>
-          <string name="title">"opennx-admin.png"</string>
+          <string name="title">"rxclient.png"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"res/opennx-admin.png"</string>
+          <string name="filename">"res/rxclient.png"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -33638,9 +33638,9 @@ enter the filter specification directly."</string>
           <long name="zoom-level">100</long>
         </document>
         <document>
-          <string name="title">"opennx-wizard.png"</string>
+          <string name="title">"rxclient.png"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"res/opennx-wizard.png"</string>
+          <string name="filename">"res/rxclient.png"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -33746,9 +33746,9 @@ enter the filter specification directly."</string>
           <long name="zoom-level">100</long>
         </document>
         <document>
-          <string name="title">"opennx.png"</string>
+          <string name="title">"rxlogo.png"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"res/opennx.png"</string>
+          <string name="filename">"res/rxlogo.png"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>

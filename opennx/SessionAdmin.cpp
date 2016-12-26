@@ -161,7 +161,7 @@ bool SessionAdmin::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const wxSt
 ////@begin SessionAdmin creation
     SetParent(parent);
     CreateControls();
-    SetIcon(GetIconResource(wxT("res/opennx-admin.png")));
+    SetIcon(GetIconResource(wxT("res/rxclient.png")));
     if (GetSizer())
     {
         GetSizer()->SetSizeHints(this);

@@ -246,7 +246,7 @@ bool tracelogApp::OnInit()
     Connect(wxEVT_DEBUGSTRING, wxCommandEventHandler(tracelogApp::OnDebugString));
     m_pGrabber->SetHandler(this);
     m_pTaskBarIcon = new MyTaskBarIcon();
-    m_pTaskBarIcon->SetIcon(CreateIconFromFile(wxT("res/nx.png")), _("RX Client"));
+    m_pTaskBarIcon->SetIcon(CreateIconFromFile(wxT("res/rxclient.png")), _("RX Client"));
     SetExitOnFrameDelete(true);
     return true;
 }

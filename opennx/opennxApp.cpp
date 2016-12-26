@@ -1129,7 +1129,7 @@ bool opennxApp::realInit()
         case MODE_DIALOG_YESNO:
             {
                 wxMessageDialog d(NULL, m_sDialogMessage, m_sDialogCaption, m_iDialogStyle);
-                d.SetIcon(CreateIconFromFile(wxT("res/nx.png")));
+                d.SetIcon(CreateIconFromFile(wxT("res/rxclient.png")));
                 if (d.ShowModal() == wxYES)
                     wxKill(m_nOtherPID, wxSIGTERM);
                 return false;
@@ -1138,7 +1138,7 @@ bool opennxApp::realInit()
         case MODE_DIALOG_OK:
             {
                 wxMessageDialog d(NULL, m_sDialogMessage, m_sDialogCaption, m_iDialogStyle);
-                d.SetIcon(CreateIconFromFile(wxT("res/nx.png")));
+                d.SetIcon(CreateIconFromFile(wxT("res/rxclient.png")));
                 d.ShowModal();
                 return false;
             }
@@ -1146,7 +1146,7 @@ bool opennxApp::realInit()
         case MODE_DIALOG_ERROR:
             {
                 wxMessageDialog d(NULL, m_sDialogMessage, m_sDialogCaption, m_iDialogStyle);
-                d.SetIcon(CreateIconFromFile(wxT("res/nx.png")));
+                d.SetIcon(CreateIconFromFile(wxT("res/rxclient.png")));
                 d.ShowModal();
                 wxKill(m_nOtherPID, wxSIGTERM);
                 return false;
