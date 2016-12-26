@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.17
-Release: alt2
+Release: alt3
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -101,6 +101,12 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 %changelog
+* Mon Dec 26 2016 Vitaly Lipatov <lav@altlinux.ru> 0.17-alt3
+- fix build with wxGTK2.8
+- fix all icons
+- add MATE/LXDE support
+- add rsa and ed25519 keys
+
 * Fri Dec 23 2016 Vitaly Lipatov <lav@altlinux.ru> 0.17-alt2
 - update license files, localize about dialog
 - add 64x64 icons and fix packing
