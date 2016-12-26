@@ -889,6 +889,15 @@ msgstr "Назад"
 msgid "Next"
 msgstr "Далее"
 
+
+#: MyWizard_symbols.h:61
+msgid "< Back"
+msgstr "< Назад"
+
+#: MyWizard_symbols.h:62
+msgid "Next >"
+msgstr "Далее >"
+
 #: MyWizard_symbols.h:63
 msgid "Finish"
 msgstr "Закончить"
@@ -1928,7 +1937,7 @@ msgstr "Запустить XSession скрипт"
 
 #: X11PropertyDialog_symbols.h:26
 msgid "Run the following command"
-msgstr "Запустить определенную команду"
+msgstr "Запустить определённую команду"
 
 #: X11PropertyDialog_symbols.h:28
 msgid "New virtual desktop"
@@ -1952,7 +1961,7 @@ msgstr "Настройка XDM сессии - RX Client"
 
 #: XdmPropertyDialog_symbols.h:24
 msgid "Let the NX server decide"
-msgstr ""
+msgstr "Оставить выбор серверу"
 
 #: XdmPropertyDialog_symbols.h:25
 msgid "Query a remote X desktop manager"
