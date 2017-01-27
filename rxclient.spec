@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.17
-Release: alt3
+Release: alt4
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -101,6 +101,10 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 %changelog
+* Fri Jan 27 2017 Vitaly Lipatov <lav@altlinux.ru> 0.17-alt4
+- fix bug with no save last session
+- drop CDE support from code
+
 * Mon Dec 26 2016 Vitaly Lipatov <lav@altlinux.ru> 0.17-alt3
 - fix build with wxGTK2.8
 - fix all icons
