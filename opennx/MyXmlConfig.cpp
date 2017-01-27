@@ -518,9 +518,6 @@ MyXmlConfig::sGetListParams(const long protocolVersion)
                 case DTYPE_GNOME:
                     ret << wxT("gnome\"");
                     break;
-                case DTYPE_CDE:
-                    ret << wxT("cde\"");
-                    break;
                 case DTYPE_LXDE:
                     ret << wxT("lxde\"");
                     break;
@@ -645,9 +642,6 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
                     break;
                 case DTYPE_GNOME:
                     ret << wxT("gnome\"");
-                    break;
-                case DTYPE_CDE:
-                    ret << wxT("cde\"");
                     break;
                 case DTYPE_LXDE:
                     ret << wxT("lxde\"");
@@ -1490,8 +1484,6 @@ MyXmlConfig::loadFromStream(wxInputStream &is, bool isPush)
                             m_eDesktopType = DTYPE_KDE;
                         if (tmp.CmpNoCase(wxT("Gnome")) == 0)
                             m_eDesktopType = DTYPE_GNOME;
-                        if (tmp.CmpNoCase(wxT("CDE")) == 0)
-                            m_eDesktopType = DTYPE_CDE;
                         if (tmp.CmpNoCase(wxT("LXDE")) == 0)
                             m_eDesktopType = DTYPE_LXDE;
                         if (tmp.CmpNoCase(wxT("MATE")) == 0)
@@ -2079,9 +2071,6 @@ MyXmlConfig::SaveToFile()
             break;
         case DTYPE_GNOME:
             optval = wxT("gnome");
-            break;
-        case DTYPE_CDE:
-            optval = wxT("cde");
             break;
         case DTYPE_LXDE:
             optval = wxT("lxde");

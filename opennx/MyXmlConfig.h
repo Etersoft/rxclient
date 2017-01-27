@@ -115,7 +115,6 @@ class MyXmlConfig
             DTYPE_RFB = -1,
             DTYPE_KDE = 0,
             DTYPE_GNOME,
-            DTYPE_CDE,
             DTYPE_LXDE,
             DTYPE_MATE,
             DTYPE_XFCE,
