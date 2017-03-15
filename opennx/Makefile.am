@@ -4,10 +4,7 @@ ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = po docs $(PLATFORM_SUBDIRS)
 DIST_SUBDIRS = po docs packaging/win32 packaging/MacOSX
 
-noinst_PROGRAMS = bin2hdr pulsetest $(TESTXAUTH) $(MACTESTKBD)
-
-bin2hdr_SOURCES = bin2hdr.cpp
-bin2hdr_LDFLAGS = -all-static
+noinst_PROGRAMS = pulsetest $(TESTXAUTH) $(MACTESTKBD)
 
 bin_PROGRAMS = rxclient pconnect $(TRACELOG) $(WATCHREADER) $(WATCHUSBIP) \
 	       $(MACFINDREADER) $(MACUNINSTALL)
@@ -197,8 +194,8 @@ RESSRC = $(subst $(srcdir)/,,$(RESDEPS))
 tmpres.zip: $(RESDEPS)
 	$(AM_V_GEN)cd $(srcdir) && zip -q9r $(abs_builddir)/$(@F) $(RESSRC)
 
-memres.h: tmpres.zip bin2hdr$(EXEEXT)
-	$(AM_V_GEN)./bin2hdr$(EXEEXT) tmpres.zip memres.h mem_res
+memres.h: tmpres.zip
+	xxd -i tmpres.zip memres.h
 
 $(top_srcdir)/opennxApp.cpp: memres.h
 

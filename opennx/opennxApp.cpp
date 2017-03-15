@@ -1086,16 +1086,14 @@ bool opennxApp::realInit()
         }
     }
     if (!resok) {
-        const unsigned char *resptr = get_mem_res();
-        if (resptr) {
-            wxMemoryFSHandler::AddFileWithMimeType(wxT("memrsc"), resptr, cnt_mem_res, wxT("application/zip"));
+        {
+            wxMemoryFSHandler::AddFileWithMimeType(wxT("memrsc"), tmpres_zip, tmpres_zip_len, wxT("application/zip"));
             {
                 // The following code eliminates a stupid error dialog which shows up
                 // if some .desktop entires (in KDE or GNOME applink dirs) are dangling symlinks.
                 wxLogNull lognull;
                 wxTheMimeTypesManager->GetFileTypeFromExtension(wxT("zip"));
             }
-            free_mem_res(resptr);
         }
         resok = true;
     }

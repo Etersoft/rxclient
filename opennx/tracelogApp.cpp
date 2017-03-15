@@ -224,8 +224,7 @@ bool tracelogApp::OnInit()
     wxBitmap::InitStandardHandlers();
     wxXmlResource::Get()->InitAllHandlers();
 
-    const unsigned char *resptr = get_mem_res();
-    wxMemoryFSHandler::AddFileWithMimeType(wxT("memrsc"), resptr, cnt_mem_res, wxT("application/zip"));
+    wxMemoryFSHandler::AddFileWithMimeType(wxT("memrsc"), tmpres_zip, tmpres_zip_len, wxT("application/zip"));
     {
         // The following code eliminates a stupid error dialog which shows up
         // if some .desktop entires (in KDE or GNOME applink dirs) are dangling symlinks.
@@ -233,7 +232,6 @@ bool tracelogApp::OnInit()
         wxTheMimeTypesManager->GetFileTypeFromExtension(wxT("zip"));
     }
 
-    free_mem_res(resptr);
     m_sResourcePrefix = wxT("memory:memrsc#zip:");
     if (!wxXmlResource::Get()->Load(m_sResourcePrefix + wxT("res/tracelog.xrc")))
         return false;
