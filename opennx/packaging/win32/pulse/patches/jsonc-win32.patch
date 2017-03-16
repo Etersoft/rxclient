@@ -1,6 +1,12 @@
 diff -urwN json-c-0.9-orig/Makefile.am json-c-0.9/Makefile.am
 --- json-c-0.9-orig/Makefile.am	2009-07-31 04:57:29.000000000 +0200
 +++ json-c-0.9/Makefile.am	2011-06-16 03:14:32.751377675 +0200
+@@ -1,4 +1,4 @@
+-AM_CFLAGS = -Wall -Wwrite-strings -Werror -std=gnu99 -D_GNU_SOURCE -D_REENTRANT
++AM_CFLAGS = -Wall -Wno-nonnull-compare -Wwrite-strings -Werror -std=gnu99 -D_GNU_SOURCE -D_REENTRANT
+ 
+ EXTRA_DIST = README.html README-WIN32.html config.h.win32 doc
+ 
 @@ -20,7 +20,7 @@
          json_object_private.h \
  	json_tokener.h
