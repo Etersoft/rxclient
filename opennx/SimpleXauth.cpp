@@ -350,7 +350,7 @@ class SimpleXauthEntryHash
 
         unsigned long operator()(const SimpleXauthEntry & k) const
         {
-            return wxStringHashwxCharStringHash(k.GetKey());
+            return wxStringHash::wxCharStringHash(k.GetKey());
         }
 
         SimpleXauthEntryHash& operator=(const SimpleXauthEntryHash&) { return *this; }
