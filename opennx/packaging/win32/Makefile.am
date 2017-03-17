@@ -50,10 +50,10 @@ FNT2URL = ftp://ftp.gwdg.de/pub/x11/x.org/pub/X11R7.5/src/font/$(FNT2BALL)
 	touch $@
 
 nativesetup: .setupdir .dlldeps .stripsetup
-	"$(ISCC)" "$(srcdir)/opennx.iss" -dBUILDXMING=$(BUILDXMING)
+	"$(ISCC)" "$(srcdir)/rxclient.iss" -dBUILDXMING=$(BUILDXMING)
 
 crosssetup: .setupdir .dlldeps .stripsetup isccwrap.sh
-	"$(ISCC)" "$(srcdir)/opennx.iss" -dBUILDXMING=$(BUILDXMING)
+	/usr/bin/wine "$(ISCC)" "$(srcdir)/rxclient.iss" -dBUILDXMING=$(BUILDXMING)
 
 setup: $(SETUP)
 
