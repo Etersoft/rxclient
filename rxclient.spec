@@ -103,7 +103,7 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 %changelog
-* Mon Mar 27 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt0.c7.1
+* Tue Mar 28 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt0.c7.1
 - backport to ALTLinux c7 (by rpmbph script)
 
 * Mon Mar 27 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1
