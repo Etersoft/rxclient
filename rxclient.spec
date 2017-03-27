@@ -1,3 +1,5 @@
+# This spec is backported to ALTLinux c7 automatically by rpmbph script from etersoft-build-utils.
+#
 # Enable USBIP support
 %def_without usbip
 
@@ -5,7 +7,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt1
+Release: alt0.c7.1
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -101,6 +103,9 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 %changelog
+* Mon Mar 27 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt0.c7.1
+- backport to ALTLinux c7 (by rpmbph script)
+
 * Mon Mar 27 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1
 - fix bug with no save last session
 - drop CDE support from code
