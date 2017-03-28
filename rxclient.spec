@@ -4,8 +4,8 @@
 %define oname opennx
 
 Name: rxclient
-Version: 0.17
-Release: alt3
+Version: 0.18
+Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -26,7 +26,7 @@ BuildRequires: gcc-c++ imake libSM-devel libXmu-devel
 BuildRequires: libopensc-devel libsmbclient-devel
 BuildRequires: xorg-cf-files zip libcups-devel
 BuildRequires: libXau-devel
-BuildRequires: libwxGTK3.1-devel
+BuildRequires: libwxGTK3.1-devel xxd
 # check:
 BuildRequires: nx
 
@@ -101,6 +101,12 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 %changelog
+* Mon Mar 27 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1
+- fix bug with no save last session
+- drop CDE support from code
+- use xxd instead internal built bin2hdr
+- add mingw build script, fix mingw build
+
 * Mon Dec 26 2016 Vitaly Lipatov <lav@altlinux.ru> 0.17-alt3
 - fix build with wxGTK2.8
 - fix all icons
