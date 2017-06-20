@@ -651,6 +651,9 @@ opennxApp::preInit()
     if (wxGetEnv(LD_LIBRARY_PATH, &ldpath))
         ldpath += wxT(":");
     ldpath += tmp + wxFileName::GetPathSeparator() + archlib;
+    // see eterbug #11676
+    ldpath += wxT(":");
+    ldpath += tmp + wxFileName::GetPathSeparator() + archlib + wxFileName::GetPathSeparator() + wxT("rxclient");
 # ifdef __WXMAC__
     if (wxFileName::DirExists(wxT("/Library/OpenSC/lib")))
         ldpath.Append(wxT(":/Library/OpenSC/lib"));

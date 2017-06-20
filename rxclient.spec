@@ -72,6 +72,13 @@ install -d -m 755 %buildroot%_sysconfdir/udev/rules.d
 install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
+# we need this names due wxDynamicLibrary (see eterbug #11676)
+mkdir -p %buildroot%_libdir/%name/%_lib
+for lib in libsmbclient.so libcups.so ; do
+    ln -sr %buildroot%_libdir/$lib %buildroot%_libdir/%name/%_lib/$lib
+done
+
+
 %find_lang %name
 
 %if_with usbip
@@ -84,6 +91,7 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %_bindir/nxssh.sh
 %_bindir/pconnect
 %_bindir/watchreader
+%_libdir/%name/
 %_man1dir/pconnect.*
 %_datadir/%name
 %_desktopdir/*.desktop
