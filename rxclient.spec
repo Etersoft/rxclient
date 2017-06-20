@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt1
+Release: alt2
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -73,9 +73,9 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 %endif
 
 # we need this names due wxDynamicLibrary (see eterbug #11676)
-mkdir -p %buildroot%_libdir/%name/%_lib
+mkdir -p %buildroot%_libdir/%name/
 for lib in libsmbclient.so libcups.so ; do
-    ln -sr %buildroot%_libdir/$lib %buildroot%_libdir/%name/%_lib/$lib
+    ln -sr %buildroot%_libdir/$lib.? %buildroot%_libdir/%name/$lib
 done
 
 
@@ -109,6 +109,9 @@ done
 %endif
 
 %changelog
+* Tue Jun 20 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt2
+- add program library dir to LD_LIBRARY_PATH (eterbug #11676)
+
 * Mon Mar 27 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1
 - fix bug with no save last session
 - drop CDE support from code
