@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt3
+Release: alt4
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -29,6 +29,9 @@ BuildRequires: libXau-devel
 BuildRequires: libwxGTK3.1-devel xxd
 # check:
 BuildRequires: nx
+
+# due _ln_sr
+BuildRequires: rpm-build-intro >= 1.9.18
 
 #Requires: nxssh
 
@@ -75,7 +78,8 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 # we need this names due wxDynamicLibrary (see eterbug #11676)
 mkdir -p %buildroot%_libdir/%name/
 for lib in libsmbclient.so libcups.so ; do
-    ln -sr %buildroot%_libdir/$lib.? %buildroot%_libdir/%name/$lib
+    rlib=$(echo %_libdir/$lib.?)
+    %_ln_sr %buildroot$rlib %buildroot%_libdir/%name/$lib
 done
 
 
@@ -109,6 +113,9 @@ done
 %endif
 
 %changelog
+* Mon Sep 11 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt4
+- use new macro _ln_sr instead ln -sr
+
 * Mon Sep 11 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt3
 - fix c_str() using
 
