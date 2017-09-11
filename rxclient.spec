@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt2
+Release: alt3
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -109,6 +109,9 @@ done
 %endif
 
 %changelog
+* Mon Sep 11 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt3
+- fix c_str() using
+
 * Tue Jun 20 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt2
 - add program library dir to LD_LIBRARY_PATH (eterbug #11676)
 
