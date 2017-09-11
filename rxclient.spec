@@ -7,7 +7,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt1.M70C.2
+Release: alt1.M70C.3
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -77,7 +77,8 @@ install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
 # we need this names due wxDynamicLibrary (see eterbug #11676)
 mkdir -p %buildroot%_libdir/%name/
 for lib in libsmbclient.so libcups.so ; do
-    ln -sr %buildroot%_libdir/$lib.? %buildroot%_libdir/%name/$lib
+    rlib=$(echo %_libdir/$lib.?)
+    ln -s $rlib %buildroot%_libdir/%name/$lib
 done
 
 
@@ -111,6 +112,10 @@ done
 %endif
 
 %changelog
+* Fri Oct 27 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.3
+- small translation fix
+- fix symlink creation (eterbug #11676)
+
 * Tue Jun 20 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.2
 - backport to ALTLinux c7 (by rpmbph script)
 
