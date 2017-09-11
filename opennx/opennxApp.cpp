@@ -594,7 +594,7 @@ opennxApp::preInit()
                 for (i = 0; candidates[i]; i++) {
                     if (wxFileName::FileExists(candidates[i])) {
                         tmp = candidates[i];
-                        myLogTrace(MYTRACETAG, wxT("Found a CUPS daemon binary in %s, however it is not executable.\nIn order to use CUPS printing, you need to fix its permissions."), tmp.c_str());
+                        myLogTrace(MYTRACETAG, wxT("Found a CUPS daemon binary in %s, however it is not executable.\nIn order to use CUPS printing, you need to fix its permissions."), to_c_str(tmp));
                         break;
                     }
                 }
