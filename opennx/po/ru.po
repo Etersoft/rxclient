@@ -1134,7 +1134,7 @@ msgstr "&Присоединиться"
 
 #: ResumeDialog.cpp:221 ResumeDialog_symbols.h:27
 msgid "&Resume"
-msgstr "&Вернуться"
+msgstr "В&ернуться"
 
 #: ResumeDialog.cpp:311
 msgid "Do you really want to terminate the selected session?"
@@ -1153,7 +1153,7 @@ msgid ""
 "There are multiple sessions available, please select one or click New to "
 "create a session."
 msgstr ""
-"Доступно несколько сессий, пожалуйста выберите одну или нажмите 'Новая' для "
+"Доступно несколько сессий. Выберите одну или нажмите «Новая» для "
 "создания новой сессии."
 
 #: ResumeDialog_symbols.h:24
@@ -1166,7 +1166,7 @@ msgstr "&Завершить"
 
 #: ResumeDialog_symbols.h:26
 msgid "&Takeover"
-msgstr "&Возобновить"
+msgstr "За&владеть"
 
 #: ResumeDialog_symbols.h:28
 msgid "&New"
