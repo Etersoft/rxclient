@@ -408,6 +408,11 @@ MyIPC::OnOutReceived(wxCommandEvent &event)
                         m_iOutCollect = 2;
                         m_sOutMessage = msg.Mid(8);
                         break;
+                    case 212:
+                        // The ECDSA host key for host differs from the key for the IP address
+                        m_iOutCollect = 3;
+                        m_sOutMessage = msg.Mid(8);
+                        break;
                     case 250:
                         // NX4 request username or password
                         if (msg.Find(wxT("login required")) != wxNOT_FOUND) {
