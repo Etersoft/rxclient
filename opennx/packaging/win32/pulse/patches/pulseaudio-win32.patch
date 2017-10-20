@@ -9,3 +9,44 @@
  
  ###################################
  #         Client library          #
+
+--- pulseaudio-1.0-fe-20111209-orig/src/modules/module-console-kit.c	2017-10-20 17:40:47.396194794 +0300
++++ pulseaudio-1.0-fe-20111209/src/modules/module-console-kit.c	2017-10-20 17:18:45.919566296 +0300
+@@ -97,9 +97,11 @@
+         }
+     }
+ 
++#if 0
+     /* We only care about our own sessions */
+     if ((uid_t) uid != getuid())
+         goto fail;
++#endif
+ 
+     session = pa_xnew(struct session, 1);
+     session->id = pa_xstrdup(id);
+@@ -219,11 +221,13 @@
+         goto fail;
+     }
+ 
++#if 0
+     uid = (uint32_t) getuid();
+     if (!(dbus_message_append_args(m, DBUS_TYPE_UINT32, &uid, DBUS_TYPE_INVALID))) {
+         pa_log("Failed to append arguments to GetSessionsForUnixUser() method call.");
+         goto fail;
+     }
++#endif
+ 
+     if (!(reply = dbus_connection_send_with_reply_and_block(pa_dbus_connection_get(u->connection), m, -1, &error))) {
+         pa_log("GetSessionsForUnixUser() call failed: %s: %s", error.name, error.message);
+
+--- pulseaudio-1.0-fe-20111209-orig/src/daemon/main.c	2017-10-20 17:45:27.821991086 +0300
++++ pulseaudio-1.0-fe-20111209/src/daemon/main.c	2017-10-20 17:17:52.536318362 +0300
+@@ -523,7 +523,7 @@
+             pa_assert_not_reached();
+     }
+ 
+-    start_server = conf->local_server_type == PA_SERVER_TYPE_USER || (getuid() == 0 && conf->local_server_type == PA_SERVER_TYPE_SYSTEM);
++    start_server = conf->local_server_type == PA_SERVER_TYPE_USER || (conf->local_server_type == PA_SERVER_TYPE_SYSTEM);
+ 
+     if (!start_server && conf->local_server_type == PA_SERVER_TYPE_SYSTEM) {
+         pa_log_notice(_("System mode refused for non-root user. Only starting the D-Bus server lookup service."));
