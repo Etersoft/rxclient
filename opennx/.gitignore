@@ -29,4 +29,10 @@ rxclient
 tmpres.zip
 watchreader
 
+*.tar.gz
+*.exe
+.dlldeps
+.miscfonts
+.setupdir
+.stripsetup
 
