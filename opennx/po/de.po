@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: felfert@users.sf.net\n"
-"POT-Creation-Date: 2016-12-23 23:33+0300\n"
+"POT-Creation-Date: 2017-10-20 14:32+0300\n"
 "PO-Revision-Date: 2012-03-17 13:56+0100\n"
 "Last-Translator: Fritz Elfert <fritz@fritz-elfert.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -654,40 +654,40 @@ msgstr "Konnte keinen Port für CUPS zuweisen"
 msgid "Could not write %s"
 msgstr "Konnte %s nicht schreiben"
 
-#: MySession.cpp:2275
+#: MySession.cpp:2280
 msgid "Could not start local X server"
 msgstr "Konnte lokalen X-Server nicht starten"
 
-#: MySession.cpp:2296 MySession.cpp:2368 MySession.cpp:2382
+#: MySession.cpp:2301 MySession.cpp:2373 MySession.cpp:2387
 #, c-format
 msgid "Connecting to %s ..."
 msgstr "Verbinde mit %s ..."
 
-#: MySession.cpp:2300
+#: MySession.cpp:2305
 msgid "Preparing multimedia service ..."
 msgstr "Multimedia Dienst vorbereiten ..."
 
-#: MySession.cpp:2314 MySession.cpp:2360 MySession.cpp:2364
+#: MySession.cpp:2319 MySession.cpp:2365 MySession.cpp:2369
 msgid "Could not start multimedia support"
 msgstr "Konnte Multimedia Unterstützung nicht starten"
 
-#: MySession.cpp:2317 MySession.cpp:2362
+#: MySession.cpp:2322 MySession.cpp:2367
 msgid "Could not assign a free port for multimedia support"
 msgstr "Konnte keinen Port für Multimedia Unterstützung zuweisen"
 
-#: MySession.cpp:2379
+#: MySession.cpp:2384
 msgid "Preparing CUPS service ..."
 msgstr "CUPS Dienst vorbereiten ..."
 
-#: MySession.cpp:2381
+#: MySession.cpp:2386
 msgid "Could not start CUPS printing"
 msgstr "Konnte CUPS Druckdienst nicht starten"
 
-#: MySession.cpp:2433
+#: MySession.cpp:2438
 msgid "Called command was: "
 msgstr "Aufgerufenes Kommando war:"
 
-#: MySession.cpp:2434
+#: MySession.cpp:2439
 msgid "Could not start nxssh."
 msgstr "Konnte nxssh nicht starten."
 
@@ -913,16 +913,16 @@ msgstr ""
 msgid "Finish"
 msgstr ""
 
-#: MyXmlConfig.cpp:592
+#: MyXmlConfig.cpp:595
 msgid "Could not find application window"
 msgstr "Konnte Applikations-Fenster nicht finden"
 
-#: MyXmlConfig.cpp:1263
+#: MyXmlConfig.cpp:1269
 #, c-format
 msgid "Error %d while fetching session configuration"
 msgstr "Fehler %d beim Laden der Sitzungskonfiguration"
 
-#: MyXmlConfig.cpp:1268
+#: MyXmlConfig.cpp:1274
 #, c-format
 msgid ""
 "Error while fetching session configuration:\n"
@@ -1334,7 +1334,7 @@ msgstr "Kein CUPS-Server verfügbar."
 msgid "Select System CUPS daemon"
 msgstr "Wähle System CUPS-Dämon"
 
-#: SessionProperties.cpp:2050 opennxApp.cpp:1323
+#: SessionProperties.cpp:2050 opennxApp.cpp:1327
 msgid "libusb is not available. No USB devices will be exported"
 msgstr "libusb ist nicht verfügbar. USB-Geräte werden nicht exportiert"
 
@@ -2019,7 +2019,7 @@ msgstr "Konnte Attribute von %s nicht ermitteln"
 msgid "Could not read link %s"
 msgstr "Konnte Verknüpfung %s nicht lesen"
 
-#: opennxApp.cpp:820 watchReaderApp.cpp:125 watchUsbIpApp.cpp:216
+#: opennxApp.cpp:823 watchReaderApp.cpp:125 watchUsbIpApp.cpp:216
 msgid ""
 "\n"
 "\n"
@@ -2029,84 +2029,84 @@ msgstr ""
 "\n"
 "Unterstützte Trace-Tags:"
 
-#: opennxApp.cpp:823
+#: opennxApp.cpp:826
 msgid "Automatically login to the specified session."
 msgstr "Automatisch an der angegebenen Sitzung anmelden."
 
-#: opennxApp.cpp:825
+#: opennxApp.cpp:828
 msgid "Automatically resume/takeover a session with the same name."
 msgstr "Automatisches Fortsetzen/Übernehmen von gleichnamigen Sitzungen."
 
-#: opennxApp.cpp:827
+#: opennxApp.cpp:830
 msgid "Automatically destroy error dialogs at termination."
 msgstr "Schliesse Fehlermeldungen automatisch."
 
-#: opennxApp.cpp:829
+#: opennxApp.cpp:832
 msgid "Start the session administration tool."
 msgstr "Starte das Sitzungs-Administrations-Werkzeug."
 
-#: opennxApp.cpp:831
+#: opennxApp.cpp:834
 msgid "Specify alternate CA cert for fetching configuration via https."
 msgstr ""
 "Spezifiziere alternatives CA-Zertifikat zum Laden der Sitzungskonfiguration"
 
-#: opennxApp.cpp:833
+#: opennxApp.cpp:836
 msgid "Specify window title for dialog mode."
 msgstr "Spezifiziere Fenstertitel für Dialog-Modus."
 
-#: opennxApp.cpp:835
+#: opennxApp.cpp:838
 msgid "Specify dialog style for dialog mode."
 msgstr "Spezifiziere Dialog-Stil für Dialog-Modus."
 
-#: opennxApp.cpp:837
+#: opennxApp.cpp:840
 msgid "Run in dialog mode."
 msgstr "Aktiviere Dialog-Modus."
 
-#: opennxApp.cpp:839
+#: opennxApp.cpp:842
 msgid "Compatibility option for dialog mode (ignored)."
 msgstr "Kompatible Option für Dialog-Modus (ignoriert)."
 
-#: opennxApp.cpp:841
+#: opennxApp.cpp:844
 msgid "Export builtin GUI resources to zip file and exit."
 msgstr "Exportiere enthaltene GUI-Ressourcen in Zip-Datei und beende Programm."
 
-#: opennxApp.cpp:843
+#: opennxApp.cpp:846
 msgid "Dialog mode proxy."
 msgstr "Proxy des Dialog-Modus."
 
-#: opennxApp.cpp:845
+#: opennxApp.cpp:848
 msgid "Specify message for dialog mode."
 msgstr "Spezifiziere Mitteilungstext für Dialog-Modus."
 
-#: opennxApp.cpp:847
+#: opennxApp.cpp:850
 msgid "Specify parent PID for dialog mode."
 msgstr "Spezifiziere Eltern-PID für Dialog-Modus."
 
-#: opennxApp.cpp:849
+#: opennxApp.cpp:852
 msgid "Run a session importing configuration settings from FILENAME."
 msgstr "Starte eine Sitzung mit den Einstellungen aus FILENAME."
 
-#: opennxApp.cpp:851
+#: opennxApp.cpp:854
 msgid "Specify window-ID for dialog mode."
 msgstr "Spezifiziere Window-ID für Dialog-Modus."
 
-#: opennxApp.cpp:853 watchReaderApp.cpp:132 watchUsbIpApp.cpp:225
+#: opennxApp.cpp:856 watchReaderApp.cpp:132 watchUsbIpApp.cpp:225
 msgid "Specify wxWidgets trace mask."
 msgstr "Spezifiziere wxWidgets Trace-Maske."
 
-#: opennxApp.cpp:856
+#: opennxApp.cpp:859
 msgid "Test CardWaiterDialog"
 msgstr "Teste CardWaiterDialog"
 
-#: opennxApp.cpp:859
+#: opennxApp.cpp:862
 msgid "Guide the user through the steps to configure a session."
 msgstr "Führe den Benutzer durch die Schritte zu Konfiguration einer Sitzung."
 
-#: opennxApp.cpp:927 watchReaderApp.cpp:270
+#: opennxApp.cpp:930 watchReaderApp.cpp:270
 msgid "Smart card removed"
 msgstr "Smart Card entfernt"
 
-#: opennxApp.cpp:929 watchReaderApp.cpp:269
+#: opennxApp.cpp:932 watchReaderApp.cpp:269
 msgid ""
 "RX Client session has been suspended, because\n"
 "the authenticating smart card has been removed."
@@ -2114,16 +2114,16 @@ msgstr ""
 "Die RX Client Sitzung wurde unterbrochen, weil\n"
 "die authentisierende Smart Card entfernt wurde."
 
-#: opennxApp.cpp:1337
+#: opennxApp.cpp:1341
 msgid "USBIP tunnel registration timeout"
 msgstr "Timeout beim Öffnen des USBIP-Kanals"
 
-#: opennxApp.cpp:1341
+#: opennxApp.cpp:1345
 #, c-format
 msgid "Unable to export USB device %s"
 msgstr "Konnte USB-Gerät %s nicht exportieren"
 
-#: opennxApp.cpp:1347
+#: opennxApp.cpp:1351
 msgid "Could not connect to usbipd2. No USB devices will be exported"
 msgstr "Verbindung zu usbipd2 gescheitert. USB-Ggeräte werden nicht exportiert"
 
@@ -2139,7 +2139,7 @@ msgstr "Aktiviere Remote-Debugging"
 msgid "E&xit"
 msgstr "Be&enden"
 
-#: tracelogApp.cpp:249
+#: tracelogApp.cpp:247
 msgid "RX Client"
 msgstr "RX Client"
 
@@ -2159,38 +2159,38 @@ msgstr "Zu überwachende NX Sitzungs-ID."
 msgid "Path of session config file."
 msgstr "Pfad der Sizungs-Konfigurationsdatei."
 
-#: watchUsbIpApp.cpp:342
+#: watchUsbIpApp.cpp:340
 msgid "An empty session ID is not allowed"
 msgstr "Eine leere Sitzungs-ID ist nicht erlaubt"
 
-#: watchUsbIpApp.cpp:347
+#: watchUsbIpApp.cpp:345
 msgid "Could not load session config file"
 msgstr "Konnte Sitzungs-Konfiguration nicht laden"
 
-#: watchUsbIpApp.cpp:373
+#: watchUsbIpApp.cpp:371
 msgid "Could not register at usbipd2! No hotplugging functionality."
 msgstr ""
 "Anmeldung am uspid2 gescheitert! Hotplugging steht nicht zur Verfügung."
 
-#: watchUsbIpApp.cpp:380
+#: watchUsbIpApp.cpp:378
 msgid "Could not connect to usbipd2! No hotplugging functionality."
 msgstr "Verbindung zu usbipd2 gescheitert. Keine Hotplug-Funktionalität."
 
-#: watchUsbIpApp.cpp:433
+#: watchUsbIpApp.cpp:431
 msgid "Got hotplug event, but device is not available in libusb"
 msgstr ""
 "Hotplug-Ereignis empfangen, aber das zugehörige Gerät ist nicht in libusb "
 "verfügbar"
 
-#: watchUsbIpApp.cpp:441
+#: watchUsbIpApp.cpp:439
 msgid "Could not send hotplug response"
 msgstr "Konnte Hotplug-Ereignis nicht bestätigen"
 
-#: watchUsbIpApp.cpp:497
+#: watchUsbIpApp.cpp:495
 msgid "Could not save session config"
 msgstr "Konnte Sitzungs-Konfiguration nicht speichern."
 
-#: watchUsbIpApp.cpp:506
+#: watchUsbIpApp.cpp:504
 msgid "Could not export USB device"
 msgstr "Konnte USB-Gerät nicht exportieren"
 
