@@ -726,7 +726,7 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
     // disable CUPS-related stuff on non-Unix platforms
     m_pCtrlCupsEnable->Enable(false);
     m_pCtrlCupsPort->Enable(false);
-    m_pCtrlCupsPath->Enable(false);
+    // m_pCtrlCupsPath->Enable(false);
 //    m_pCtrlCupsBrowse->Enable(false);
 #endif
 #ifdef HAVE_PULSE_PULSEAUDIO_H
