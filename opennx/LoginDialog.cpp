@@ -84,7 +84,7 @@ BEGIN_EVENT_TABLE( LoginDialog, wxDialog )
 
     EVT_COMBOBOX( XRCID("ID_COMBOBOX_SESSION"), LoginDialog::OnComboboxSessionSelected )
 
-    EVT_LISTBOX( XRCID("ID_COMBOBOX_LOGINTYPE"), LoginDialog::OnComboboxLoginTypeSelected )
+    EVT_COMBOBOX( XRCID("ID_COMBOBOX_LOGINTYPE"), LoginDialog::OnComboboxLoginTypeSelected )
 
     EVT_CHECKBOX( XRCID("ID_CHECKBOX_SMARTCARD"), LoginDialog::OnCheckboxSmartcardClick )
 
@@ -476,7 +476,8 @@ void LoginDialog::OnButtonConfigureClick( wxCommandEvent& event )
 
 void LoginDialog::OnComboboxLoginTypeSelected( wxCommandEvent& event )
 {
-
+    m_pCtrlPassword->Enable(m_pCtrlLoginType->GetStringSelection() == ID_DIALOG_LOGIN_SYMBOL_11);
+    event.Skip();
 }
 
 /*!
