@@ -84,6 +84,8 @@ BEGIN_EVENT_TABLE( LoginDialog, wxDialog )
 
     EVT_COMBOBOX( XRCID("ID_COMBOBOX_SESSION"), LoginDialog::OnComboboxSessionSelected )
 
+    EVT_LISTBOX( XRCID("ID_COMBOBOX_LOGINTYPE"), LoginDialog::OnComboboxLoginTypeSelected )
+
     EVT_CHECKBOX( XRCID("ID_CHECKBOX_SMARTCARD"), LoginDialog::OnCheckboxSmartcardClick )
 
     EVT_CHECKBOX( XRCID("ID_CHECKBOX_GUESTLOGIN"), LoginDialog::OnCheckboxGuestloginClick )
@@ -245,6 +247,7 @@ bool LoginDialog::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const wxStr
     ////@begin LoginDialog member initialisation
     m_sTmpUsername = wxT("");
     m_sTmpPassword = wxT("");
+    m_pCtrlLoginType = NULL;
     m_pCtrlUsername = NULL;
     m_pCtrlPassword = NULL;
     m_pCtrlSessionName = NULL;
@@ -280,6 +283,7 @@ void LoginDialog::CreateControls()
     ////@begin LoginDialog content construction
     if (!wxXmlResource::Get()->LoadDialog(this, GetParent(), _T("ID_DIALOG_LOGIN")))
         wxLogError(wxT("Missing wxXmlResource::Get()->Load() in OnInit()?"));
+    m_pCtrlLoginType = XRCCTRL(*this, "ID_COMBOBOX_LOGINTYPE", wxComboBox);
     m_pCtrlUsername = XRCCTRL(*this, "ID_TEXTCTRL_USERNAME", wxTextCtrl);
     m_pCtrlPassword = XRCCTRL(*this, "ID_TEXTCTRL_PASSWORD", wxTextCtrl);
     m_pCtrlSessionName = XRCCTRL(*this, "ID_COMBOBOX_SESSION", wxComboBox);
@@ -307,6 +311,16 @@ void LoginDialog::CreateControls()
     ////@end LoginDialog content initialisation
 
     ReadConfigDirectory();
+
+    m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_11);
+    m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_12);
+    m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_13);
+    m_pCtrlLoginType->SetSelection(m_pCtrlLoginType->FindString(ID_DIALOG_LOGIN_SYMBOL_11));
+
+    // Hide guest and smart card buttons for move them to new combobox
+    m_pCtrlUseSmartCard->Hide();
+    m_pCtrlGuestLogin->Hide();
+/*
     m_bUseSmartCard = wxGetApp().NxSmartCardSupport() && m_pCurrentCfg && m_pCurrentCfg->bGetUseSmartCard();
     m_pCtrlUseSmartCard->SetValue(m_bUseSmartCard);
     m_pCtrlUseSmartCard->Enable(wxGetApp().NxSmartCardSupport() && m_pCurrentCfg && m_pCurrentCfg->IsWritable());
@@ -316,6 +330,8 @@ void LoginDialog::CreateControls()
     }
     m_pCtrlGuestLogin->Enable(m_pCurrentCfg && m_pCurrentCfg->IsWritable());
     m_pCtrlConfigure->Enable(m_pCurrentCfg && m_pCurrentCfg->IsWritable());
+*/
+
 #ifdef SINGLE_SESSION
     m_pCtrlLoginButton->Enable(false);
     m_cNxSshWatchTimer.Start(1000);
@@ -450,6 +466,17 @@ void LoginDialog::OnButtonConfigureClick( wxCommandEvent& event )
         }
     }
     event.Skip();
+}
+
+
+
+/*!
+ * wxEVT_COMMAND_LISTBOX_SELECTED event handler for ID_LISTBOX_LOGINTYPE
+ */
+
+void LoginDialog::OnComboboxLoginTypeSelected( wxCommandEvent& event )
+{
+
 }
 
 /*!

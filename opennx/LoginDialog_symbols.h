@@ -29,3 +29,7 @@
 #define ID_DIALOG_LOGIN_SYMBOL_7 _("L&ogin")
 #define ID_DIALOG_LOGIN_SYMBOL_8 _("&Cancel")
 #define ID_DIALOG_LOGIN_SYMBOL_9 _("&Wizard")
+#define ID_DIALOG_LOGIN_SYMBOL_10 _("Login Type")
+#define ID_DIALOG_LOGIN_SYMBOL_11 _("Use Password")
+#define ID_DIALOG_LOGIN_SYMBOL_12 _("Use Kerberos Ticket")
+#define ID_DIALOG_LOGIN_SYMBOL_13 _("Use Smart Card")

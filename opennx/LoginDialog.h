@@ -108,6 +108,8 @@ private:
     /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_SESSION
     void OnComboboxSessionSelected( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_LOGINTYPE
+    void OnComboboxLoginTypeSelected( wxCommandEvent& event );
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SMARTCARD
     void OnCheckboxSmartcardClick( wxCommandEvent& event );
 
@@ -158,6 +160,7 @@ private:
     wxTextCtrl* m_pCtrlUsername;
     wxTextCtrl* m_pCtrlPassword;
     wxComboBox* m_pCtrlSessionName;
+    wxComboBox* m_pCtrlLoginType;
     wxCheckBox* m_pCtrlUseSmartCard;
     wxCheckBox* m_pCtrlGuestLogin;
     wxButton* m_pCtrlConfigure;
