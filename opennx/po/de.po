@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: felfert@users.sf.net\n"
-"POT-Creation-Date: 2017-10-20 14:32+0300\n"
+"POT-Creation-Date: 2017-10-30 17:26+0300\n"
 "PO-Revision-Date: 2012-03-17 13:56+0100\n"
 "Last-Translator: Fritz Elfert <fritz@fritz-elfert.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -111,7 +111,7 @@ msgstr "Sitzungsprotokoll - RX Client"
 msgid "Close"
 msgstr "Schließen"
 
-#: LoginDialog.cpp:433 LoginDialog.cpp:559 MyWizard.cpp:1369
+#: LoginDialog.cpp:449 LoginDialog.cpp:586 MyWizard.cpp:1369
 #, c-format
 msgid ""
 "Could not save session to\n"
@@ -121,11 +121,11 @@ msgstr ""
 "%s\n"
 "speichern."
 
-#: LoginDialog.cpp:434 LoginDialog.cpp:560 MyWizard.cpp:1370
+#: LoginDialog.cpp:450 LoginDialog.cpp:587 MyWizard.cpp:1370
 msgid "Error saving - RX Client"
 msgstr "Fehler beim Speichern - RX Client"
 
-#: LoginDialog.cpp:495
+#: LoginDialog.cpp:522
 #, c-format
 msgid ""
 "An old session configuration has been detected.\n"
@@ -136,7 +136,7 @@ msgstr ""
 "Die Sitzung '%s' wurde in das neue Format konvertiert.\n"
 "Bitte überprüfen Sie die benutzerdefinierten Kompressions-Einstellungen"
 
-#: LoginDialog.cpp:497
+#: LoginDialog.cpp:524
 #, c-format
 msgid ""
 "An old session configuration has been detected.\n"
@@ -148,7 +148,7 @@ msgstr ""
 "gespeichert werden.\n"
 "Bitte überprüfen Sie die benutzerdefinierten Kompressions-Einstellungen"
 
-#: LoginDialog.cpp:501 MySession.cpp:798 MySession.cpp:810 MySession.cpp:824
+#: LoginDialog.cpp:528 MySession.cpp:798 MySession.cpp:810 MySession.cpp:824
 msgid "Warning - RX Client"
 msgstr "Warnung - RX Client"
 
@@ -190,6 +190,25 @@ msgstr "L&ogin"
 #: LoginDialog_symbols.h:31
 msgid "&Wizard"
 msgstr ""
+
+#: LoginDialog_symbols.h:32
+#, fuzzy
+msgid "Login Type"
+msgstr "Login"
+
+#: LoginDialog_symbols.h:33
+#, fuzzy
+msgid "Use Password"
+msgstr "Passwort"
+
+#: LoginDialog_symbols.h:34
+msgid "Use Kerberos Ticket"
+msgstr ""
+
+#: LoginDialog_symbols.h:35
+#, fuzzy
+msgid "Use Smart Card"
+msgstr "Verwende SmartCard"
 
 #: MacUninstallApp.cpp:60 MacUninstallApp.cpp:508
 #, c-format

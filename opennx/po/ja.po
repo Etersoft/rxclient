@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opennx 0.16\n"
 "Report-Msgid-Bugs-To: felfert@users.sf.net\n"
-"POT-Creation-Date: 2017-10-20 14:32+0300\n"
+"POT-Creation-Date: 2017-10-30 17:26+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,18 +107,18 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: LoginDialog.cpp:433 LoginDialog.cpp:559 MyWizard.cpp:1369
+#: LoginDialog.cpp:449 LoginDialog.cpp:586 MyWizard.cpp:1369
 #, c-format
 msgid ""
 "Could not save session to\n"
 "%s"
 msgstr ""
 
-#: LoginDialog.cpp:434 LoginDialog.cpp:560 MyWizard.cpp:1370
+#: LoginDialog.cpp:450 LoginDialog.cpp:587 MyWizard.cpp:1370
 msgid "Error saving - RX Client"
 msgstr ""
 
-#: LoginDialog.cpp:495
+#: LoginDialog.cpp:522
 #, c-format
 msgid ""
 "An old session configuration has been detected.\n"
@@ -126,7 +126,7 @@ msgid ""
 "Please verify the custom image compression settings."
 msgstr ""
 
-#: LoginDialog.cpp:497
+#: LoginDialog.cpp:524
 #, c-format
 msgid ""
 "An old session configuration has been detected.\n"
@@ -134,7 +134,7 @@ msgid ""
 "Please verify the custom image compression settings."
 msgstr ""
 
-#: LoginDialog.cpp:501 MySession.cpp:798 MySession.cpp:810 MySession.cpp:824
+#: LoginDialog.cpp:528 MySession.cpp:798 MySession.cpp:810 MySession.cpp:824
 msgid "Warning - RX Client"
 msgstr ""
 
@@ -175,6 +175,22 @@ msgstr ""
 
 #: LoginDialog_symbols.h:31
 msgid "&Wizard"
+msgstr ""
+
+#: LoginDialog_symbols.h:32
+msgid "Login Type"
+msgstr ""
+
+#: LoginDialog_symbols.h:33
+msgid "Use Password"
+msgstr ""
+
+#: LoginDialog_symbols.h:34
+msgid "Use Kerberos Ticket"
+msgstr ""
+
+#: LoginDialog_symbols.h:35
+msgid "Use Smart Card"
 msgstr ""
 
 #: MacUninstallApp.cpp:60 MacUninstallApp.cpp:508

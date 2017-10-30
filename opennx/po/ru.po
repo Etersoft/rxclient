@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: felfert@users.sf.net\n"
-"POT-Creation-Date: 2017-10-20 14:32+0300\n"
+"POT-Creation-Date: 2017-10-30 17:26+0300\n"
 "PO-Revision-Date: 2016-12-23 15:21+0300\n"
 "Last-Translator: Vitaly Lipatov <lav@etersoft.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -105,7 +105,6 @@ msgid "Session Log - RX Client"
 msgstr "Лог сессии - RX Client"
 
 #: LogDialog_symbols.h:22
-#, fuzzy
 msgid "Session Log - OpenNX"
 msgstr "Лог сессии - RX Client"
 
@@ -113,7 +112,7 @@ msgstr "Лог сессии - RX Client"
 msgid "Close"
 msgstr "Закрыть"
 
-#: LoginDialog.cpp:433 LoginDialog.cpp:559 MyWizard.cpp:1369
+#: LoginDialog.cpp:449 LoginDialog.cpp:586 MyWizard.cpp:1369
 #, c-format
 msgid ""
 "Could not save session to\n"
@@ -122,11 +121,11 @@ msgstr ""
 "Не удалось сохранить сессию в\n"
 "%s"
 
-#: LoginDialog.cpp:434 LoginDialog.cpp:560 MyWizard.cpp:1370
+#: LoginDialog.cpp:450 LoginDialog.cpp:587 MyWizard.cpp:1370
 msgid "Error saving - RX Client"
 msgstr "Ошибка при сохранении - RX Client"
 
-#: LoginDialog.cpp:495
+#: LoginDialog.cpp:522
 #, c-format
 msgid ""
 "An old session configuration has been detected.\n"
@@ -137,7 +136,7 @@ msgstr ""
 "Конфигурационный файл '%s' был преобразован к новому формату.\n"
 "Пожалуйста, проверьте настройки сжатия изображения"
 
-#: LoginDialog.cpp:497
+#: LoginDialog.cpp:524
 #, c-format
 msgid ""
 "An old session configuration has been detected.\n"
@@ -148,7 +147,7 @@ msgstr ""
 "Конфигурационный файл '%s' был преобразован но не был сохранён.\n"
 "Пожалуйста, проверьте настройки сжатия изображения"
 
-#: LoginDialog.cpp:501 MySession.cpp:798 MySession.cpp:810 MySession.cpp:824
+#: LoginDialog.cpp:528 MySession.cpp:798 MySession.cpp:810 MySession.cpp:824
 msgid "Warning - RX Client"
 msgstr "Предупреждение - RX Client"
 
@@ -190,6 +189,22 @@ msgstr "Подключиться"
 #: LoginDialog_symbols.h:31
 msgid "&Wizard"
 msgstr "Добавить"
+
+#: LoginDialog_symbols.h:32
+msgid "Login Type"
+msgstr "Способ входа"
+
+#: LoginDialog_symbols.h:33
+msgid "Use Password"
+msgstr "Использовать пароль"
+
+#: LoginDialog_symbols.h:34
+msgid "Use Kerberos Ticket"
+msgstr "Использовать kerberos билет"
+
+#: LoginDialog_symbols.h:35
+msgid "Use Smart Card"
+msgstr "Использовать смарт-карту"
 
 #: MacUninstallApp.cpp:60 MacUninstallApp.cpp:508
 #, c-format
@@ -1221,7 +1236,6 @@ msgid "Help"
 msgstr "Помощь"
 
 #: SessionAdmin_symbols.h:37
-#, fuzzy
 msgid "About RX Client ..."
 msgstr "О RX Client"
 
