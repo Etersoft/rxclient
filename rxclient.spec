@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt4
+Release: alt5
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -113,6 +113,11 @@ done
 %endif
 
 %changelog
+* Wed Nov 01 2017 Pavel Vainerman <pv@altlinux.ru> 0.18-alt5
+- Update translation
+- Add serialization for login type
+- Update login dialog, add login type combobox
+
 * Mon Sep 11 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt4
 - use new macro _ln_sr instead ln -sr
 
