@@ -310,12 +310,12 @@ void LoginDialog::CreateControls()
     ////@begin LoginDialog content initialisation
     ////@end LoginDialog content initialisation
 
-    ReadConfigDirectory();
-
     m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_11);
     m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_12);
     m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_13);
-    m_pCtrlLoginType->SetSelection(m_pCtrlLoginType->FindString(ID_DIALOG_LOGIN_SYMBOL_11));
+    m_pCtrlLoginType->SetValue(ID_DIALOG_LOGIN_SYMBOL_11);
+
+    ReadConfigDirectory();
 
     // Hide guest and smart card buttons for move them to new combobox
     m_pCtrlUseSmartCard->Hide();
@@ -509,6 +509,20 @@ void LoginDialog::OnComboboxSessionSelected( wxCommandEvent& event )
                 m_pCtrlUsername->SetValue(cfg.sGetUsername());
                 m_pCtrlPassword->Enable(true);
                 m_pCtrlUsername->Enable(true);
+                switch(cfg.eGetLoginType())
+                {
+                case MyXmlConfig::LOGIN_PASSWORD:
+                    m_pCtrlLoginType->ChangeValue(ID_DIALOG_LOGIN_SYMBOL_11);
+                    break;
+                case MyXmlConfig::LOGIN_KERBEROS:
+                    m_pCtrlLoginType->ChangeValue(ID_DIALOG_LOGIN_SYMBOL_12);
+                    break;
+                case MyXmlConfig::LOGIN_SMARTCARD:
+                    m_pCtrlLoginType->ChangeValue(ID_DIALOG_LOGIN_SYMBOL_13);
+                    break;
+                }
+                // FIXME: Enabling/disabling of password field must be on event from ChangeValue()
+                m_pCtrlPassword->Enable(m_pCtrlLoginType->GetStringSelection() == ID_DIALOG_LOGIN_SYMBOL_11);
             }
             m_pCtrlUseSmartCard->SetValue(wxGetApp().NxSmartCardSupport() && cfg.bGetUseSmartCard());
         }
@@ -542,6 +556,13 @@ void LoginDialog::OnOkClick(wxCommandEvent& event)
 {
     if (m_pCurrentCfg) {
         TransferDataFromWindow();
+        if (m_pCtrlLoginType->GetStringSelection() == ID_DIALOG_LOGIN_SYMBOL_12) {
+            m_pCurrentCfg->eSetLoginType(MyXmlConfig::LOGIN_KERBEROS);
+        } else if (m_pCtrlLoginType->GetStringSelection() == ID_DIALOG_LOGIN_SYMBOL_13) {
+            m_pCurrentCfg->eSetLoginType(MyXmlConfig::LOGIN_SMARTCARD);
+        } else {
+            m_pCurrentCfg->eSetLoginType(MyXmlConfig::LOGIN_PASSWORD);
+        }
         m_pCurrentCfg->bSetGuestMode(m_bGuestLogin);
         if (!m_bGuestLogin) {
             m_pCurrentCfg->sSetUsername(m_sUsername);

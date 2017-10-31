@@ -294,6 +294,7 @@ MyXmlConfig::init()
     m_eDisplayType = DPTYPE_AVAILABLE;
     m_eSessionType = STYPE_UNIX;
     m_eXdmMode = XDM_MODE_SERVER;
+    m_eLoginType = LOGIN_PASSWORD;
 
     m_sCommandLine = wxEmptyString;
     wxConfigBase::Get()->Read(wxT("Config/CupsPath"), &m_sCupsPath);
@@ -425,6 +426,7 @@ MyXmlConfig::operator =(const MyXmlConfig &other)
     m_eDisplayType = other.m_eDisplayType;
     m_eSessionType = other.m_eSessionType;
     m_eXdmMode = other.m_eXdmMode;
+    m_eLoginType = other.m_eLoginType;
 
     m_sCommandLine = other.m_sCommandLine;
     m_sCupsPath = other.m_sCupsPath;
@@ -1130,6 +1132,7 @@ MyXmlConfig::operator ==(const MyXmlConfig &other)
     if (m_eDisplayType != other.m_eDisplayType) return false;
     if (m_eSessionType != other.m_eSessionType) return false;
     if (m_eXdmMode != other.m_eXdmMode) return false;
+    if (m_eLoginType != other.m_eLoginType) return false;
 
     if (m_sCommandLine != other.m_sCommandLine) return false;
     if (m_sCupsPath != other.m_sCupsPath) return false;
@@ -1691,6 +1694,14 @@ MyXmlConfig::loadFromStream(wxInputStream &is, bool isPush)
                         } else {
                             m_pMd5Password = getStringNew(opt, wxT("Auth"), m_pMd5Password);
                             m_sUsername = getString(opt, wxT("User"), m_sUsername);
+                            tmp = getString(opt, wxT("Login Type"), wxEmptyString);
+                            if (tmp == wxT("kerberos")) {
+                                m_eLoginType = LOGIN_KERBEROS;
+                            } else if (tmp == wxT("pcsc")) {
+                                m_eLoginType = LOGIN_SMARTCARD;
+                            } else {
+                                m_eLoginType = LOGIN_PASSWORD;
+                            }
                             m_sGuestPassword = getString(opt, wxT("Guest password"),
                                     m_sGuestPassword);
                             m_sGuestUser = getString(opt, wxT("Guest username"), m_sGuestUser);
@@ -2246,6 +2257,18 @@ MyXmlConfig::SaveToFile()
     sAddOption(g, wxT("Login Method"), wxT("nx"));
     sAddOption(g, wxT("Public Key"), m_sSshKey);
     sAddOption(g, wxT("User"), m_sUsername);
+    switch (m_eLoginType) {
+        case LOGIN_PASSWORD:
+            optval = wxT("password");
+            break;
+        case LOGIN_KERBEROS:
+            optval = wxT("kerberos");
+            break;
+        case LOGIN_SMARTCARD:
+            optval = wxT("pcsc");
+            break;
+    }
+    sAddOption(g, wxT("Login Type"), optval);
 
     g = AddGroup(r, wxT("Environment"));
     sAddOption(g, wxT("CUPSD path"), m_sCupsPath);

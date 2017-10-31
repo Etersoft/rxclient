@@ -163,6 +163,12 @@ class MyXmlConfig
             XDM_MODE_LIST,
         } XdmMode;
 
+        typedef enum LoginType {
+            LOGIN_PASSWORD = 0,
+            LOGIN_KERBEROS,
+            LOGIN_SMARTCARD,
+        } LoginType;
+
         MyXmlConfig();
         MyXmlConfig(const wxString &);
         virtual ~MyXmlConfig();
@@ -231,6 +237,7 @@ class MyXmlConfig
         MyXmlConfig::CacheMemory eGetCacheMemory() { return m_eCacheMemory; }
         MyXmlConfig::CacheDisk eGetCacheDisk() { return m_eCacheDisk; }
         MyXmlConfig::XdmMode eGetXdmMode() { return m_eXdmMode; }
+        MyXmlConfig::LoginType eGetLoginType() { return m_eLoginType; }
 
         int iGetClipFilter() { return m_iClipFilter; }
         int iGetCupsPort() { return m_iCupsPort; }
@@ -329,6 +336,7 @@ class MyXmlConfig
         void eSetDisplayType(MyXmlConfig::DisplayType e) { m_eDisplayType = e; }
         void eSetSessionType(MyXmlConfig::SessionType e) { m_eSessionType = e; }
         void eSetXdmMode(MyXmlConfig::XdmMode e) { m_eXdmMode = e; }
+        void eSetLoginType(MyXmlConfig::LoginType e) { m_eLoginType = e; }
 
         void iSetClipFilter(int i) { m_iClipFilter = i; }
         void iSetCupsPort(int i) { m_iCupsPort = i; }
@@ -506,6 +514,7 @@ class MyXmlConfig
         CacheMemory m_eCacheMemory;
         CacheDisk m_eCacheDisk;
         XdmMode m_eXdmMode;
+        LoginType m_eLoginType;
 
         ArrayOfShareGroups m_aShareGroups;
         wxArrayString m_aUsedShareGroups;
