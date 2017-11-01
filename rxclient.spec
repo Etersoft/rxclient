@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt5
+Release: alt6
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -113,6 +113,9 @@ done
 %endif
 
 %changelog
+* Thu Nov 02 2017 Pavel Vainerman <pv@altlinux.ru> 0.18-alt6
+- fix bug for commit 21d6a6864a45385a
+
 * Wed Nov 01 2017 Pavel Vainerman <pv@altlinux.ru> 0.18-alt5
 - Update translation
 - Add serialization for login type
