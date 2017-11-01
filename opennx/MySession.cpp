@@ -881,7 +881,20 @@ MySession::OnSshEvent(wxCommandEvent &event)
                     m_eConnectState = STATE_AUTHMODE;
                     break;
                 case STATE_AUTHMODE:
-                    printSsh(wxT("SET AUTH_MODE PASSWORD"));
+                    switch (m_pCfg->eGetLoginType()) {
+                        case MyXmlConfig::LOGIN_PASSWORD:
+                            printSsh(wxT("SET AUTH_MODE PASSWORD"));
+                            break;
+                        case MyXmlConfig::LOGIN_KERBEROS:
+                            printSsh(wxT("SET AUTH_MODE KERBEROS"));
+                            break;
+                        case MyXmlConfig::LOGIN_SMARTCARD:
+                            printSsh(wxT("SET AUTH_MODE PCSC"));
+                            break;
+                        case MyXmlConfig::LOGIN_SSHKEY:
+                            printSsh(wxT("SET AUTH_MODE SSHKEY"));
+                            break;
+                    }
                     m_eConnectState = STATE_SSH_SHARED_SETTING;
                     break;
                 case STATE_SSH_SHARED_SETTING:
@@ -2082,6 +2095,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 
     if (cfg.IsValid()) {
         // Copy misc values from login dialog
+        m_pCfg->eSetLoginType(cfgpar.eGetLoginType());
         m_pCfg->bSetUseSmartCard(cfgpar.bGetUseSmartCard());
         m_pCfg->bSetEnableSSL(cfgpar.bGetEnableSSL());
         m_pCfg->bSetGuestMode(cfgpar.bGetGuestMode());
@@ -2114,13 +2128,26 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 #endif
         wxString nxsshcmd = fn.GetShortPath();
         nxsshcmd << appendcmd;
-        nxsshcmd << wxT(" -nx -x -2")
-            << wxT(" -p ") << m_pCfg->iGetServerPort()
+        nxsshcmd << wxT(" -nx -x -2");
+        switch (m_pCfg->eGetLoginType()) {
+            case MyXmlConfig::LOGIN_KERBEROS:
+                nxsshcmd << wxT(" -K");
+                break;
+            case MyXmlConfig::LOGIN_SSHKEY:
+                nxsshcmd << wxT(" -A");
+                break;
+            case MyXmlConfig::LOGIN_SMARTCARD: // TODO
+            case MyXmlConfig::LOGIN_PASSWORD:
+                // Nothing to do
+                break;
+        }
+        nxsshcmd << wxT(" -p ") << m_pCfg->iGetServerPort()
             << wxT(" -o 'RhostsAuthentication no'")
             << wxT(" -o 'PasswordAuthentication no'")
             << wxT(" -o 'RSAAuthentication no'")
             << wxT(" -o 'RhostsRSAAuthentication no'")
             << wxT(" -o 'PubkeyAuthentication yes'");
+
         m_sTempDir = m_sUserDir;
         m_sTempDir << wxFileName::GetPathSeparator() << wxT("temp")
             << wxFileName::GetPathSeparator() << wxGetProcessId();
