@@ -33,3 +33,4 @@
 #define ID_DIALOG_LOGIN_SYMBOL_11 _("Use Password")
 #define ID_DIALOG_LOGIN_SYMBOL_12 _("Use Kerberos Ticket")
 #define ID_DIALOG_LOGIN_SYMBOL_13 _("Use Smart Card")
+#define ID_DIALOG_LOGIN_SYMBOL_14 _("Use SSH Key")

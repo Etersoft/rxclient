@@ -1699,6 +1699,8 @@ MyXmlConfig::loadFromStream(wxInputStream &is, bool isPush)
                                 m_eLoginType = LOGIN_KERBEROS;
                             } else if (tmp == wxT("pcsc")) {
                                 m_eLoginType = LOGIN_SMARTCARD;
+                            } else if (tmp == wxT("sshkey")) {
+                                m_eLoginType = LOGIN_SSHKEY;
                             } else {
                                 m_eLoginType = LOGIN_PASSWORD;
                             }
@@ -2266,6 +2268,9 @@ MyXmlConfig::SaveToFile()
             break;
         case LOGIN_SMARTCARD:
             optval = wxT("pcsc");
+            break;
+        case LOGIN_SSHKEY:
+            optval = wxT("sshkey");
             break;
     }
     sAddOption(g, wxT("Login Type"), optval);

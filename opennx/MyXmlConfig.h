@@ -167,6 +167,7 @@ class MyXmlConfig
             LOGIN_PASSWORD = 0,
             LOGIN_KERBEROS,
             LOGIN_SMARTCARD,
+            LOGIN_SSHKEY,
         } LoginType;
 
         MyXmlConfig();

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opennx 0.16\n"
 "Report-Msgid-Bugs-To: felfert@users.sf.net\n"
-"POT-Creation-Date: 2017-10-30 17:26+0300\n"
+"POT-Creation-Date: 2017-11-01 16:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,18 +107,18 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: LoginDialog.cpp:449 LoginDialog.cpp:586 MyWizard.cpp:1369
+#: LoginDialog.cpp:450 LoginDialog.cpp:615 MyWizard.cpp:1369
 #, c-format
 msgid ""
 "Could not save session to\n"
 "%s"
 msgstr ""
 
-#: LoginDialog.cpp:450 LoginDialog.cpp:587 MyWizard.cpp:1370
+#: LoginDialog.cpp:451 LoginDialog.cpp:616 MyWizard.cpp:1370
 msgid "Error saving - RX Client"
 msgstr ""
 
-#: LoginDialog.cpp:522
+#: LoginDialog.cpp:541
 #, c-format
 msgid ""
 "An old session configuration has been detected.\n"
@@ -126,7 +126,7 @@ msgid ""
 "Please verify the custom image compression settings."
 msgstr ""
 
-#: LoginDialog.cpp:524
+#: LoginDialog.cpp:543
 #, c-format
 msgid ""
 "An old session configuration has been detected.\n"
@@ -134,7 +134,7 @@ msgid ""
 "Please verify the custom image compression settings."
 msgstr ""
 
-#: LoginDialog.cpp:528 MySession.cpp:798 MySession.cpp:810 MySession.cpp:824
+#: LoginDialog.cpp:547 MySession.cpp:798 MySession.cpp:810 MySession.cpp:824
 msgid "Warning - RX Client"
 msgstr ""
 
@@ -191,6 +191,10 @@ msgstr ""
 
 #: LoginDialog_symbols.h:35
 msgid "Use Smart Card"
+msgstr ""
+
+#: LoginDialog_symbols.h:36
+msgid "Use SSH Key"
 msgstr ""
 
 #: MacUninstallApp.cpp:60 MacUninstallApp.cpp:508
@@ -529,134 +533,134 @@ msgstr ""
 msgid "Authentication successful"
 msgstr ""
 
-#: MySession.cpp:903
+#: MySession.cpp:917
 msgid "Query server-side features"
 msgstr ""
 
-#: MySession.cpp:915
+#: MySession.cpp:929
 msgid "Query server-side sessions"
 msgstr ""
 
-#: MySession.cpp:932 MySession.cpp:1036 MySession.cpp:1065
+#: MySession.cpp:946 MySession.cpp:1050 MySession.cpp:1079
 msgid "Starting session"
 msgstr ""
 
-#: MySession.cpp:939
+#: MySession.cpp:953
 msgid "Attaching to session"
 msgstr ""
 
-#: MySession.cpp:950
+#: MySession.cpp:964
 msgid "Resuming session"
 msgstr ""
 
-#: MySession.cpp:975
+#: MySession.cpp:989
 msgid "Enter PIN for Smart Card access."
 msgstr ""
 
-#: MySession.cpp:975
+#: MySession.cpp:989
 msgid "Smart Card PIN"
 msgstr ""
 
-#: MySession.cpp:980
+#: MySession.cpp:994
 msgid "Enter passphrase"
 msgstr ""
 
-#: MySession.cpp:982
+#: MySession.cpp:996
 msgid "Empty passphrase"
 msgstr ""
 
-#: MySession.cpp:988 MySession.cpp:992 MySession.cpp:996 MySession.cpp:1000
-#: MySession.cpp:1004 MySession.cpp:1008 MySession.cpp:1012 MySession.cpp:1016
-#: MySession.cpp:1020 MySession.cpp:1024 MySession.cpp:1028
+#: MySession.cpp:1002 MySession.cpp:1006 MySession.cpp:1010 MySession.cpp:1014
+#: MySession.cpp:1018 MySession.cpp:1022 MySession.cpp:1026 MySession.cpp:1030
+#: MySession.cpp:1034 MySession.cpp:1038 MySession.cpp:1042
 msgid "Negotiating session parameter"
 msgstr ""
 
-#: MySession.cpp:1058
+#: MySession.cpp:1072
 msgid "Unexpected termination of nxssh"
 msgstr ""
 
-#: MySession.cpp:1314
+#: MySession.cpp:1328
 msgid "There are no sessions which can be attached to."
 msgstr ""
 
-#: MySession.cpp:1315 MySession.cpp:1325
+#: MySession.cpp:1329 MySession.cpp:1339
 msgid "Error - RX Client"
 msgstr ""
 
-#: MySession.cpp:1324
+#: MySession.cpp:1338
 msgid "You have reached your session limit. No more sessions allowed"
 msgstr ""
 
-#: MySession.cpp:1516 MySession.cpp:1560
+#: MySession.cpp:1530 MySession.cpp:1574
 msgid "Could not create X11 authentication cookie"
 msgstr ""
 
-#: MySession.cpp:1596
+#: MySession.cpp:1610
 msgid "No X server found."
 msgstr ""
 
-#: MySession.cpp:1604
+#: MySession.cpp:1618
 #, c-format
 msgid "Could not execute %s: %s\n"
 msgstr ""
 
-#: MySession.cpp:1697
+#: MySession.cpp:1711
 #, c-format
 msgid ""
 "Could not create session directory\n"
 "%s\n"
 msgstr ""
 
-#: MySession.cpp:1728
+#: MySession.cpp:1742
 #, c-format
 msgid ""
 "Could not write session options\n"
 "%s\n"
 msgstr ""
 
-#: MySession.cpp:1816 MySession.cpp:1830
+#: MySession.cpp:1830 MySession.cpp:1844
 msgid "Could not assign a free port for CUPS printing"
 msgstr ""
 
-#: MySession.cpp:2175
+#: MySession.cpp:2203
 #, c-format
 msgid "Could not write %s"
 msgstr ""
 
-#: MySession.cpp:2280
+#: MySession.cpp:2309
 msgid "Could not start local X server"
 msgstr ""
 
-#: MySession.cpp:2301 MySession.cpp:2373 MySession.cpp:2387
+#: MySession.cpp:2330 MySession.cpp:2402 MySession.cpp:2416
 #, c-format
 msgid "Connecting to %s ..."
 msgstr ""
 
-#: MySession.cpp:2305
+#: MySession.cpp:2334
 msgid "Preparing multimedia service ..."
 msgstr ""
 
-#: MySession.cpp:2319 MySession.cpp:2365 MySession.cpp:2369
+#: MySession.cpp:2348 MySession.cpp:2394 MySession.cpp:2398
 msgid "Could not start multimedia support"
 msgstr ""
 
-#: MySession.cpp:2322 MySession.cpp:2367
+#: MySession.cpp:2351 MySession.cpp:2396
 msgid "Could not assign a free port for multimedia support"
 msgstr ""
 
-#: MySession.cpp:2384
+#: MySession.cpp:2413
 msgid "Preparing CUPS service ..."
 msgstr ""
 
-#: MySession.cpp:2386
+#: MySession.cpp:2415
 msgid "Could not start CUPS printing"
 msgstr ""
 
-#: MySession.cpp:2438
+#: MySession.cpp:2467
 msgid "Called command was: "
 msgstr ""
 
-#: MySession.cpp:2439
+#: MySession.cpp:2468
 msgid "Could not start nxssh."
 msgstr ""
 
@@ -866,16 +870,16 @@ msgstr ""
 msgid "Finish"
 msgstr ""
 
-#: MyXmlConfig.cpp:595
+#: MyXmlConfig.cpp:597
 msgid "Could not find application window"
 msgstr ""
 
-#: MyXmlConfig.cpp:1269
+#: MyXmlConfig.cpp:1272
 #, c-format
 msgid "Error %d while fetching session configuration"
 msgstr ""
 
-#: MyXmlConfig.cpp:1274
+#: MyXmlConfig.cpp:1277
 #, c-format
 msgid ""
 "Error while fetching session configuration:\n"
