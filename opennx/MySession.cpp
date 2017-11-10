@@ -429,6 +429,7 @@ MySession::MySession(wxString dir, wxString status, wxString stype, wxString hos
     , m_sHost(host)
     , m_sMd5(md5)
     , m_sDir(dir)
+    , m_WaitEventNum(5)
 {
     m_bValid = false;
     if (stype == wxT("C"))
@@ -967,7 +968,8 @@ MySession::OnSshEvent(wxCommandEvent &event)
                         << wxT("\" --type=\"") << m_sResumeType
                         << wxT("\" --id=\"") << m_sResumeId << wxT("\"");
                     printSsh(scmd);
-                    m_eConnectState = STATE_FINISH;
+                    m_eConnectState = STATE_WAITING_FOR_AGENT_PARAMETERS;
+                    m_WaitEventNum = 5; // wait proxy cookie(701) and other parameters: (705)display, (701)proxy cookie, (703)session type, (702)proxy IP, (704)session cache, (707) SSL tunelling
                     break;
                 case STATE_KILL_SESSION:
                     scmd = wxT("terminate --sessionid=\"");
@@ -981,6 +983,12 @@ MySession::OnSshEvent(wxCommandEvent &event)
                         printSsh(wxT("bye"), true, wxT("Mainloop: Got error, "));
                     }
                     break;
+
+                 case STATE_WAITING_FOR_AGENT_PARAMETERS:
+                    m_WaitEventNum--;
+                    if( m_WaitEventNum <= 0 || !m_sProxyCookie.empty() ){
+                        m_eConnectState = STATE_FINISH;
+                    }
             }
             break;
         case MyIPC::ActionPinDialog:
@@ -1008,6 +1016,8 @@ MySession::OnSshEvent(wxCommandEvent &event)
         case MyIPC::ActionSetProxyCookie:
             m_pDlg->SetStatusText(_("Negotiating session parameter"));
             m_sProxyCookie = msg;
+            if( m_eConnectState == STATE_WAITING_FOR_AGENT_PARAMETERS )
+                m_eConnectState = STATE_FINISH;
             break;
         case MyIPC::ActionSetProxyIP:
             m_pDlg->SetStatusText(_("Negotiating session parameter"));
@@ -1045,7 +1055,7 @@ MySession::OnSshEvent(wxCommandEvent &event)
             if (m_eConnectState == STATE_ABORT) {
                 m_bAbort = true;
             } else {
-                if (m_eConnectState == STATE_FINISH) {
+                if (m_eConnectState == STATE_FINISH || m_eConnectState == STATE_WAITING_FOR_AGENT_PARAMETERS) {
                     m_pDlg->SetStatusText(_("Starting session"));
                     msg = wxT("NX> 299 Switch connection to: ");
                     if ((m_lProtocolVersion > 0x00020000) && m_bSslTunneling) {
@@ -1074,7 +1084,7 @@ MySession::OnSshEvent(wxCommandEvent &event)
             }
             break;
         case MyIPC::ActionStartProxy:
-            if (m_eConnectState == STATE_FINISH) {
+            if (m_eConnectState == STATE_FINISH || m_eConnectState == STATE_WAITING_FOR_AGENT_PARAMETERS) {
                 m_pDlg->SetStatusText(_("Starting session"));
                 startSharing();
                 startProxy();

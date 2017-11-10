@@ -109,6 +109,7 @@ private:
         STATE_KILL_SESSION,
         STATE_ABORT,
         STATE_FINISH,
+        STATE_WAITING_FOR_AGENT_PARAMETERS,
     } tConnectState;
 
     wxArrayString m_aParseBuffer;
@@ -195,6 +196,8 @@ private:
     wxString m_sShadowGeometry;
     wxWindow *m_pParent;
     SessionWatch *m_pSessionWatch;
+
+    long m_WaitEventNum;
 
     // locals for admin tool
     bool m_bTouched;
