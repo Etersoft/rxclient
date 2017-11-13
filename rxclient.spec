@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt6
+Release: alt7
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -33,7 +33,7 @@ BuildRequires: nx
 # due _ln_sr
 BuildRequires: rpm-build-intro >= 1.9.18
 
-#Requires: nxssh
+Requires: nx >= 3.5.1.1
 
 Provides: opennx = %version
 Obsoletes: opennx
@@ -113,6 +113,9 @@ done
 %endif
 
 %changelog
+* Mon Nov 13 2017 Pavel Vainerman <pv@altlinux.ru> 0.18-alt7
+- added require for nx (nxssh)
+
 * Thu Nov 02 2017 Pavel Vainerman <pv@altlinux.ru> 0.18-alt6
 - fix bug for commit 21d6a6864a45385a
 
