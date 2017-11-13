@@ -34,6 +34,7 @@ BuildRequires: nx
 BuildRequires: rpm-build-intro >= 1.9.18
 
 Requires: nx >= 3.5.1.1
+Requires: nxssh
 
 Provides: opennx = %version
 Obsoletes: opennx
