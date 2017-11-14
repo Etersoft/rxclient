@@ -2201,10 +2201,18 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
                 fn.AppendDir(wxT("share"));
                 fn.AppendDir(wxT("rxclient"));
                 fn.AppendDir(wxT("keys"));
+                fn.SetFullName(wxT("server.id_rsa.key"));
+                nxsshcmd << wxT(" -i ") << cygPath(fn.GetFullPath());
+                fn.SetFullName(wxT("server.id_dsa.key"));
+                nxsshcmd << wxT(" -i ") << cygPath(fn.GetFullPath());
+                fn.SetFullName(wxT("server.id_ed25519.key"));
+                nxsshcmd << wxT(" -i ") << cygPath(fn.GetFullPath());
             } else {
                 fn.Assign(m_sTempDir, wxT("keylog"));
                 wxFile f;
-                wxRemoveFile(fn.GetFullPath());
+                if(fn.Exists()) {
+                    wxRemoveFile(fn.GetFullPath());
+                }
                 if (f.Open(fn.GetFullPath(), wxFile::write_excl, wxS_IRUSR|wxS_IWUSR)) {
                     f.Write(m_pCfg->sGetSshKey());
                     f.Close();
@@ -2212,13 +2220,8 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
                     wxLogSysError(_("Could not write %s"), fn.GetFullPath().c_str());
                     return false;
                 }
+                nxsshcmd << wxT(" -i ") << cygPath(fn.GetFullPath());
             }
-            fn.SetFullName(wxT("server.id_rsa.key"));
-            nxsshcmd << wxT(" -i ") << cygPath(fn.GetFullPath());
-            fn.SetFullName(wxT("server.id_dsa.key"));
-            nxsshcmd << wxT(" -i ") << cygPath(fn.GetFullPath());
-            fn.SetFullName(wxT("server.id_ed25519.key"));
-            nxsshcmd << wxT(" -i ") << cygPath(fn.GetFullPath());
         }
 
         if (m_pCfg->bGetUseProxy()) {
