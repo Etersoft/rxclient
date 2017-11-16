@@ -1,0 +1,51 @@
+stages:
+  - build
+  - test
+
+build and public:
+  stage: build
+  script:
+    # /tmp/.private/.. нужен для hasher, т.к. он не позволяет собирать с другим каталогом, а по умолчанию
+    # у gitlab-runner выставляется /tmp
+    - export TMPDIR=/tmp/.private/${USER}; export TMP=${TMPDIR}
+
+    # вынимаем через ssh, чтобы потом смочь сделать коммит
+    - git remote | grep -q gitlab || git remote add gitlab git@gitlab.eterfund.ru:rx-etersoft/rxclient.git
+    - /usr/bin/rpmlog -q -r -l
+    - korinf -f rxclient.spec x86_64/ALTLinux/p8 /var/ftp/pvt/Etersoft/RX@Etersoft/unstable
+    - korinf -f rxclient.spec x86_64/ALTLinux/Sisyphus /var/ftp/pvt/Etersoft/RX@Etersoft/unstable
+    - git push -f gitlab HEAD:ci/latest-build
+
+    # Приходиться делать так, потому-что gitlab-runner не позволяет обращаться к ресурсам лежащим вне сборочного каталога
+    - mkdir -p RPM/log; cp -rf ${HOME}/RPM/log/*rxclient*.log RPM/log/
+    - mkdir -p korinf-log; cp -rf ${HOME}/RPM/tmp/korinf-log/* korinf-log/
+
+  artifacts:
+    paths:
+    - RPM/log
+    - korinf-log
+    expire_in: 10 days
+
+  only:
+    - devel/gitlab-ci
+
+  tags:
+    - rx-build
+
+testsuite:
+  stage: test
+  script:
+    - sudo apt-get update && sudo apt-get -fy install rxclient
+    # токен задаётся как VARIABLE в свойствах проекта
+    - git clone https://gitlab-ci-token:${RX_TESTSUITE_TOKEN}@gitlab.eterfund.ru/rx-etersoft/rx-testsuite.git
+    - cd rx-testsuite && ./rx-tests-start-all
+  artifacts:
+    paths:
+    - rx-testsuite/report/*
+    expire_in: 10 days
+
+  only:
+    - ci/latest-build
+
+  tags:
+    - rx-tests
