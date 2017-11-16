@@ -2083,7 +2083,7 @@ MySession::clearSshKeys(const wxString &keyloc)
     }
 }
     bool
-MySession::initSmartCard(wxString & tempDir)
+MySession::initSmartCard(const wxString & tempDir)
 {
 #ifdef __WXMSW__
         return false;
