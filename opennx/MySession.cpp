@@ -2082,6 +2082,20 @@ MySession::clearSshKeys(const wxString &keyloc)
         }
     }
 }
+    bool
+MySession::initSmartCard(wxString & tempDir)
+{
+#ifdef __WXMSW__
+        return false;
+#endif
+
+    wxString logFile = tempDir;
+    logFile << wxFileName::GetPathSeparator() << wxT("smartkey.log");
+
+    wxShell("ssh-add -e /usr/lib64/opensc-pkcs11.so </dev/null >>" + logFile + " 2>&1");
+    wxShell("ssh-add -s /usr/lib64/opensc-pkcs11.so </dev/null >>" + logFile + " 2>&1");
+    return true;
+}
 
     bool
 MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent)
@@ -2136,27 +2150,6 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 #endif
         }
 #endif
-        wxString nxsshcmd = fn.GetShortPath();
-        nxsshcmd << appendcmd;
-        nxsshcmd << wxT(" -nx -x -2");
-        switch (m_pCfg->eGetLoginType()) {
-            case MyXmlConfig::LOGIN_KERBEROS:
-                nxsshcmd << wxT(" -K");
-                break;
-            case MyXmlConfig::LOGIN_SSHKEY:
-                nxsshcmd << wxT(" -A");
-                break;
-            case MyXmlConfig::LOGIN_SMARTCARD: // TODO
-            case MyXmlConfig::LOGIN_PASSWORD:
-                // Nothing to do
-                break;
-        }
-        nxsshcmd << wxT(" -p ") << m_pCfg->iGetServerPort()
-            << wxT(" -o 'RhostsAuthentication no'")
-            << wxT(" -o 'PasswordAuthentication no'")
-            << wxT(" -o 'RSAAuthentication no'")
-            << wxT(" -o 'RhostsRSAAuthentication no'")
-            << wxT(" -o 'PubkeyAuthentication yes'");
 
         m_sTempDir = m_sUserDir;
         m_sTempDir << wxFileName::GetPathSeparator() << wxT("temp")
@@ -2183,6 +2176,35 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         log->open(logfn.mb_str());
         m_pSshLog = new wxLogStream(log);
         wxLog::SetLogLevel(wxLOG_Max);
+
+        wxString nxsshcmd = fn.GetShortPath();
+        nxsshcmd << appendcmd;
+        nxsshcmd << wxT(" -nx -x -2");
+        switch (m_pCfg->eGetLoginType()) {
+            case MyXmlConfig::LOGIN_KERBEROS:
+                nxsshcmd << wxT(" -K");
+                break;
+            case MyXmlConfig::LOGIN_SSHKEY:
+                nxsshcmd << wxT(" -A");
+                break;
+            case MyXmlConfig::LOGIN_SMARTCARD:
+                if (initSmartCard(m_sTempDir)) {
+                    nxsshcmd << wxT(" -A");
+                } else {
+                    wxLogError(_("Could not add smartcard"));
+                }
+                break;
+            case MyXmlConfig::LOGIN_PASSWORD:
+                // Nothing to do
+                break;
+        }
+        nxsshcmd << wxT(" -p ") << m_pCfg->iGetServerPort()
+            << wxT(" -o 'RhostsAuthentication no'")
+            << wxT(" -o 'PasswordAuthentication no'")
+            << wxT(" -o 'RSAAuthentication no'")
+            << wxT(" -o 'RhostsRSAAuthentication no'")
+            << wxT(" -o 'PubkeyAuthentication yes'");
+
 
         m_bIsShadow = (m_pCfg->eGetSessionType() == MyXmlConfig::STYPE_SHADOW);
         if (m_pCfg->bGetRemoveOldSessionFiles())

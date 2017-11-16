@@ -129,6 +129,7 @@ private:
     void printSsh(const wxString &s, bool doLog = true, const wxString &reason = wxT(""));
     void cleanupOldSessions();
     void clearSshKeys(const wxString &);
+    bool initSmartCard(wxString & tempDir);
     ArrayOfShareGroups getActiveCupsPrinters();
     virtual void OnSshEvent(wxCommandEvent &);
     virtual void OnSessionEvent(wxCommandEvent &);
