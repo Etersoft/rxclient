@@ -1697,8 +1697,11 @@ MyXmlConfig::loadFromStream(wxInputStream &is, bool isPush)
                             tmp = getString(opt, wxT("Login Type"), wxEmptyString);
                             if (tmp == wxT("kerberos")) {
                                 m_eLoginType = LOGIN_KERBEROS;
+// Temporary turn off for Windows
+#ifndef __WXMSW__
                             } else if (tmp == wxT("pcsc")) {
                                 m_eLoginType = LOGIN_SMARTCARD;
+#endif
                             } else if (tmp == wxT("sshkey")) {
                                 m_eLoginType = LOGIN_SSHKEY;
                             } else {

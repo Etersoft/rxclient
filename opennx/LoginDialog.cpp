@@ -310,10 +310,12 @@ void LoginDialog::CreateControls()
     ////@begin LoginDialog content initialisation
     ////@end LoginDialog content initialisation
 
-    m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_11);
-    m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_12);
-    m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_13);
-    m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_14);
+    m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_11); // password
+    m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_12); // kerberos
+#ifndef __WXMSW__
+    m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_13); // smartcard (not for Windows yet)
+#endif
+    m_pCtrlLoginType->Append(ID_DIALOG_LOGIN_SYMBOL_14); // sshkey
     m_pCtrlLoginType->SetValue(ID_DIALOG_LOGIN_SYMBOL_11);
 
     ReadConfigDirectory();
