@@ -105,6 +105,7 @@ IMPLEMENT_APP(opennxApp);
     ,m_bAutoLogin(false)
     ,m_bAutoResume(false)
     ,m_bKillErrors(false)
+    ,m_bSilent(false)
     ,m_bNoGui(false)
     ,m_pLoginDialog(NULL)
 {
@@ -828,6 +829,8 @@ void opennxApp::OnInitCmdLine(wxCmdLineParser& parser)
             _("Automatically resume/takeover a session with the same name."));
     parser.AddSwitch(wxEmptyString, wxT("killerrors"),
             _("Automatically destroy error dialogs at termination."));
+    parser.AddSwitch(wxEmptyString, wxT("silent"),
+            _("Run autologin in silent mode."));
     parser.AddSwitch(wxEmptyString, wxT("admin"),
             _("Start the session administration tool."));
     parser.AddOption(wxEmptyString, wxT("cacert"),
@@ -866,10 +869,10 @@ void opennxApp::OnInitCmdLine(wxCmdLineParser& parser)
     // between option and option-value. The original however
     // *requires* the separator to be a space instead.
 #ifdef __WXMSW__
-    wxRegEx re(wxT("^--((exportres)|(cacert)|(caption)|(style)|(dialog)|(display)|(message)|(parent)|(session)|(window)|(trace))$"));
+    wxRegEx re(wxT("^--((exportres)|(cacert)|(caption)|(style)|(dialog)|(display)|(message)|(parent)|(session)|(window)|(trace)|(silent))$"));
 #else
     // On Unix, --display is a toolkit option
-    wxRegEx re(wxT("^--((exportres)|(cacert)|(caption)|(style)|(dialog)|(message)|(parent)|(session)|(window)|(trace))$"));
+    wxRegEx re(wxT("^--((exportres)|(cacert)|(caption)|(style)|(dialog)|(message)|(parent)|(session)|(window)|(trace)|(silent))$"));
 #endif
 
 #if wxCHECK_VERSION(2,9,0)
@@ -1013,6 +1016,11 @@ bool opennxApp::OnCmdLineParsed(wxCmdLineParser& parser)
         m_bAutoResume = true;
     if (parser.Found(wxT("killerrors")))
         m_bKillErrors = true;
+    if (parser.Found(wxT("silent"))) {
+        m_bKillErrors = true;
+        m_bAutoLogin = true;
+        m_bSilent = true;
+    }
     if (parser.Found(wxT("waittest")))
         m_bTestCardWaiter = true;
     (void)parser.Found(wxT("session"), &m_sSessionName);
@@ -1292,7 +1300,7 @@ bool opennxApp::OnInit()
             m_bNoGui = true;
             break;
         }
-        if (tmp.IsSameAs(wxT("--killerrors"))) {
+        if (tmp.IsSameAs(wxT("--killerrors")) || tmp.IsSameAs(wxT("--silent"))) {
             m_bKillErrors = true;
             break;
         }
