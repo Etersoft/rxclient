@@ -539,6 +539,9 @@ void LoginDialog::OnOkClick(wxCommandEvent& event)
         bool b = s.Create(*m_pCurrentCfg, m_sPassword, this);
         Enable();
         if (!b) {
+            if (wxGetApp().Silent()) {
+                EndModal(wxID_CANCEL);
+            }
             // Clear password after failure or abort.
             if (!m_bGuestLogin) {
                 bool clpw = true;
@@ -613,6 +616,9 @@ void LoginDialog::OnInitDialog( wxInitDialogEvent& event )
 {
     wxDialog::OnInitDialog(event);
 #ifndef SINGLE_SESSION
+    if (wxGetApp().Silent()) {
+        Show(false);
+    }
     if (wxGetApp().AutoLogin())
         m_cAutoLoginTimer.Start(1000, wxTIMER_ONE_SHOT);
 #endif
