@@ -59,6 +59,7 @@ class opennxApp : public wxApp
         bool LibUSBAvailable() { return m_bLibUSBAvailable; }
         bool NxProxyAvailable() { return m_bNxProxyAvailable; }
         bool AutoLogin() { return m_bAutoLogin; }
+        bool Silent() { return m_bSilent; }
         bool AutoResume() { return m_bAutoResume; }
 
         void SetRequireWatchReader(bool b) { m_bRequireWatchReader = b; }
@@ -118,6 +119,7 @@ class opennxApp : public wxApp
         bool m_bAutoLogin;
         bool m_bAutoResume;
         bool m_bKillErrors;
+        bool m_bSilent;
         bool m_bNoGui;
         LoginDialog *m_pLoginDialog;
 
