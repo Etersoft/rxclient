@@ -2359,7 +2359,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         m_iProgress = 0;
         ConnectDialog dlg(m_pParent);
         m_pDlg = &dlg;
-        dlg.Show(true);
+        dlg.Show(!wxGetApp().Silent());
         dlg.SetStatusText(wxString::Format(_("Connecting to %s ..."),
                     m_pCfg->sGetServerHost().c_str()));
         if (m_pCfg->bGetEnableMultimedia()) {
