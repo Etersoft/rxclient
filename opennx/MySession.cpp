@@ -869,6 +869,9 @@ MySession::OnSshEvent(wxCommandEvent &event)
             m_iProgress += 4;
             m_pDlg->SetProgress(m_iProgress);
             switch (m_eConnectState) {
+                case STATE_WAIT:
+                    m_pDlg->SetStatusText(_("Waiting user prompt"));
+                    break;
                 case STATE_INIT:
                 case STATE_ABORT:
                     break;
@@ -972,6 +975,7 @@ MySession::OnSshEvent(wxCommandEvent &event)
                     m_WaitEventNum = 5; // wait proxy cookie(701) and other parameters: (705)display, (701)proxy cookie, (703)session type, (702)proxy IP, (704)session cache, (707) SSL tunelling
                     break;
                 case STATE_KILL_SESSION:
+                    m_pDlg->SetStatusText(_("Terminate session"));
                     scmd = wxT("terminate --sessionid=\"");
                     scmd << m_sKillId << wxT("\"");
                     printSsh(scmd);
@@ -1285,6 +1289,7 @@ MySession::parseSessions(bool moreAllowed)
             m_sResumeId = d.GetSelectedId();
             m_eConnectState = STATE_RESUME_SESSION;
         } else {
+            m_eConnectState = STATE_WAIT;
             switch (d.ShowModal()) {
                 case wxID_OK:
                     ::myLogTrace(MYTRACETAG, wxT("ResumeDialog returned OK"));
@@ -1297,6 +1302,7 @@ MySession::parseSessions(bool moreAllowed)
                             wxLogInfo(wxT("TERMINATE"));
                             m_sKillId = d.GetSelectedId();
                             m_eConnectState = STATE_KILL_SESSION;
+                            printSsh(wxEmptyString);
                             break;
                         case ResumeDialog::Resume:
                             wxLogInfo(wxT("RESUME"));
@@ -1305,6 +1311,7 @@ MySession::parseSessions(bool moreAllowed)
                             m_sResumeId = d.GetSelectedId();
                             m_sResumePort = d.GetSelectedPort();
                             m_eConnectState = m_bIsShadow ? STATE_ATTACH_SESSION : STATE_RESUME_SESSION;
+                            printSsh(wxEmptyString);
                             break;
                         case ResumeDialog::Takeover:
                             wxLogInfo(wxT("TAKEOVER"));
@@ -1312,9 +1319,11 @@ MySession::parseSessions(bool moreAllowed)
                             m_sResumeType = d.GetSelectedType();
                             m_sResumeId = d.GetSelectedId();
                             m_eConnectState = STATE_RESUME_SESSION;
+                            printSsh(wxEmptyString);
                             break;
                         case ResumeDialog::New:
                             m_eConnectState = STATE_START_SESSION;
+                            printSsh(wxEmptyString);
                             break;
                     }
                     if (m_bNextCmd) {
@@ -1733,6 +1742,7 @@ MySession::startProxy()
             if (m_lProtocolVersion <= 0x00020000) {
                 wxLogInfo(wxT("Executing %s"), pcmd.c_str());
 #ifdef __WXMSW__
+                if (m_eXarch == XARCH_XMING)
                 CreateDetachedProcess((const char *)pcmd.mb_str());
                 if (m_iXserverPID)
                     AllowSetForegroundWindow(m_iXserverPID);

@@ -109,6 +109,7 @@ private:
         STATE_KILL_SESSION,
         STATE_ABORT,
         STATE_FINISH,
+        STATE_WAIT,
         STATE_WAITING_FOR_AGENT_PARAMETERS,
     } tConnectState;
 
