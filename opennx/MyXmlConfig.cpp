@@ -908,10 +908,9 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
 #ifdef __WXMAC__
     ret << wxT(" --client=\"macosx\"");
 #else
-# ifdef __UNIX__
-    ret << wxT(" --client=\"linux\"");
+# ifdef __WXMSW__
+    ret << wxT(" --client=\"winnt\"");
 # else
-    // << wxT(" --client=\"winnt\"")
     ret << wxT(" --client=\"linux\"");
 # endif
 #endif
