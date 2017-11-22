@@ -441,6 +441,7 @@
                                                                     <item>Available Area</item>
                                                                     <item>Fullscreen</item>
                                                                     <item>Custom</item>
+                                                                    <item>No decoration</item>
                                                                 </content>
                                                             </object>
                                                         </object>
