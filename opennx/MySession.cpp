@@ -1058,18 +1058,20 @@ MySession::OnSshEvent(wxCommandEvent &event)
                 if (m_eConnectState == STATE_FINISH || m_eConnectState == STATE_WAITING_FOR_AGENT_PARAMETERS) {
                     m_pDlg->SetStatusText(_("Starting session"));
                     msg = wxT("NX> 299 Switch connection to: ");
-                    if ((m_lProtocolVersion > 0x00020000) && m_bSslTunneling) {
-                        msg << wxT("NX mode: encrypted options: nx,options=")
+		    if (m_lProtocolVersion > 0x00020000) {
+			msg << wxT("NX mode: ")
+			    << (m_bSslTunneling ? wxT("encrypted") : wxT("unencrypted"))
+			    << wxT(" options: nx,options=")
                             << formatOptFilename() << wxT(":") << m_sSessionDisplay;
                     } else {
                         msg << m_sProxyIP << wxT(":") << m_sProxyPort
                             << wxT(" cookie: ") << m_sProxyCookie;
-                        m_bSessionRunning = true;
-                        wxString slog = m_sSessionDir;
-                        slog << wxFileName::GetPathSeparator() << wxT("session");
-                        m_pSessionWatch = new SessionWatch(this, slog,
-                                wxT("Session: Session started at"));
                     }
+                    m_bSessionRunning = true;
+                    wxString slog = m_sSessionDir;
+                    slog << wxFileName::GetPathSeparator() << wxT("session");
+                    m_pSessionWatch = new SessionWatch(this, slog,
+                    wxT("Session: Session started at"));
                     printSsh(msg);
                 } else {
                     m_bSessionRunning = true;
@@ -1512,6 +1514,9 @@ MySession::unhideNXWin()
     void
 MySession::terminateXserver()
 {
+    // nxwin and nonencrypted: keep running (here we need it?)
+    if ((XARCH_CYGWIN == m_eXarch) && (!m_bSslTunneling))
+        return;
     // Xming non-fullscreen: keep running
     if ((XARCH_CYGWIN == m_eXarch) ||
             (MyXmlConfig::DPTYPE_FULLSCREEN == m_pCfg->eGetDisplayType())) {
@@ -1673,19 +1678,6 @@ MySession::startProxy()
     popts
         << wxT(",encryption=") << (m_bSslTunneling ? 1 : 0)
         << wxT(",session=session");
-    if (m_lProtocolVersion < 0x00030300) {
-        popts
-#ifdef __WXMAC__
-            << wxT(",client=macosx");
-#else
-# ifdef __UNIX__
-            << wxT(",client=linux");
-# else
-            //<< wxT(",client=winnt");
-            << wxT(",client=linux");
-# endif
-#endif
-    }
     popts << wxT(",id=") << m_sSessionID;
     if (m_bSslTunneling) {
         if (m_lProtocolVersion <= 0x00020000) {
@@ -1694,7 +1686,7 @@ MySession::startProxy()
             popts << wxT(",listen=") << m_sProxyPort;
         }
     } else
-        popts << wxT(",connect=") << m_sHost;
+        popts << wxT(",connect=") << m_sProxyIP;
 
     // Undocumented feature of the original:
     // If a file ~/.nx/options exists, it's content is
@@ -1738,7 +1730,7 @@ MySession::startProxy()
                 << wxFileName::GetPathSeparator() << wxT("nxproxy -S nx,options=")
                 << cygPath(m_sOptFilename) << wxT(":") << m_sSessionDisplay;
             printSsh(wxT("bye"), true, wxT("Options file written, "));
-            if ((m_lProtocolVersion <= 0x00020000) || (!m_bSslTunneling)) {
+            if (m_lProtocolVersion <= 0x00020000) {
                 wxLogInfo(wxT("Executing %s"), pcmd.c_str());
 #ifdef __WXMSW__
                 CreateDetachedProcess((const char *)pcmd.mb_str());
@@ -2487,12 +2479,16 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 #endif
                         return false;
                     }
-                } else {
+                }
+/*
+// but original nxclient stay leave nxssh in case of unencrypted conn
+                else {
                     if (m_bSessionEstablished && (!m_bSslTunneling)) {
                         // Unecrypted session (handled by nxproxy), get rid of nxssh
                         nxssh.Kill();
                     }
                 }
+*/
                 wxThread::Sleep(500);
 #ifdef __WXMSW__
                 if (m_iXserverPID)
