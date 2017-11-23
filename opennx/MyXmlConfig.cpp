@@ -688,7 +688,6 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
                     else if (m_bRunXclients)
                         ret << wxT("default\"");
                     else {
-                        bNeedGeometry = false;
                         ret << wxT("application\"");
                         ret    << wxT(" --application=\"")
                             << UrlEsc(m_sCommandLine) << wxT("\"");
