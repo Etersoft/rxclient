@@ -36,3 +36,15 @@ watchreader
 .setupdir
 .stripsetup
 
+*.m4
+/op/*
+*.orig
+*.rej
+packaging/win32/pulse/include/*
+packaging/win32/pulse/pa-win32-*/*
+
+packaging/win32/cygnx/*
+packaging/win32/dejavu-fonts-ttf*
+packaging/win32/font-misc-misc*
+packaging/win32/pulse/dist/*
+packaging/win32/setupdir/*
