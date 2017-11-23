@@ -9,7 +9,7 @@
 #include "version.iss"
 
 #define MSWU "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
-#define APPIDSTR "{56D797D7-543C-408F-BBEB-B56787873D2F}"
+#define APPIDSTR "{56D797D7-543C-408F-BBEB-B56787874E2F}"
 #define APPIDVAL "{" + APPIDSTR
 
 [Setup]
