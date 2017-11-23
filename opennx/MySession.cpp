@@ -167,12 +167,12 @@ wxString cygPath(const wxString &dir, const wxString &file)
 class RunLog : public wxLogChain
 {
     public:
-        RunLog(wxLog *logger) :wxLogChain(logger) { }
+        RunLog(wxLog *logger) :wxLogChain(logger) { SetVerbose(true); }
 
-        void DoLog(wxLogLevel level, const wxChar *szString, time_t t)
+        void DoLogRecord(wxLogLevel level, const wxString & szString, const wxLogRecordInfo & info)
         {
             PassMessages(level <= minlevel);
-            wxLogChain::DoLog((level > minlevel) ? minlevel : level, szString, t);
+            wxLogChain::DoLogRecord((level > minlevel) ? minlevel : level, szString, info);
         }
     private:
         static const wxLogLevel minlevel = wxLOG_Message;
@@ -1504,8 +1504,7 @@ MySession::unhideNXWin()
         HWND h = ::GetTopWindow(0);
         while (h) {
             wxString wclass;
-            int r = GetClassName(h, wclass.GetWriteBuf(40), 38);
-            wclass.UngetWriteBuf();
+            int r = GetClassName(h, wxStringBuffer(wclass,40), 38);
             if ((r > 0) && wclass.Contains(wxT("cygwin/xfree86"))) {
                 DWORD pid;
                 GetWindowThreadProcessId(h, &pid);
@@ -2360,8 +2359,8 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 #ifdef __WXMSW__
         if (m_eXarch == XARCH_CYGWIN) {
             wxString srvstr = wxT("server");
-            ::wxSetEnv(wxT("CYGWIN"), srvstr);
-            ::wxLogInfo(wxT("env: CYGWIN='%s'"), srvstr.c_str());
+            wxSetEnv(wxT("CYGWIN"), srvstr);
+            wxLogInfo(wxT("env: CYGWIN='%s'"), srvstr.c_str());
         }
         if (!startXserver()) {
             wxLogError(_("Could not start local X server"));
