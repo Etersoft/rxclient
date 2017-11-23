@@ -195,6 +195,7 @@ class SessionCleaner : public wxDirTraverser
 
         ~SessionCleaner()
         {
+            wxLogNull nolog;
             int n = m_aFiles.GetCount() - 1;
             while (n >= 0)
                 wxRemoveFile(m_aFiles[n--]);
