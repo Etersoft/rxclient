@@ -50,7 +50,7 @@ encodeString(const wxString &s)
 #if wxCHECK_VERSION(2,9,0)
             ret += wxString::Format(wxT("%d:"), s[i].GetValue() + i + 1);
 #else
-            ret += wxString::Format(wxT("%d:"), s[i] + i + 1);
+            ret += wxString::Format(wxT("%d:"), (int) s[i] + (int) i + 1);
 #endif
     }
     return ret;
@@ -70,7 +70,7 @@ decodeString(const wxString &s)
             if (p != -1) {
                 long l;
                 val.Left(p).ToLong(&l);
-                ret += wxChar(l - idx++);
+                ret += wxChar((int)l - idx++);
             } else
                 break;
             val.Remove(0, p + 1);
@@ -132,7 +132,7 @@ decryptString(const wxString &s)
 #if wxCHECK_VERSION(2,9,0)
     int n = (sRet[0].GetValue() + sRet.Length()) - 3;
 #else
-    int n = (sRet[0] + sRet.Length()) - 3;
+    int n = ((int) sRet[0] + sRet.Length()) - 3;
 #endif
     
     for (i = 1; i < sRet.Length(); i++) {
