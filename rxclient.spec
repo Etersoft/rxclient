@@ -1,4 +1,3 @@
-# This spec is backported to ALTLinux c7 automatically by rpmbph script from etersoft-build-utils.
 #
 # Enable USBIP support
 %def_without usbip
@@ -7,7 +6,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt1.M70C.3
+Release: alt1.M70C.4
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -112,6 +111,10 @@ done
 %endif
 
 %changelog
+* Fri Nov 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.4
+- add parameter "silent" to opennxapp parameters
+- hide all dialogs when rxclient runned in silent mode
+
 * Fri Oct 27 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.3
 - small translation fix
 - fix symlink creation (eterbug #11676)
