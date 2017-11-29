@@ -64,8 +64,12 @@ ENABLE_TRACE;
 #endif
 
 #ifdef WITH_PULSEAUDIO
-#include <pulse/pulseaudio.h>
 
+#ifdef __WXMSW__
+#include "packaging/win32/pulse/include/pulseaudio.h"
+#else
+#include <pulse/pulseaudio.h>
+#endif
 
 typedef pa_threaded_mainloop* (*Tpa_threaded_mainloop_new)(void);
 typedef pa_mainloop_api* (*Tpa_threaded_mainloop_get_api)(pa_threaded_mainloop*);
