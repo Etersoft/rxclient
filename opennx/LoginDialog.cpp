@@ -515,16 +515,16 @@ void LoginDialog::OnComboboxSessionSelected( wxCommandEvent& event )
                 switch(cfg.eGetLoginType())
                 {
                 case MyXmlConfig::LOGIN_PASSWORD:
-                    m_pCtrlLoginType->ChangeValue(ID_DIALOG_LOGIN_SYMBOL_11);
+                    m_pCtrlLoginType->SetValue(ID_DIALOG_LOGIN_SYMBOL_11);
                     break;
                 case MyXmlConfig::LOGIN_KERBEROS:
-                    m_pCtrlLoginType->ChangeValue(ID_DIALOG_LOGIN_SYMBOL_12);
+                    m_pCtrlLoginType->SetValue(ID_DIALOG_LOGIN_SYMBOL_12);
                     break;
                 case MyXmlConfig::LOGIN_SMARTCARD:
-                    m_pCtrlLoginType->ChangeValue(ID_DIALOG_LOGIN_SYMBOL_13);
+                    m_pCtrlLoginType->SetValue(ID_DIALOG_LOGIN_SYMBOL_13);
                     break;
                 case MyXmlConfig::LOGIN_SSHKEY:
-                    m_pCtrlLoginType->ChangeValue(ID_DIALOG_LOGIN_SYMBOL_14);
+                    m_pCtrlLoginType->SetValue(ID_DIALOG_LOGIN_SYMBOL_14);
                     break;
                 }
                 // FIXME: Enabling/disabling of password field must be on event from ChangeValue()

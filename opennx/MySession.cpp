@@ -169,11 +169,19 @@ class RunLog : public wxLogChain
     public:
         RunLog(wxLog *logger) :wxLogChain(logger) { SetVerbose(true); }
 
+#if wxCHECK_VERSION(3,0,0)
         void DoLogRecord(wxLogLevel level, const wxString & szString, const wxLogRecordInfo & info)
         {
             PassMessages(level <= minlevel);
             wxLogChain::DoLogRecord((level > minlevel) ? minlevel : level, szString, info);
         }
+#else
+        void DoLog(wxLogLevel level, const wxChar *szString, time_t t)
+        {
+            PassMessages(level <= minlevel);
+            wxLogChain::DoLog((level > minlevel) ? minlevel : level, szString, t);
+        }
+#endif
     private:
         static const wxLogLevel minlevel = wxLOG_Message;
 };
@@ -2109,8 +2117,15 @@ MySession::initSmartCard(const wxString & tempDir)
     wxString logFile = tempDir;
     logFile << wxFileName::GetPathSeparator() << wxT("smartkey.log");
 
-    wxShell("ssh-add -e /usr/lib64/opensc-pkcs11.so </dev/null >>" + logFile + " 2>&1");
-    wxShell("ssh-add -s /usr/lib64/opensc-pkcs11.so </dev/null >>" + logFile + " 2>&1");
+    wxString cmd;
+
+    cmd = wxEmptyString;
+    cmd << wxT("ssh-add -e /usr/lib64/opensc-pkcs11.so </dev/null >>") << logFile << wxT(" 2>&1");
+    wxShell(cmd);
+
+    cmd = wxEmptyString;
+    cmd << wxT("ssh-add -s /usr/lib64/opensc-pkcs11.so </dev/null >>") << logFile << wxT(" 2>&1");
+    wxShell(cmd);
     return true;
 }
 
@@ -2249,7 +2264,10 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
             } else {
                 fn.Assign(m_sTempDir, wxT("keylog"));
                 wxFile f;
-                if(fn.Exists()) {
+#if wxCHECK_VERSION(3,0,0)
+                if(fn.Exists())
+#endif
+                {
                     wxRemoveFile(fn.GetFullPath());
                 }
                 if (f.Open(fn.GetFullPath(), wxFile::write_excl, wxS_IRUSR|wxS_IWUSR)) {
