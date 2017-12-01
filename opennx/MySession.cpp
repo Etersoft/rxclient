@@ -2264,10 +2264,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
             } else {
                 fn.Assign(m_sTempDir, wxT("keylog"));
                 wxFile f;
-#if wxCHECK_VERSION(3,0,0)
-                if(fn.Exists())
-#endif
-                {
+                if (fn.IsFileWritable()) {
                     wxRemoveFile(fn.GetFullPath());
                 }
                 if (f.Open(fn.GetFullPath(), wxFile::write_excl, wxS_IRUSR|wxS_IWUSR)) {
