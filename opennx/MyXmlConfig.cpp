@@ -692,12 +692,13 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
                         ret    << wxT(" --application=\"")
                             << UrlEsc(m_sCommandLine) << wxT("\"");
                     }
+                    ret << wxT(" --rootless=\"") << (m_bVirtualDesktop ? 0 : 1)
+                        << wxT("\" --virtualdesktop=\"")
+                        << (m_bVirtualDesktop ? 1 : 0) << wxT("\"");
                     break;
             }
-            ret << wxT(" --rootless=\"")
-                << (m_bVirtualDesktop ? 0 : 1)
-                << wxT("\" --virtualdesktop=\"")
-                << (m_bVirtualDesktop ? 1 : 0) << wxT("\"");
+            if (DTYPE_CUSTOM != m_eSessionType)
+                ret << wxT(" --rootless=\"0\" --virtualdesktop=\"1\"");
             if (m_bUseCustomImageEncoding) {
                 ret << wxT(" --imagecompressionmethod=\"") << m_iImageEncoding << wxT("\"")
                     << wxT(" --imagecompressionlevel=\"")
