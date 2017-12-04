@@ -8,16 +8,16 @@ cache:
   apt: true
 
 env:
-  global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
-   - secure: "KrqAnUjd5+AjMOGnWvtyt0BF0BIkJMwJ0i/4X+VdI3sWYDy4rKZETh4uZLfgQmxBFHbQqCGLSdhM+Mbjt2LF/F5L1GqJELjXMYPxfiaXy2o1KJPZGYAn8Lm/FeTh2GPBkvHAOYrNpY758zKibZeTuIrr7fTiei8iRxELdtXRx/zNKyF3AacuqULrlziaQaUjJWaamwtbLuXWxJ2SsKq0cWNVwhp/SYLBvn4oZ5d6hWZWHav4mGo793nANKN4b6/0iLxOZVxBwdxE8o4bAgqs8Q+mTAeqJ19STCgq9unIMU8QvE5xu/PlR3Z1qJJRBTl3l8eiitW5y92DoJHj6AR3vit7YTTaXSD570CW+p5ZV9e+u/5s3nAZa5S1Qyk4mlEzDxDYv/3HoItC4Llqz3LqBhMHRf0i6ELBzOmsHRoWrG8ANSu5QhilepNbi73NQgp9mOoV7WtlfN/q1Vn3RCCWOb4ZIXEQPhmI9yLbDHOigzKvr2Oe/WSN5aitFBb49alaWzLsObuSVsPOnKfCBKQqqmai7O8asCIWA+FhSeKev7LKgKicK+dGF/Rwdp309MPghBXCiN5uH1AN4D350hIyvOHhC2ZrWgHqXPOjaRwo+J26oX9SFahOopZ/dfLxGyf1R3uX2Ao2AIm2gN0VSTuh41obocVE1pV8SOgF0olzRU8="
+   - secure: "rJQezd8T+XlRkBBl/NO2t+2dRvQT0RG1v7wBaj/87TOgK+KDyJWpdmfCNPkCMGkB80GUw7HUvyijP7XzVi2ewEdnQVQAt+HHMWC0TFxccFPNo7sdQLJYtDX8Ie58gH9+ebiUi4Spr1K8pjeL5feXQh9RZfsGKGqj9trsgDJsiNQ7JGQ1FOr7uxOxE71jeCUIElUVDxqFyIfDHXckLmLXz687zIYyFzKYxey4kGfszzc8n0vLg/FeGS5ow+LRvkmLCqcvWyK6uigg0x/j2mqNbaxCoz0bWErTDkwTIudxo/EFsC4ZL0+gr7KnCujRlcA3XGNqF+mKtrn5VLR0F4DztQt/hp28F7CZmLFZcv0sI2yEB6JsikGpyDVywVQBWHV9k6MRAmLbh+XdsMya6PDdHnc79KEb6Na5LZKxlkdRggwXosaC9FstXpmPWgAAKvnnutU0KrdLUnvbSx/Pj3ogIdIZHkSVz630d0P/+02FLpDfA2/PosDzMWkCZXu8+3OW6E3OoQ38G/t0yWNh+ot5ckfbjwif2SWCiqbvkSmz2N4GJbDMJxLgZvzp9GX4LZlKHB9VRvjEUCq6AQmzhJXdxq9JkNumO9FWcL1o8tf5Zts6Qn4kACLX+MtrzuxGMGOQsA6ofKk10WazkhxUw4T9FmXPq13du6SkbncwL1eXlNk="
 
 before_install:
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
   - sudo apt-get -qq update
   - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8 libstdc++-4.8-dev; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+  # - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
 install:
   - sudo apt-get install libwxgtk3.0-dev libsmbclient-dev libcups2-dev libsm-dev libxau-dev libxmu-dev vim-common
@@ -50,4 +50,4 @@ addons:
     notification_email: pv@etersoft.ru
     build_command_prepend: "make clean"
     build_command: make -j4
-    branch_pattern: coverity_scan
+    branch_pattern: travis
