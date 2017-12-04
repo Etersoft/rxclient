@@ -697,7 +697,7 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
                         << (m_bVirtualDesktop ? 1 : 0) << wxT("\"");
                     break;
             }
-            if (DTYPE_CUSTOM != m_eSessionType)
+            if (DTYPE_CUSTOM != m_eDesktopType)
                 ret << wxT(" --rootless=\"0\" --virtualdesktop=\"1\"");
             if (m_bUseCustomImageEncoding) {
                 ret << wxT(" --imagecompressionmethod=\"") << m_iImageEncoding << wxT("\"")
