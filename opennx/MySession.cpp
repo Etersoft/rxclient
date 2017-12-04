@@ -803,6 +803,9 @@ MySession::OnSshEvent(wxCommandEvent &event)
             break;
         case MyIPC::ActionWarning:
             {
+                if (wxGetApp().Silent()) {
+                    break;
+                }
                 wxString cfgid(wxT("sshwarn."));
                 SupressibleMessageDialog d(m_pParent, msg,
                         _("Warning - RX Client"), wxOK|wxICON_EXCLAMATION);
@@ -815,6 +818,10 @@ MySession::OnSshEvent(wxCommandEvent &event)
             break;
         case MyIPC::ActionPromptYesNo:
             {
+                if (wxGetApp().Silent()) {
+                    printSsh(wxT("yes"));
+                    break;
+                }
                 wxString cfgid(wxT("sshyesno."));
                 SupressibleMessageDialog d(m_pParent, msg,
                         _("Warning - RX Client"), wxYES_NO|wxICON_EXCLAMATION);
