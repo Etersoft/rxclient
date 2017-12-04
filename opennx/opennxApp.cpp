@@ -79,8 +79,8 @@
 #include "memres.h"
 
 #include "trace.h"
-ENABLE_TRACE;
-DECLARE_TRACETAGS;
+ENABLE_TRACE
+DECLARE_TRACETAGS
 
 // Create a new application object: this macro will allow wxWindows to create
 // the application object during program execution (it's better than using a
@@ -88,7 +88,7 @@ DECLARE_TRACETAGS;
 // wxGetApp() which will return the reference of the right type (i.e. opennxApp and
 // not wxApp)
 
-IMPLEMENT_APP(opennxApp);
+IMPLEMENT_APP(opennxApp)
 
     opennxApp::opennxApp()
     : wxApp()

@@ -41,7 +41,7 @@ class SharedResource : public wxObject
             SHARE_UNKNOWN,
             SHARE_SMB_DISK,
             SHARE_SMB_PRINTER,
-            SHARE_CUPS_PRINTER,
+            SHARE_CUPS_PRINTER
         } ShareType;
 
         wxString name;

@@ -46,8 +46,8 @@
 #include "PulseAudio.h"
 
 #include "trace.h"
-ENABLE_TRACE;
-DECLARE_TRACETAGS;
+ENABLE_TRACE
+DECLARE_TRACETAGS
 
 IMPLEMENT_APP( pulseTest )
 IMPLEMENT_CLASS( pulseTest, wxApp )

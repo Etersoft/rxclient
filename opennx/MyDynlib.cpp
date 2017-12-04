@@ -45,7 +45,7 @@
 #include <wx/tokenzr.h>
 
 #include "trace.h"
-ENABLE_TRACE;
+ENABLE_TRACE
 
 #ifdef __WXMAC__
 # define LD_LIBRARY_PATH wxT("DYLD_LIBRARY_PATH")

@@ -52,7 +52,7 @@
 ////@end XPM images
 
 class myRichTextCtrl : public wxRichTextCtrl {
-DECLARE_DYNAMIC_CLASS(myRichTextCtrl);
+DECLARE_DYNAMIC_CLASS(myRichTextCtrl)
 
     public:
 
@@ -88,7 +88,7 @@ DECLARE_DYNAMIC_CLASS(myRichTextCtrl);
         return false;
     }
 };
-IMPLEMENT_DYNAMIC_CLASS(myRichTextCtrl, wxRichTextCtrl);
+IMPLEMENT_DYNAMIC_CLASS(myRichTextCtrl, wxRichTextCtrl)
 
 /*!
  * TextViewer type definition

@@ -54,7 +54,7 @@
 #endif
 
 #include "trace.h"
-ENABLE_TRACE;
+ENABLE_TRACE
 
 #ifdef __WXMAC__
 // Current SCA implementation on MacOSX does not
@@ -73,7 +73,7 @@ typedef int (*Tsc_detect_card_presence)(sc_reader_t *reader, int slot_id);
 #endif // SUPPORT_OPENSC
 
 #ifdef APP_OPENNX
-DEFINE_LOCAL_EVENT_TYPE(wxEVT_CARDINSERTED);
+DEFINE_LOCAL_EVENT_TYPE(wxEVT_CARDINSERTED)
 
 class CardWaitThread : public wxThreadHelper
 {

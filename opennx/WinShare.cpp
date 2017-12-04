@@ -47,11 +47,11 @@
 #include <wx/arrimpl.cpp>
 
 #include "trace.h"
-ENABLE_TRACE;
+ENABLE_TRACE
 
-IMPLEMENT_DYNAMIC_CLASS(SharedResource, wxObject);
+IMPLEMENT_DYNAMIC_CLASS(SharedResource, wxObject)
 
-WX_DEFINE_OBJARRAY(ArrayOfShares);
+WX_DEFINE_OBJARRAY(ArrayOfShares)
 
 #ifdef __UNIX__
 
@@ -146,7 +146,7 @@ class DllData
             SmbClientWinNT,
             SmbClientWin95,
             SmbClientUnix,
-            CupsClientUnix,
+            CupsClientUnix
         } ClientType;
 
         DllData(ClientType);

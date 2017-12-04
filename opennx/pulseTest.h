@@ -26,7 +26,7 @@
 
 class pulseTest: public wxApp
 {    
-    DECLARE_CLASS(pulseTest);
+    DECLARE_CLASS(pulseTest)
     DECLARE_EVENT_TABLE()
 
     public:

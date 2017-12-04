@@ -47,7 +47,7 @@ public:
         MYVAL_NUMERIC,
         MYVAL_HEX,
         MYVAL_HOST,
-        MYVAL_FILENAME,
+        MYVAL_FILENAME
     } MyValidatorType;
 
 

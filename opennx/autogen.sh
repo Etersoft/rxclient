@@ -1,4 +1,4 @@
 #! /bin/sh
 
 autoreconf -fiv
-./configure --prefix=/usr $*
+./configure --enable-warn --prefix=/usr $*

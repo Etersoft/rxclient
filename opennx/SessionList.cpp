@@ -45,9 +45,9 @@
 #include <wx/filename.h>
 
 #include "trace.h"
-ENABLE_TRACE;
+ENABLE_TRACE
 
-DEFINE_LOCAL_EVENT_TYPE(wxEVT_SESSIONLIST_ACTION);
+DEFINE_LOCAL_EVENT_TYPE(wxEVT_SESSIONLIST_ACTION)
 
 class SessionTraverser : public wxDirTraverser
 {

@@ -30,7 +30,7 @@
 
 class WrappedStaticText : public wxStaticText
 {
-    DECLARE_DYNAMIC_CLASS(WrappedStaticText);
+    DECLARE_DYNAMIC_CLASS(WrappedStaticText)
 
     public:
         WrappedStaticText()

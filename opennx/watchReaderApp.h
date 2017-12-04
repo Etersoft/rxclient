@@ -26,7 +26,7 @@
 
 class watchReaderApp: public wxApp
 {    
-    DECLARE_CLASS(watchReaderApp);
+    DECLARE_CLASS(watchReaderApp)
     DECLARE_EVENT_TABLE()
 
     public:

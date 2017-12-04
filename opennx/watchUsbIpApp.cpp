@@ -59,7 +59,7 @@
 #include "memres.h"
 
 #include "trace.h"
-ENABLE_TRACE;
+ENABLE_TRACE
 DECLARE_TRACETAGS;
 
 DECLARE_LOCAL_EVENT_TYPE(wxEVT_PROCESS_DIED, -1);

@@ -50,7 +50,7 @@
 ////@end XPM images
 
 #include "trace.h"
-ENABLE_TRACE;
+ENABLE_TRACE
 
 /*!
  * LogDialog type definition

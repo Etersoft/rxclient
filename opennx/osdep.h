@@ -41,5 +41,5 @@ extern "C" {
 #ifdef __WXMAC__
     extern unsigned short macFirstFreePort(unsigned short startPort);
 #endif
-};
+}
 #endif

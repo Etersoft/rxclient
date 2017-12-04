@@ -81,7 +81,7 @@ public:
         New,
         Resume,
         Takeover,
-        Terminate,
+        Terminate
     } Mode;
     
     /// Constructors

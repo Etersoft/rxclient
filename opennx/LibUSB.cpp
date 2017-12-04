@@ -46,9 +46,9 @@
 #include <wx/arrimpl.cpp>
 
 #include "trace.h"
-ENABLE_TRACE;
+ENABLE_TRACE
 
-WX_DEFINE_OBJARRAY(ArrayOfUSBDevices);
+WX_DEFINE_OBJARRAY(ArrayOfUSBDevices)
 
 #ifdef SUPPORT_USBIP
 #include <usb.h>

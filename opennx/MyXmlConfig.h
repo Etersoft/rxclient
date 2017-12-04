@@ -69,7 +69,7 @@ class SharedUsbDevice : public wxObject
         typedef enum {
             MODE_UNKNOWN = 0,
             MODE_LOCAL,
-            MODE_REMOTE,
+            MODE_REMOTE
         } Mode;
 
         SharedUsbDevice() : wxObject() { m_eMode = MODE_UNKNOWN; }
@@ -99,14 +99,14 @@ class MyXmlConfig
             SPEED_ISDN,
             SPEED_ADSL,
             SPEED_WAN,
-            SPEED_LAN,
+            SPEED_LAN
         } ConnectionSpeed;
 
         typedef enum {
             STYPE_UNIX = 0,
             STYPE_WINDOWS,
             STYPE_VNC,
-            STYPE_SHADOW,
+            STYPE_SHADOW
         } SessionType;
 
         typedef enum {
@@ -119,7 +119,7 @@ class MyXmlConfig
             DTYPE_MATE,
             DTYPE_XFCE,
             DTYPE_XDM,
-            DTYPE_CUSTOM,
+            DTYPE_CUSTOM
         } DesktopType;
 
         typedef enum {
@@ -130,7 +130,7 @@ class MyXmlConfig
             DPTYPE_FULLSCREEN,
             DPTYPE_CUSTOM,
             DPTYPE_NODECORATION,
-            DPTYPE_REMOTE,
+            DPTYPE_REMOTE
         } DisplayType;
 
         typedef enum {
@@ -142,7 +142,7 @@ class MyXmlConfig
             CACHEMEM_16MB,
             CACHEMEM_32MB,
             CACHEMEM_64MB,
-            CACHEMEM_128MB,
+            CACHEMEM_128MB
         } CacheMemory;
 
         typedef enum CacheDisk {
@@ -154,21 +154,21 @@ class MyXmlConfig
             CACHEDISK_64MB,
             CACHEDISK_128MB,
             CACHEDISK_256MB,
-            CACHEDISK_512MB,
+            CACHEDISK_512MB
         } CacheDisk;
 
         typedef enum XdmMode {
             XDM_MODE_SERVER,
             XDM_MODE_QUERY,
             XDM_MODE_BROADCAST,
-            XDM_MODE_LIST,
+            XDM_MODE_LIST
         } XdmMode;
 
         typedef enum LoginType {
             LOGIN_PASSWORD = 0,
             LOGIN_KERBEROS,
             LOGIN_SMARTCARD,
-            LOGIN_SSHKEY,
+            LOGIN_SSHKEY
         } LoginType;
 
         MyXmlConfig();

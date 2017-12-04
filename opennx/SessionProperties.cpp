@@ -77,7 +77,7 @@
 ////@end XPM images
 
 #include "trace.h"
-ENABLE_TRACE;
+ENABLE_TRACE
 
 class KbdLayout {
     public:
@@ -87,7 +87,7 @@ class KbdLayout {
 };
 
 #include <wx/arrimpl.cpp>
-WX_DEFINE_OBJARRAY(KbdLayoutTable);
+WX_DEFINE_OBJARRAY(KbdLayoutTable)
 
 class CacheCleaner : public wxDirTraverser
 {

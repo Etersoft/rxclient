@@ -47,8 +47,8 @@
 #include "osdep.h"
 
 #include "trace.h"
-ENABLE_TRACE;
-DECLARE_TRACETAGS;
+ENABLE_TRACE
+DECLARE_TRACETAGS
 
 IMPLEMENT_APP( watchReaderApp )
 IMPLEMENT_CLASS( watchReaderApp, wxApp )

@@ -83,7 +83,7 @@
 #endif
 
 #include "trace.h"
-ENABLE_TRACE;
+ENABLE_TRACE
 
 static const int CUPS_PORT_OFFSET  = 2000;
 static const int SMB_PORT_OFFSET   = 3000;
@@ -304,8 +304,8 @@ class SessionCleaner : public wxDirTraverser
         wxRegEx m_cRegex;
 };
 
-DECLARE_EVENT_TYPE(wxEVT_SESSION, -6);
-DEFINE_EVENT_TYPE(wxEVT_SESSION);
+DECLARE_EVENT_TYPE(wxEVT_SESSION, -6)
+DEFINE_EVENT_TYPE(wxEVT_SESSION)
 
 /**
  * This class is a helper for watching a file until a specific
@@ -415,12 +415,12 @@ private:
 
 };
 
-IMPLEMENT_DYNAMIC_CLASS(MySession, wxEvtHandler);
+IMPLEMENT_DYNAMIC_CLASS(MySession, wxEvtHandler)
 
 BEGIN_EVENT_TABLE(MySession, wxEvtHandler)
     EVT_COMMAND(wxID_ANY, wxEVT_NXSSH, MySession::OnSshEvent)
     EVT_COMMAND(wxID_ANY, wxEVT_SESSION, MySession::OnSessionEvent)
-END_EVENT_TABLE();
+END_EVENT_TABLE()
 
 MySession::MySession(wxString dir, wxString status, wxString stype, wxString host, int port, wxString md5)
     : wxEvtHandler()

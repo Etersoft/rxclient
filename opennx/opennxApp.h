@@ -88,7 +88,7 @@ class opennxApp : public wxApp
             MODE_DIALOG_ERROR,
             MODE_DIALOG_PANIC,
             MODE_DIALOG_QUIT,
-            MODE_FOREIGN_TOOLBAR,
+            MODE_FOREIGN_TOOLBAR
         };
 
         wxConfigBase *m_pCfg;

@@ -60,7 +60,7 @@
 ////@end XPM images
 
 #include "trace.h"
-ENABLE_TRACE;
+ENABLE_TRACE
 
 #ifdef SINGLE_SESSION
 # define NXSSH_TIMER 5432

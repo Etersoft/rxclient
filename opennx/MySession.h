@@ -40,27 +40,27 @@ class MyXmlConfig;
 
 class MySession : public wxEvtHandler
 {
-    DECLARE_DYNAMIC_CLASS(MySession);
-    DECLARE_EVENT_TABLE();
+    DECLARE_DYNAMIC_CLASS(MySession)
+    DECLARE_EVENT_TABLE()
 
 public:
     typedef enum {
         None,
         Client,
-        Server,
+        Server
     } tSessionType;
 
     typedef enum {
         Unknown,
         Failed,
         Terminated,
-        Running,
+        Running
     } tSessionStatus;
 
     typedef enum {
         XARCH_NONE,
         XARCH_CYGWIN,
-        XARCH_XMING,
+        XARCH_XMING
     } tXarch;
 
     MySession();
@@ -110,7 +110,7 @@ private:
         STATE_ABORT,
         STATE_FINISH,
         STATE_WAIT,
-        STATE_WAITING_FOR_AGENT_PARAMETERS,
+        STATE_WAITING_FOR_AGENT_PARAMETERS
     } tConnectState;
 
     wxArrayString m_aParseBuffer;

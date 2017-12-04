@@ -57,7 +57,7 @@
 #include "osdep.h"
 
 #include "trace.h"
-ENABLE_TRACE;
+ENABLE_TRACE
 
 #if defined(HAVE_PULSE_PULSEAUDIO_H) || defined(__WXMSW__) || defined(__WXMAC__)
 # define WITH_PULSEAUDIO

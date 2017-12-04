@@ -28,16 +28,16 @@
 
 #include <wx/event.h>
 
-DECLARE_LOCAL_EVENT_TYPE(wxEVT_NXSSH, -1);
-DECLARE_LOCAL_EVENT_TYPE(wxEVT_GENERIC, -2);
+DECLARE_LOCAL_EVENT_TYPE(wxEVT_NXSSH, -1)
+DECLARE_LOCAL_EVENT_TYPE(wxEVT_GENERIC, -2)
 
 class AsyncProcess;
 class wxRegEx;
 
 class MyIPC : public wxEvtHandler
 {
-    DECLARE_CLASS(MyIPC);
-    DECLARE_EVENT_TABLE();
+    DECLARE_CLASS(MyIPC)
+    DECLARE_EVENT_TABLE()
 
 public:
     typedef enum {
@@ -77,7 +77,7 @@ public:
         ActionResList,
         ActionTerminated,
         ActionStdout,
-        ActionStderr,
+        ActionStderr
     } tSessionEvents;
 
     MyIPC();
@@ -94,7 +94,7 @@ public:
 private:
     typedef enum {
         TypeNone,
-        TypeSsh,
+        TypeSsh
     } ProcessType;
 
     int parseCode(const wxString &);
@@ -116,7 +116,7 @@ private:
     int m_iSshPid;
     int m_iOutCollect;
     int m_iErrCollect;
-    int m_nLines618;;
+    int m_nLines618;
     wxString m_sOutMessage;
     wxString m_sErrMessage;
     wxString m_s595msg;
