@@ -35,7 +35,7 @@ public:
     }
 
     // format: ' --param1=val1 --param2=val2  ...'
-    virtual wxString getSessionExtraParam( const MyXmlConfig* cfg ) const
+    virtual wxString getSessionExtraParam( const MyXmlConfig* cfg, const MySession* sess ) const
     {
         return wxEmptyString;
     }

@@ -57,7 +57,6 @@ UnixImageSettingsDialog_symbols.h
 UsbFilterDetailsDialog.cpp
 UsbFilterDetailsDialog.h
 UsbFilterDetailsDialog_symbols.h
-UsbIp.cpp
 VncImageSettingsDialog.h
 VncImageSettingsDialog_symbols.h
 VncPropertyDialog.h
@@ -69,4 +68,3 @@ XdmPropertyDialog_symbols.h
 opennxApp.cpp
 tracelogApp.cpp
 watchReaderApp.cpp
-watchUsbIpApp.cpp

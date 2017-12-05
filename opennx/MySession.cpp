@@ -92,7 +92,6 @@ static const int X_PORT_OFFSET     = 6000;
 static const int SOUND_PORT_OFFSET = 7000;
 static const int KBD_PORT_OFFSET   = 8000;
 static const int HTTP_PORT_OFFSET  = 9000;
-static const int USBIP_PORT_OFFSET = 40000;
 
 #define X11ARCH_NONE   0
 #define X11ARCH_CYGWIN 1
@@ -924,7 +923,7 @@ MySession::OnSshEvent(wxCommandEvent &event)
                         // only for "pcsc"
                         auto m_pcsc = ModuleManager::instance().getModule("pcsc");
                         if( m_pcsc )
-                            pssh << m_pcsc->getSessionExtraParam(m_pCfg);
+                            pssh << m_pcsc->getSessionExtraParam(m_pCfg, this);
 
                         printSsh(pssh);
                         m_eConnectState = STATE_LOGIN;
@@ -966,6 +965,7 @@ MySession::OnSshEvent(wxCommandEvent &event)
                     m_pDlg->SetStatusText(_("Starting session"));
                     scmd = wxT("startsession");
                     scmd << m_pCfg->sGetSessionParams(m_lProtocolVersion, true, m_sClearPassword);
+                    scmd << ModuleManager::instance().getSessionExtraParam(m_pCfg,this);
                     printSsh(scmd);
                     m_eConnectState = STATE_FINISH;
                     break;
@@ -973,6 +973,7 @@ MySession::OnSshEvent(wxCommandEvent &event)
                     m_pDlg->SetStatusText(_("Attaching to session"));
                     scmd = wxT("attachsession");
                     scmd << m_pCfg->sGetSessionParams(m_lProtocolVersion, false, m_sClearPassword)
+                        << ModuleManager::instance().getSessionExtraParam(m_pCfg,this)
                         << wxT(" --display=\"") << m_sResumePort
                         << wxT("\" --id=\"") << m_sResumeId << wxT("\"")
                         // TODO: Check, since which version this is supported
@@ -984,6 +985,7 @@ MySession::OnSshEvent(wxCommandEvent &event)
                     m_pDlg->SetStatusText(_("Resuming session"));
                     scmd = wxT("restoresession");
                     scmd << m_pCfg->sGetSessionParams(m_lProtocolVersion, true, m_sClearPassword)
+                        << ModuleManager::instance().getSessionExtraParam(m_pCfg,this)
                         << wxT(" --session=\"") << m_sResumeName
                         << wxT("\" --type=\"") << m_sResumeType
                         << wxT("\" --id=\"") << m_sResumeId << wxT("\"");
@@ -1708,10 +1710,7 @@ MySession::startProxy()
     }
     if ((getActiveCupsPrinters().GetCount() > 0) && (isCupsRunning()))
         popts << wxT(",cups=") << cupsport;
-#ifdef SUPPORT_USBIP
-    if (m_pCfg->bGetEnableUSBIP())
-        popts << wxT(",http=") << wxConfigBase::Get()->Read(wxT("Config/UsbipPort"), 3420);
-#endif
+
     if (m_bEsdRunning && (0 < m_lEsdPort))
         popts << wxT(",media=") << m_lEsdPort;
     popts
@@ -2572,7 +2571,6 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         // call before detach!
         long nxsshPID = nxssh.GetPID();
         wxGetApp().SetNxSshPID(nxsshPID);
-
         nxssh.Detach();
 
         ModuleManager::instance().runAfterNxSsh(m_pCfg, this, nxsshPID);

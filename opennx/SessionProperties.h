@@ -474,10 +474,8 @@ private:
 
     bool readKbdLayouts();
     int findSelectedShare();
-#ifdef SUPPORT_USBIP
     int findSelectedUsbDevice();
-    void appendUsbDevice(SharedUsbDevice &, int);
-#endif
+    void appendUsbDevice( SharedUsbDevice &, int );
     void updateListCtrlColumnWidth(wxListCtrl *);
     void removePage(const wxString &);
 

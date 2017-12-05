@@ -388,11 +388,10 @@ SessionProperties::CheckChanged()
         m_pCfg->iSetCupsPort(m_iCupsPort);
         m_pCfg->iSetSmbPort(m_iSmbPort);
 
-#ifdef SUPPORT_USBIP
         // variables on the 'USB' tab
         m_pCfg->bSetEnableUSBIP(m_bEnableUSBIP);
         m_pCfg->aSetUsbForwards(m_aUsbForwards);
-#endif
+        m_pCfg->iSetUsbIpPort(m_iUsbLocalPort);
 
         // variabless on 'Environment' tab
         m_pCfg->bSetRemoveOldSessionFiles(m_bRemoveOldSessionFiles);
@@ -557,13 +556,14 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
         m_iSmbPort = m_pCfg->iGetSmbPort();
 
         // variables on 'USB' tab
-#ifdef SUPPORT_USBIP
-        m_bEnableUSBIP = m_pCfg->bGetEnableUSBIP();
-        m_aUsbForwards = m_pCfg->aGetUsbForwards();
-#else
-        m_bEnableUSBIP = false;
-        m_pCfg->bSetEnableUSBIP(false);
-#endif
+        if( ModuleManager::instance().exists("usbip") ) {
+            m_bEnableUSBIP = m_pCfg->bGetEnableUSBIP();
+            m_aUsbForwards = m_pCfg->aGetUsbForwards();
+            m_iUsbLocalPort = m_pCfg->iGetUsbIpPort();
+        } else {
+            m_bEnableUSBIP = false;
+            m_pCfg->bSetEnableUSBIP(false);
+        }
 
         // variables on 'Environment' tab
         m_bRemoveOldSessionFiles = m_pCfg->bGetRemoveOldSessionFiles();
@@ -577,12 +577,14 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
     wxConfigBase::Get()->Read(wxT("Config/LowercaseLogin"), &m_bLowercaseLogin, false);
     wxConfigBase::Get()->Read(wxT("Config/ClearPassOnAbort"), &m_bClearPassOnAbort, true);
     wxConfigBase::Get()->Read(wxT("Config/DisableMagicPixel"), &m_bDisableMagicPixel, false);
-#ifdef SUPPORT_USBIP
-    wxConfigBase::Get()->Read(wxT("Config/UsbipdSocket"), &m_sUsbipdSocket);
-    wxConfigBase::Get()->Read(wxT("Config/UsbipPort"), &m_iUsbLocalPort);
-#else
-    m_sUsbipdSocket = wxEmptyString;
-#endif
+
+    if( ModuleManager::instance().exists("usbip") ) {
+        wxConfigBase::Get()->Read(wxT("Config/UsbipdSocket"), &m_sUsbipdSocket);
+        wxConfigBase::Get()->Read(wxT("Config/UsbipPort"), &m_iUsbLocalPort);
+    }
+    else
+        m_sUsbipdSocket = wxEmptyString;
+
     // This setting can be used by an admin to disable storing passwords
     // It has to be set manually in the global config file.
     wxConfigBase::Get()->Read(wxT("Config/StorePasswords"), &m_bStorePasswords, true);
@@ -601,15 +603,15 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
     Centre();
     ////@end SessionProperties creation
 
-#ifdef SUPPORT_USBIP
-    m_pCtrlUsbipdDaemon->Show();
-    wxSize sz = GetBestSize();
-    sz.IncBy(0, 35);
-    SetInitialSize(sz);
-#else
-    removePage(_("USB"));
-    m_pCtrlUsbipdDaemon->Hide();
-#endif
+    if( ModuleManager::instance().exists("usbip") ) {
+        m_pCtrlUsbipdDaemon->Show();
+        wxSize sz = GetBestSize();
+        sz.IncBy(0, 35);
+        SetInitialSize(sz);
+    } else {
+        removePage(_("USB"));
+        m_pCtrlUsbipdDaemon->Hide();
+    }
 
     //Hide shared smart card flag if bash module not exists
     FindWindow(XRCID("ID_CHECKBOX_SHRSMARDCARD"))->Show(ModuleManager::instance().exists("pcsc"));
@@ -639,11 +641,13 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
     il->Add(CreateBitmapFromFile(wxT("res/smbfolder.png"), SHI_SIZE));
     il->Add(CreateBitmapFromFile(wxT("res/smbprinter.png"), SHI_SIZE));
     il->Add(CreateBitmapFromFile(wxT("res/cupsprinter.png"), SHI_SIZE));
-#ifdef SUPPORT_USBIP
-    wxImageList *il2 = new wxImageList(SHI_SIZE);
-    il2->Add(CreateBitmapFromFile(wxT("res/usblocal.png"), SHI_SIZE));
-    il2->Add(CreateBitmapFromFile(wxT("res/usbremote.png"), SHI_SIZE));
-#endif
+
+    wxImageList *il2 = nullptr;
+    if( ModuleManager::instance().exists("usbip")) {
+        il2 = new wxImageList(SHI_SIZE);
+        il2->Add(CreateBitmapFromFile(wxT("res/usblocal.png"), SHI_SIZE));
+        il2->Add(CreateBitmapFromFile(wxT("res/usbremote.png"), SHI_SIZE));
+    }
 #undef SHI_SIZE
 
     m_pCtrlSmbShares->AssignImageList(il, wxIMAGE_LIST_SMALL);
@@ -704,17 +708,16 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
     }
     updateListCtrlColumnWidth(m_pCtrlSmbShares);
 
-#ifdef SUPPORT_USBIP
-    m_pCtrlUsbFilter->AssignImageList(il2, wxIMAGE_LIST_SMALL);
-    m_pCtrlUsbFilter->InsertColumn(0, _("VendorID"));
-    m_pCtrlUsbFilter->InsertColumn(1, _("ProductID"));
-    m_pCtrlUsbFilter->InsertColumn(2, _("Class"));
-    m_pCtrlUsbFilter->InsertColumn(3, _("Name"));
-    m_pCtrlUsbFilter->InsertColumn(4, _("Serial"));
-    for (i = 0; i < m_aUsbForwards.GetCount(); i++)
-        appendUsbDevice(m_aUsbForwards[i], i);
-    updateListCtrlColumnWidth(m_pCtrlUsbFilter);
-#endif
+    if( il2 && ModuleManager::instance().exists("usbip")) {
+        m_pCtrlUsbFilter->AssignImageList(il2, wxIMAGE_LIST_SMALL);
+        m_pCtrlUsbFilter->InsertColumn(0, _("BusID"));
+        m_pCtrlUsbFilter->InsertColumn(1, _("UsbID"));
+        m_pCtrlUsbFilter->InsertColumn(2, _("Vendor"));
+        m_pCtrlUsbFilter->InsertColumn(3, _("Product"));
+        for (i = 0; i < m_aUsbForwards.GetCount(); i++)
+            appendUsbDevice(m_aUsbForwards[i], i);
+        updateListCtrlColumnWidth(m_pCtrlUsbFilter);
+    }
 
     UpdateDialogConstraints(false);
 
@@ -775,24 +778,27 @@ void SessionProperties::updateListCtrlColumnWidth(wxListCtrl *ctrl)
     delete []w;
 }
 
-#ifdef SUPPORT_USBIP
-void SessionProperties::appendUsbDevice(SharedUsbDevice &dev, int aidx)
+void SessionProperties::appendUsbDevice( SharedUsbDevice &dev, int aidx )
 {
     long idx;
-    wxString lbl = (-1 == dev.m_iVendorID) ? wxT("*") : wxString::Format(wxT("%04X"), dev.m_iVendorID);
+    wxString lbl = dev.m_sBusID.empty() ? wxT("*") : dev.m_sBusID;
+
     idx = m_pCtrlUsbFilter->InsertItem(m_pCtrlUsbFilter->GetItemCount(),
             lbl, (dev.m_eMode == SharedUsbDevice::MODE_REMOTE) ? 1 : 0);
-    lbl = (-1 == dev.m_iProductID) ? wxT("*") : wxString::Format(wxT("%04X"), dev.m_iProductID);
+
+    m_pCtrlUsbFilter->SetItem(idx, 0, lbl);
+
+    lbl = dev.m_sUsbID.empty() ? wxT("*") : dev.m_sUsbID;
     m_pCtrlUsbFilter->SetItem(idx, 1, lbl);
-    lbl = (-1 == dev.m_iClass) ? wxT("*") : wxString::Format(wxT("%02X"), dev.m_iClass);
+
+    lbl = dev.m_sVendor.empty() ? wxT("*") : dev.m_sVendor;
     m_pCtrlUsbFilter->SetItem(idx, 2, lbl);
-    lbl = dev.toShortString().IsEmpty() ? wxT("*") : dev.toShortString();
+
+    lbl = dev.m_sProduct.empty() ? wxT("*") : dev.m_sProduct;
     m_pCtrlUsbFilter->SetItem(idx, 3, lbl);
-    lbl = dev.m_sSerial.IsEmpty() ? wxT("*") : dev.m_sSerial;
-    m_pCtrlUsbFilter->SetItem(idx, 4, lbl);
+
     m_pCtrlUsbFilter->SetItemData(idx, aidx);
 }
-#endif
 
 /**
  * Installs event handler for OnChar event in all wxTextCtrl and wxSpinCtrl
@@ -864,9 +870,8 @@ void SessionProperties::UpdateDialogConstraints(bool getValues)
             }
             m_pCtrlCupsEnable->Enable(c.IsAvailable());
             m_pCtrlSmbEnable->Enable(s.IsAvailable());
-#ifdef SUPPORT_USBIP
-            m_pCtrlUsbEnable->Enable(true);
-#endif
+            if( ModuleManager::instance().exists("usbip") )
+                m_pCtrlUsbEnable->Enable(true);
             break;
         case MyXmlConfig::STYPE_WINDOWS:
             if (m_iPseudoDesktopTypeIndex != -1) {
@@ -890,9 +895,8 @@ void SessionProperties::UpdateDialogConstraints(bool getValues)
             m_bUseCups = false;
             m_bEnableSmbSharing = false;
             m_bEnableUSBIP = false;
-#ifdef SUPPORT_USBIP
-            m_pCtrlUsbEnable->Enable(false);
-#endif
+            if( m_pCtrlUsbEnable )
+                m_pCtrlUsbEnable->Enable(false);
             break;
         case MyXmlConfig::STYPE_VNC:
             if (m_iPseudoDesktopTypeIndex != -1) {
@@ -917,9 +921,8 @@ void SessionProperties::UpdateDialogConstraints(bool getValues)
             m_bUseCups = false;
             m_bEnableSmbSharing = false;
             m_bEnableUSBIP = false;
-#ifdef SUPPORT_USBIP
-            m_pCtrlUsbEnable->Enable(false);
-#endif
+            if( m_pCtrlUsbEnable )
+                m_pCtrlUsbEnable->Enable(false);
             break;
         case MyXmlConfig::STYPE_SHADOW:
             if (m_iPseudoDesktopTypeIndex != -1) {
@@ -941,9 +944,8 @@ void SessionProperties::UpdateDialogConstraints(bool getValues)
             m_bUseCups = false;
             m_bEnableSmbSharing = false;
             m_bEnableUSBIP = false;
-#ifdef SUPPORT_USBIP
-            m_pCtrlUsbEnable->Enable(false);
-#endif
+            if( m_pCtrlUsbEnable )
+                m_pCtrlUsbEnable->Enable(false);
             break;
     }
     switch (m_iDisplayType) {
@@ -974,13 +976,13 @@ void SessionProperties::UpdateDialogConstraints(bool getValues)
     m_pCtrlSmbPort->Enable(m_bEnableSmbSharing);
     m_pCtrlCupsPort->Enable(m_bUseCups);
 
-#ifdef SUPPORT_USBIP
-    // 'USB' tab
-    m_pCtrlUsbFilter->Enable(m_bEnableUSBIP);
-    m_pCtrlUsbAdd->Enable(m_bEnableUSBIP);
-    m_pCtrlUsbDelete->Enable(m_bEnableUSBIP && (m_pCtrlUsbFilter->GetSelectedItemCount() > 0));
-    m_pCtrlUsbModify->Enable(m_bEnableUSBIP && (m_pCtrlUsbFilter->GetSelectedItemCount() > 0));
-#endif
+    if( ModuleManager::instance().exists("usbip") ) {
+        // 'USB' tab
+        m_pCtrlUsbFilter->Enable(m_bEnableUSBIP);
+        m_pCtrlUsbAdd->Enable(m_bEnableUSBIP);
+        m_pCtrlUsbDelete->Enable(m_bEnableUSBIP && (m_pCtrlUsbFilter->GetSelectedItemCount() > 0));
+        m_pCtrlUsbModify->Enable(m_bEnableUSBIP && (m_pCtrlUsbFilter->GetSelectedItemCount() > 0));
+    }
 
     // 'Advanced' tab
     m_pCtrlKeyboardLayout->Enable(m_bKbdLayoutOther);
@@ -1106,6 +1108,7 @@ void SessionProperties::CreateControls()
         FindWindow(XRCID("ID_CHECKBOX_SHRSMARDCARD"))->SetValidator( wxGenericValidator(& m_bEnableSharedSmartCard) );
     if (FindWindow(XRCID("ID_CHECKBOX_USBENABLE")))
         FindWindow(XRCID("ID_CHECKBOX_USBENABLE"))->SetValidator( wxGenericValidator(& m_bEnableUSBIP) );
+
 //    if (FindWindow(XRCID("ID_TEXTCTRL_USERDIR")))
   //      FindWindow(XRCID("ID_TEXTCTRL_USERDIR"))->SetValidator( MyValidator(& m_sUserNxDir) );
     if (FindWindow(XRCID("ID_CHECKBOX_REMOVEOLDSF")))
@@ -1235,7 +1238,6 @@ SessionProperties::findSelectedShare()
     return -1;
 }
 
-#ifdef SUPPORT_USBIP
     int
 SessionProperties::findSelectedUsbDevice()
 {
@@ -1246,7 +1248,6 @@ SessionProperties::findSelectedUsbDevice()
     }
     return -1;
 }
-#endif
 
     bool
 SessionProperties::readKbdLayouts()
@@ -1618,10 +1619,10 @@ void SessionProperties::OnApplyClick( wxCommandEvent& event )
     wxConfigBase::Get()->Write(wxT("Config/LowercaseLogin"), m_bLowercaseLogin);
     wxConfigBase::Get()->Write(wxT("Config/ClearPassOnAbort"), m_bClearPassOnAbort);
     wxConfigBase::Get()->Write(wxT("Config/DisableMagicPixel"), m_bDisableMagicPixel);
-#ifdef SUPPORT_USBIP
-    wxConfigBase::Get()->Write(wxT("Config/UsbipdSocket"), m_sUsbipdSocket);
-    wxConfigBase::Get()->Write(wxT("Config/UsbipPort"), m_iUsbLocalPort);
-#endif
+    if( ModuleManager::instance().exists("usbip")) {
+        wxConfigBase::Get()->Write(wxT("Config/UsbipdSocket"), m_sUsbipdSocket);
+        wxConfigBase::Get()->Write(wxT("Config/UsbipPort"), m_iUsbLocalPort);
+    }
 
     if (m_bSavedCreateDesktopIcon != m_bCreateDesktopIcon) {
         if (NULL != m_pCfg) {
@@ -2052,10 +2053,10 @@ void SessionProperties::OnCHECKBOXUSBENABLEClick( wxCommandEvent& event )
 void SessionProperties::OnButtonUsbaddClick( wxCommandEvent& event )
 {
     wxUnusedVar(event);
-#ifdef SUPPORT_USBIP
+
     USB u;
     if (!u.IsAvailable()) {
-        wxLogWarning(_("libusb is not available. No USB devices will be exported"));
+        wxLogWarning(_("USB is not supported. No USB devices will be exported"));
         return;
     }
     ArrayOfUSBDevices a = u.GetDevices();
@@ -2069,27 +2070,10 @@ void SessionProperties::OnButtonUsbaddClick( wxCommandEvent& event )
     if (d.ShowModal() == wxID_OK) {
         SharedUsbDevice dev;
         long tmp;
-        if (d.GetVendorID().IsEmpty())
-            dev.m_iVendorID = -1;
-        else {
-            d.GetVendorID().ToLong(&tmp, 16);
-            dev.m_iVendorID = tmp;
-        }
-        if (d.GetProductID().IsEmpty())
-            dev.m_iProductID = -1;
-        else {
-            d.GetProductID().ToLong(&tmp, 16);
-            dev.m_iProductID = tmp;
-        }
-        if (d.GetDeviceClass().IsEmpty())
-            dev.m_iClass = -1;
-        else {
-            d.GetDeviceClass().ToLong(&tmp, 16);
-            dev.m_iClass = tmp;
-        }
         dev.m_sVendor = d.GetVendor();
         dev.m_sProduct = d.GetProduct();
-        dev.m_sSerial = d.GetSerial();
+        dev.m_sBusID = d.GetBusID();
+        dev.m_sUsbID = d.GetUsbID();
         dev.m_eMode = d.GetForwarding() ? SharedUsbDevice::MODE_REMOTE : SharedUsbDevice::MODE_LOCAL;
         bool found = false;
         for (size_t i = 0; i < m_aUsbForwards.GetCount(); i++) {
@@ -2106,7 +2090,6 @@ void SessionProperties::OnButtonUsbaddClick( wxCommandEvent& event )
             CheckChanged();
         }
     }
-#endif
 }
 
 
@@ -2117,61 +2100,38 @@ void SessionProperties::OnButtonUsbaddClick( wxCommandEvent& event )
 void SessionProperties::OnButtonUsbmodifyClick( wxCommandEvent& event )
 {
     wxUnusedVar(event);
-#ifdef SUPPORT_USBIP
     int idx = findSelectedUsbDevice();
     if (idx != -1) {
         int aidx = m_pCtrlUsbFilter->GetItemData(idx);
         SharedUsbDevice dev = m_aUsbForwards[aidx];
         UsbFilterDetailsDialog d(this);
         d.SetDialogMode(UsbFilterDetailsDialog::MODE_EDIT);
-        d.SetVendorID((-1 == dev.m_iVendorID) ? wxT("") : wxString::Format(wxT("%04X"), dev.m_iVendorID));
-        d.SetProductID((-1 == dev.m_iProductID) ? wxT("") : wxString::Format(wxT("%04X"), dev.m_iProductID));
-        d.SetDeviceClass((-1 == dev.m_iClass) ? wxT("") : wxString::Format(wxT("%02X"), dev.m_iClass));
+        d.SetBusID(dev.m_sBusID);
+        d.SetUsbID(dev.m_sUsbID);
         d.SetVendor(dev.m_sVendor);
         d.SetProduct(dev.m_sProduct);
-        d.SetSerial(dev.m_sSerial);
         d.SetForwarding(dev.m_eMode == SharedUsbDevice::MODE_REMOTE);
         if (d.ShowModal() == wxID_OK) {
             long tmp;
-            if (d.GetVendorID().IsEmpty())
-                dev.m_iVendorID = -1;
-            else {
-                d.GetVendorID().ToLong(&tmp, 16);
-                dev.m_iVendorID = tmp;
-            }
-            if (d.GetProductID().IsEmpty())
-                dev.m_iProductID = -1;
-            else {
-                d.GetProductID().ToLong(&tmp, 16);
-                dev.m_iProductID = tmp;
-            }
-            if (d.GetDeviceClass().IsEmpty())
-                dev.m_iClass = -1;
-            else {
-                d.GetDeviceClass().ToLong(&tmp, 16);
-                dev.m_iClass = tmp;
-            }
             dev.m_sVendor = d.GetVendor();
             dev.m_sProduct = d.GetProduct();
-            dev.m_sSerial = d.GetSerial();
+            dev.m_sBusID = d.GetBusID();
+            dev.m_sUsbID = d.GetUsbID();
             dev.m_eMode = d.GetForwarding() ? SharedUsbDevice::MODE_REMOTE : SharedUsbDevice::MODE_LOCAL;
             m_aUsbForwards[aidx] = dev;
-            wxString lbl = (-1 == dev.m_iVendorID) ? wxT("*") : wxString::Format(wxT("%04X"), dev.m_iVendorID);
+            wxString lbl = dev.m_sBusID.empty()  ? wxT("*") : dev.m_sBusID;
             m_pCtrlUsbFilter->SetItem(idx, 0, lbl, (dev.m_eMode == SharedUsbDevice::MODE_REMOTE) ? 1 : 0);
-            lbl = (-1 == dev.m_iProductID) ? wxT("*") : wxString::Format(wxT("%04X"), dev.m_iProductID);
+            lbl = dev.m_sUsbID.empty() ? wxT("*") : dev.m_sUsbID;
             m_pCtrlUsbFilter->SetItem(idx, 1, lbl);
-            lbl = (-1 == dev.m_iClass) ? wxT("*") : wxString::Format(wxT("%02X"), dev.m_iClass);
+            lbl = dev.m_sVendor.empty() ? wxT("*") : dev.m_sVendor;
             m_pCtrlUsbFilter->SetItem(idx, 2, lbl);
-            lbl = dev.toShortString().IsEmpty() ? wxT("*") : dev.toShortString();
+            lbl = dev.m_sProduct.empty() ? wxT("*") : dev.m_sProduct;
             m_pCtrlUsbFilter->SetItem(idx, 3, lbl);
-            lbl = dev.m_sSerial.IsEmpty() ? wxT("*") : dev.m_sSerial;
-            m_pCtrlUsbFilter->SetItem(idx, 4, lbl);
             updateListCtrlColumnWidth(m_pCtrlUsbFilter);
             UpdateDialogConstraints(false);
             CheckChanged();
         }
     }
-#endif
 }
 
 
@@ -2182,7 +2142,6 @@ void SessionProperties::OnButtonUsbmodifyClick( wxCommandEvent& event )
 void SessionProperties::OnButtonUsbdeleteClick( wxCommandEvent& event )
 {
     wxUnusedVar(event);
-#ifdef SUPPORT_USBIP
     int idx = findSelectedUsbDevice();
     if (idx != -1) {
         int aidx = m_pCtrlUsbFilter->GetItemData(idx);
@@ -2197,7 +2156,6 @@ void SessionProperties::OnButtonUsbdeleteClick( wxCommandEvent& event )
         CheckChanged();
         UpdateDialogConstraints(false);
     }
-#endif
 }
 
 
@@ -2208,10 +2166,8 @@ void SessionProperties::OnButtonUsbdeleteClick( wxCommandEvent& event )
 void SessionProperties::OnListctrlUsbfilterSelected( wxListEvent& event )
 {
     wxUnusedVar(event);
-#ifdef SUPPORT_USBIP
     m_pCtrlUsbModify->Enable(true);
     m_pCtrlUsbDelete->Enable(true);
-#endif
 }
 
 
@@ -2221,11 +2177,7 @@ void SessionProperties::OnListctrlUsbfilterSelected( wxListEvent& event )
 
 void SessionProperties::OnListctrlUsbfilterItemActivated( wxListEvent& event )
 {
-#ifdef SUPPORT_USBIP
     OnButtonUsbmodifyClick(event);
-#else
-    wxUnusedVar(event);
-#endif
 }
 
 

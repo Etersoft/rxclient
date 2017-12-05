@@ -1,7 +1,6 @@
-// $Id: LibUSB.cpp 605 2011-02-22 04:00:58Z felfert $
+// This code is based on code of Fritz Elfert (Copyright (C) 2006 The OpenNX Team)
 //
-// Copyright (C) 2006 The OpenNX Team
-// Author: Fritz Elfert
+// Author: Pavel Vainerman (Etersoft)
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Library General Public License as
@@ -18,26 +17,36 @@
 // Free Software Foundation, Inc.,
 // 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
+// ----------------------------------------------------------------------------
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-
-#if defined(__GNUG__) && !defined(NO_GCC_PRAGMA)
-#pragma implementation "LibUSB.h"
+// ----------------------------------------------------------------------------
+#include <iostream>
+#include <wx/process.h>
+#include <wx/regex.h>
+#include <wx/file.h>
+#include <wx/textfile.h>
+#include <wx/arrstr.h>
+using namespace std;
+#ifndef USBIDS_FILE
+#ifdef __WXMSW__
+// \todo FILL FOR WINDOWS
+#define USBIDS_FILE "?????"
+#else
+#define USBIDS_FILE "/usr/share/misc/usb.ids"
+//#define USBIDS_FILE wxT("./usb.ids")
 #endif
+#endif
+
 
 // For compilers that support precompilation, includes "wx.h".
 #include "wx/wxprec.h"
-
-#ifdef __BORLANDC__
-#pragma hdrstop
-#endif
 
 #ifndef WX_PRECOMP
 #include "wx/defs.h"
 #endif
 
-#include "MyDynlib.h"
 #include "LibUSB.h"
 
 #include <wx/wfstream.h>
@@ -47,219 +56,268 @@
 
 #include "trace.h"
 ENABLE_TRACE;
+// ----------------------------------------------------------------------------
+namespace {
+    struct USBInfo
+    {
+        wxString m_sVendorID;
+        wxString m_sVendorName;
+        wxString m_sDeviceID;
+        wxString m_sDeviceName;
 
-WX_DEFINE_OBJARRAY(ArrayOfUSBDevices);
+        wxString key() const {
+            return key(m_sVendorID,m_sDeviceID);
+        }
 
-#ifdef SUPPORT_USBIP
-#include <usb.h>
+        static wxString key( const wxString& vendorID, const wxString& deviceID ) {
+            wxString k;
+            return k << vendorID << wxT(":") << deviceID;
+        }
 
-typedef void (*Tusb_init)(void);
-typedef int (*Tusb_find_busses)(void);
-typedef int (*Tusb_find_devices)(void);
-typedef struct usb_bus *(*Tusb_get_busses)(void);
-typedef int (*Tusb_get_string_simple)(usb_dev_handle *dev, int index, char *buf,
-	size_t buflen);
-typedef usb_dev_handle *(*Tusb_open)(struct usb_device *dev);
-typedef int (*Tusb_close)(usb_dev_handle *dev);
-#endif
+        void reset() {
+            m_sVendorID = wxT("");
+            m_sVendorName = wxT("");
+            m_sDeviceID = wxT("");
+            m_sDeviceName = wxT("");
+        }
 
-USBDevice::USBDevice(int v, int p, unsigned char c) {
-    m_iVendor = v;
-    m_iProduct = p;
-    m_iClass = c;
+        operator bool() const {
+            return !m_sVendorID.empty();
+        }
+    };
 }
 
+typedef std::unordered_map<wxString, USBInfo> IDSMap;
+
+// devices info (from IDS file). loaded once (!)
+static IDSMap dbDeviceInfo;
+
+static void loadIDSFile();
+static bool addDeviceInfo( const USBInfo& u );
+static USBInfo findDeviceInfo( const wxString& vendorID, const wxString& deviceID );
+// ----------------------------------------------------------------------------
+WX_DEFINE_OBJARRAY(ArrayOfUSBDevices);
+// ----------------------------------------------------------------------------
+USBDevice::USBDevice(   const wxString& idBus
+                      , const wxString& idUsb
+                      , const wxString& sVendor
+                      , const wxString& sProduct
+                      )
+    : m_sVendor(sVendor)
+    , m_sProduct(sProduct)
+    , m_sBusId(idBus)
+    , m_sUsbId(idUsb)
+{
+}
+// ----------------------------------------------------------------------------
 wxString USBDevice::toString() {
-    wxString ret = wxString::Format(wxT("%d-%d %04X/%04X/%02X"),
-            m_iBusNum, m_iDevNum, m_iVendor, m_iProduct, m_iClass);
+
+// #if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 8
+#if wxMAJOR_VERSION < 3
+    wxString ret = wxString::Format(wxT("busid %s (%s)"),m_sBusId.c_str(),m_sUsbId.c_str());
+#else
+    wxString ret = wxString::Format(wxT("busid %s (%s)"),m_sBusId,m_sUsbId);
+#endif
+
     if (!m_sVendor.IsEmpty())
         ret.Append(wxT(" ")).Append(m_sVendor);
     if (!m_sProduct.IsEmpty())
         ret.Append(wxT(" ")).Append(m_sProduct);
-    if (!m_sSerial.IsEmpty())
-        ret.Append(wxT(" #")).Append(m_sSerial);
+
     return ret;
 }
-
+// ----------------------------------------------------------------------------
 wxString USBDevice::toShortString() {
     wxString ret = m_sVendor;
     if ((!ret.IsEmpty()) && (!m_sProduct.IsEmpty()))
         ret.Append(wxT(" "));
     ret.Append(m_sProduct);
+
+    if ( !m_sUsbId.IsEmpty())
+        ret << wxT("(") << m_sUsbId << wxT(")");
+
     return ret;
 }
-
-#ifdef SUPPORT_USBIP
-static wxString readSysfs(int bus, int dev, const wxString &attr)
-{
-    wxLogNull nolog;
-    int i;
-    // Find the device with the specified devnum
-    for (i = 0; i < 16 ; ++i) {
-        wxString path(wxString::Format(wxT("/sys/bus/usb/devices/%d-%d/devnum"), bus, i));
-        wxFileInputStream fis(path);
-        wxTextInputStream tis(fis);
-        if (dev == tis.Read16S())
-            break;
-    }
-    // Read the attribute
-    wxString path(wxString::Format(wxT("/sys/bus/usb/devices/%d-%d/%s"), bus, i, attr.c_str()));
-    wxFileInputStream fis(path);
-    wxTextInputStream tis(fis);
-    return tis.ReadLine();
-}
-#endif
-
-void USB::adddev(MyDynamicLibrary *dll, struct usb_device *dev, unsigned char dclass)
-{
-#ifdef SUPPORT_USBIP
-    usb_dev_handle *udev;
-    char string[256];
-
-    switch (dclass) {
-        case USB_CLASS_HUB:
-        case USB_CLASS_HID:
-            return;
-    }
-
-    wxDYNLIB_FUNCTION(Tusb_open, usb_open, *dll);
-    if (!pfnusb_open)
-        return;
-    wxDYNLIB_FUNCTION(Tusb_close, usb_close, *dll);
-    if (!pfnusb_close)
-        return;
-    wxDYNLIB_FUNCTION(Tusb_get_string_simple, usb_get_string_simple, *dll);
-    if (!pfnusb_get_string_simple)
-        return;
-    udev = pfnusb_open(dev);
-    if (!udev)
-        return;
-    USBDevice d(dev->descriptor.idVendor, dev->descriptor.idProduct, dclass);
-    if (dev->descriptor.iManufacturer) {
-        if (0 < pfnusb_get_string_simple(udev,
-                    dev->descriptor.iManufacturer, string, sizeof(string)))
-            d.m_sVendor = wxConvUTF8.cMB2WX(string);
-    }
-
-    if (dev->descriptor.iProduct) {
-        if (0 < pfnusb_get_string_simple(udev,
-                    dev->descriptor.iProduct, string, sizeof(string)))
-            d.m_sProduct = wxConvUTF8.cMB2WX(string);
-    }
-    if (dev->descriptor.iSerialNumber) {
-        if (0 < pfnusb_get_string_simple(udev,
-                    dev->descriptor.iSerialNumber, string, sizeof(string)))
-            d.m_sSerial = wxConvUTF8.cMB2WX(string);
-    }
-    wxString tmp(dev->bus->dirname, wxConvUTF8);
-    long lval;
-    tmp.ToLong(&lval);
-    d.m_iBusNum = lval;
-    tmp = wxConvUTF8.cMB2WX(dev->filename);
-    tmp.ToLong(&lval);
-    d.m_iDevNum = lval;
-
-    // Try fallback to sysfs, if libusb could not read info due to
-    // permission problems.
-    if (d.m_sVendor.IsEmpty()) {
-        d.m_sVendor = readSysfs(d.m_iBusNum, d.m_iDevNum, wxT("manufacturer"));
-    }
-    if (d.m_sProduct.IsEmpty()) {
-        d.m_sProduct = readSysfs(d.m_iBusNum, d.m_iDevNum, wxT("product"));
-    }
-    if (d.m_sSerial.IsEmpty()) {
-        d.m_sSerial = readSysfs(d.m_iBusNum, d.m_iDevNum, wxT("serial"));
-    }
-
-    ::myLogTrace(MYTRACETAG, wxT("Device found: %s"), to_c_str(d.toString()));
-    m_aDevices.Add(d);
-    pfnusb_close(udev);
-#else
-    wxUnusedVar(dll);
-    wxUnusedVar(dev);
-    wxUnusedVar(dclass);
-#endif
-}
-
-void USB::usbscan(MyDynamicLibrary *dll)
-{
-#ifdef SUPPORT_USBIP
-    struct usb_bus *bus;
-
-    wxDYNLIB_FUNCTION(Tusb_find_busses, usb_find_busses, *dll);
-    if (!pfnusb_find_busses)
-        return;
-    wxDYNLIB_FUNCTION(Tusb_find_devices, usb_find_devices, *dll);
-    if (!pfnusb_find_devices)
-        return;
-    wxDYNLIB_FUNCTION(Tusb_get_busses, usb_get_busses, *dll);
-    if (!pfnusb_get_busses)
-        return;
-    pfnusb_find_busses();
-    pfnusb_find_devices();
-    for (bus = pfnusb_get_busses(); bus; bus = bus->next) {
-        struct usb_device *dev;
-        for (dev = bus->devices; dev; dev = dev->next) {
-            int devclass = dev->descriptor.bDeviceClass;
-
-            if ((devclass == USB_CLASS_PER_INTERFACE) && (dev->config)) {
-                for (int c = 0; c < dev->descriptor.bNumConfigurations; c++) {
-                    struct usb_config_descriptor *cfg = &dev->config[c];
-                    for (int i = 0; i < cfg->bNumInterfaces; i++) {
-                        struct usb_interface *uif = &cfg->interface[i];
-                        for (int ac = 0; ac < uif->num_altsetting; ac++)
-                            adddev(dll, dev, uif->altsetting[ac].bInterfaceClass);
-                    }
-                }
-            } else
-                adddev(dll, dev, devclass);
-        }
-    }
-#else
-    wxUnusedVar(dll);
-#endif
-}
-
+// ----------------------------------------------------------------------------
 USB::USB() {
     m_bAvailable = false;
-#ifdef SUPPORT_USBIP
     wxLogNull noerrors;
-    MyDynamicLibrary dll;
-    if (dll.Load(wxT("libusb"))) {
-        wxDYNLIB_FUNCTION(Tusb_init, usb_init, dll);
-        if (!pfnusb_init)
-            return;
-        wxDYNLIB_FUNCTION(Tusb_find_busses, usb_find_busses, dll);
-        if (!pfnusb_find_busses)
-            return;
-        wxDYNLIB_FUNCTION(Tusb_find_devices, usb_find_devices, dll);
-        if (!pfnusb_find_devices)
-            return;
-        wxDYNLIB_FUNCTION(Tusb_get_busses, usb_get_busses, dll);
-        if (!pfnusb_get_busses)
-            return;
-        wxDYNLIB_FUNCTION(Tusb_open, usb_open, dll);
-        if (!pfnusb_open)
-            return;
-        wxDYNLIB_FUNCTION(Tusb_close, usb_close, dll);
-        if (!pfnusb_close)
-            return;
-        wxDYNLIB_FUNCTION(Tusb_get_string_simple, usb_get_string_simple, dll);
-        if (!pfnusb_get_string_simple)
-            return;
-        pfnusb_init();
-        m_bAvailable = true;
-        usbscan(&dll);
-    }
-#endif
+    loadDevicesFromUSBIP();
 }
-
+// ----------------------------------------------------------------------------
 ArrayOfUSBDevices USB::GetDevices() {
     return m_aDevices;
 }
-
+// ----------------------------------------------------------------------------
 bool USB::IsAvailable() {
     ::myLogTrace(MYTRACETAG, wxT("USB::IsAvailable() = %s"), m_bAvailable ? wxT("true") : wxT("false"));
     return m_bAvailable;
 }
+// ----------------------------------------------------------------------------
+wxString USB::GetUSBIPPath()
+{
+#ifdef __WXMSW__
+    // \todo It has not been tested under windows yet!
+    return wxT("usbip.exe")
+#else
+    wxString cmd;
 
+    // \todo It is necessary to add a path to PATH, and here to use simply 'usbip'
+    return cmd << wxFileName::GetPathSeparator() << wxT("usr")
+               << wxFileName::GetPathSeparator() << wxT("sbin")
+               << wxFileName::GetPathSeparator() << wxT("usbip");
+#endif
+}
+// ----------------------------------------------------------------------------
+void USB::loadDevicesFromUSBIP()
+{
+    // \todo Сделать проверку на наличие usbip
+    m_bAvailable = true;
+    wxArrayString out;
+    wxString cmd;
+    cmd << GetUSBIPPath() << wxT(" list --parsable --local");
+
+    long ret = wxExecute(cmd, out);
+    if( ret == -1 )
+    {
+        m_bAvailable = false;
+
+// #if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 8
+#if wxMAJOR_VERSION < 3
+        ::myLogTrace(MYTRACETAG,wxT("(loadDevicesFromUSPIP): Error run command '%s'\n"),cmd.c_str());
+#else
+        ::myLogTrace(MYTRACETAG,wxT("(loadDevicesFromUSPIP): Error run command '%s'\n"),cmd);
+#endif
+        return;
+    }
+
+    wxRegEx re;
+    bool reOk = re.Compile(wxT("^busid=(.*)#usbid=([0-9abcdef]{4}):([0-9abcdef]{4})#"));
+    if( !reOk )
+    {
+        m_bAvailable = false;
+        ::myLogTrace(MYTRACETAG, wxT("(loadDevicesFromUSPIP): Error compile regexp..'\n"));
+        return;
+    }
+
+    for( int i=0; i<out.size(); i++ )
+    {
+        if( re.Matches(out[i]) )
+        {
+            wxString sBusId( re.GetMatch(out[i],1) );
+            wxString sVendorId( re.GetMatch(out[i],2) );
+            wxString sDeviceId( re.GetMatch(out[i],3) );
+            wxString sUsbId;
+            sUsbId << sVendorId << wxT(":") << sDeviceId;
+
+            USBInfo u = findDeviceInfo(sVendorId,sDeviceId);
+            if( !u ) {
+                u.m_sVendorID = sVendorId;
+                u.m_sDeviceID = sDeviceId;
+                u.m_sDeviceName << wxT("unknown product (") << sUsbId << wxT(")");
+                u.m_sVendorName << wxT("unknown vendor (") << sUsbId << wxT(")");
+            }
+
+            USBDevice d( sBusId
+                         , sUsbId
+                         , u.m_sVendorName
+                         , u.m_sDeviceName );
+
+            m_aDevices.push_back(d);
+        }
+    }
+}
+// ----------------------------------------------------------------------------
+static void loadIDSFile()
+{
+    wxTextFile ifile( wxT(USBIDS_FILE) );
+    if( !ifile.Exists() || !ifile.Open() )
+    {
+        ::myLogTrace(MYTRACETAG, wxT("(loadIDSFile): WARNING can't load file %s..\n"), USBIDS_FILE);
+        return;
+    }
+// -------------------------------------
+// IDS FILE
+// -------------------------------------
+// # Syntax:
+// # vendor  vendor_name
+// #       device  device_name                             <-- single tab
+// #               interface  interface_name               <-- two tabs
+
+// 03e7  Intel
+//         2150  Myriad VPU [Movidius Neural Compute Stick]
+// 03e8  EndPoints, Inc.
+//         0004  SE401 Webcam
+//         0008  101 Ethernet [klsi]
+//         0015  ATAPI Enclosure
+
+    wxRegEx reVendor;
+    wxRegEx reDevice;
+    if( !reVendor.Compile(wxT("^([0-9abcdef]{4})\\ \\ (.*)$")) )
+    {
+        ::myLogTrace(MYTRACETAG, wxT("(loadIDSFile): WARNING: compile 'vendor' regexp error..\n"));
+        return;
+    }
+
+    if( !reDevice.Compile(wxT("^\t([0-9abcdef]{4})\\ \\ (.*)$")) )
+    {
+        ::myLogTrace(MYTRACETAG, wxT("(loadIDSFile): WARNING: compile 'device' regexp error..\n"));
+        return;
+    }
+
+    wxString line;
+    USBInfo usb;
+
+    for (line = ifile.GetFirstLine(); !ifile.Eof(); line = ifile.GetNextLine()) {
+
+        if( reVendor.Matches(line) )
+        {
+            // clean previous
+            if( !usb.m_sVendorID.empty() )
+                usb.reset();
+
+            usb.m_sVendorID = reVendor.GetMatch(line,1);
+            usb.m_sVendorName = reVendor.GetMatch(line,2);
+            addDeviceInfo(usb);
+        }
+        else if( reDevice.Matches(line) )
+        {
+            if( !usb.m_sVendorID.empty() )
+            {
+                // add the previous
+                if( !usb.m_sDeviceID.empty() )
+                    addDeviceInfo(usb);
+
+                usb.m_sDeviceID = reDevice.GetMatch(line,1);
+                usb.m_sDeviceName = reDevice.GetMatch(line,2);
+            }
+        }
+    }
+}
+// ----------------------------------------------------------------------------
+static bool addDeviceInfo( const USBInfo& u )
+{
+    if( u.m_sVendorID.empty() )
+        return false;
+
+    dbDeviceInfo[u.key()] = u;
+}
+// ----------------------------------------------------------------------------
+static USBInfo findDeviceInfo( const wxString &vendorID, const wxString &deviceID )
+{
+    if( dbDeviceInfo.empty() )
+        loadIDSFile();
+
+    IDSMap::const_iterator i = dbDeviceInfo.find( USBInfo::key(vendorID,deviceID));
+    // find with vendorID and deviceID
+    if( i != dbDeviceInfo.end() )
+        return i->second;
+
+    // find with vendorID
+    i = dbDeviceInfo.find( USBInfo::key(vendorID,wxT("")));
+    if( i != dbDeviceInfo.end() )
+        return i->second;
+
+    return USBInfo();
+}
+// ----------------------------------------------------------------------------

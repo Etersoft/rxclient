@@ -7,7 +7,7 @@
 // it under the terms of the GNU Library General Public License as
 // published by the Free Software Foundation; either version 2 of the
 // License, or (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -167,10 +167,8 @@ bool SharedUsbDevice::operator ==(const SharedUsbDevice &other)
     if (m_eMode != other.m_eMode) return false;
     if (m_sVendor != other.m_sVendor) return false;
     if (m_sProduct != other.m_sProduct) return false;
-    if (m_sSerial != other.m_sSerial) return false;
-    if (m_iVendorID != other.m_iVendorID) return false;
-    if (m_iProductID != other.m_iProductID) return false;
-    if (m_iClass != other.m_iClass) return false;
+    if (m_sBusID != other.m_sBusID) return false;
+    if (m_sUsbID != other.m_sUsbID) return false;
     return true;
 }
 
@@ -178,10 +176,8 @@ bool SharedUsbDevice::cmpNoMode(const SharedUsbDevice &other)
 {
     if (m_sVendor != other.m_sVendor) return false;
     if (m_sProduct != other.m_sProduct) return false;
-    if (m_sSerial != other.m_sSerial) return false;
-    if (m_iVendorID != other.m_iVendorID) return false;
-    if (m_iProductID != other.m_iProductID) return false;
-    if (m_iClass != other.m_iClass) return false;
+    if (m_sBusID != other.m_sBusID) return false;
+    if (m_sUsbID != other.m_sUsbID) return false;
     return true;
 }
 
@@ -190,18 +186,14 @@ bool SharedUsbDevice::operator !=(const SharedUsbDevice &other)
     return (!(*this == other));
 }
 
-bool SharedUsbDevice::MatchHotplug(const USBDevice &udev)
+bool SharedUsbDevice::MatchHotplug( const USBDevice &udev )
 {
-    if (m_iVendorID >= 0) {
-        if (m_iVendorID != udev.GetVendorID())
+    if (!m_sBusID.IsEmpty()) {
+        if (!udev.GetBusID().StartsWith(m_sBusID))
             return false;
     }
-    if (m_iProductID >= 0) {
-        if (m_iProductID != udev.GetProductID())
-            return false;
-    }
-    if (m_iClass >= 0) {
-        if (m_iClass != udev.GetDeviceClass())
+    if (!m_sUsbID.IsEmpty()) {
+        if (!udev.GetUsbID().StartsWith(m_sUsbID))
             return false;
     }
     if (!m_sVendor.IsEmpty()) {
@@ -212,19 +204,23 @@ bool SharedUsbDevice::MatchHotplug(const USBDevice &udev)
         if (!udev.GetProduct().StartsWith(m_sProduct))
             return false;
     }
-    if (!m_sSerial.IsEmpty()) {
-        if (!udev.GetSerial().StartsWith(m_sSerial))
-            return false;
-    }
+
     return true;
 }
 
 wxString SharedUsbDevice::toShortString()
 {
-    wxString ret = m_sVendor.Strip(wxString::both);
-    if ((!ret.IsEmpty()) && (!m_sProduct.IsEmpty()))
-        ret.Append(wxT(" "));
-    ret.Append(m_sProduct.Strip(wxString::both));
+    wxString ret;
+    ret << wxT("(") << m_sUsbID << wxT(")");
+
+    wxString v = m_sVendor.Strip(wxString::both);
+    if( !v.empty() )
+        ret << wxT(" ") << v;
+
+    wxString p = m_sProduct.Strip(wxString::both);
+    if( !p.empty() )
+        ret << wxT(" ") << p;
+
     return ret;
 }
 
@@ -292,6 +288,7 @@ MyXmlConfig::init()
     m_iXdmListPort = 177;
     m_iXdmQueryPort = 177;
     m_iPcscPort = 3241;
+    m_iUsbIpPort = 3240;
 
     m_eCacheDisk = CACHEDISK_32MB;
     m_eCacheMemory = CACHEMEM_8MB;
@@ -429,6 +426,7 @@ MyXmlConfig::operator =(const MyXmlConfig &other)
     m_iXdmListPort = other.m_iXdmListPort;
     m_iXdmQueryPort = other.m_iXdmQueryPort;
     m_iPcscPort = other.m_iPcscPort;
+    m_iUsbIpPort = other.m_iUsbIpPort;
 
     m_eCacheDisk = other.m_eCacheDisk;
     m_eCacheMemory = other.m_eCacheMemory;
@@ -492,7 +490,6 @@ MyXmlConfig::sGetProxyParams(const long protocolVersion)
     // FIXME: use real settings
     ret << wxT(",font=1");
     ret << wxT(",aux=1");
-
     return ret;
 }
 
@@ -943,9 +940,6 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
         ret << wxT(" --mediahelper=\"esd\"");
     }
 
-    // Get params from modules
-    ret << ModuleManager::instance().getSessionExtraParam(this);
-
     // Original always uses those?!
     ret << wxT(" --strict=\"0\"");
     if (bNew) {
@@ -953,15 +947,15 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
         // so we simply leave it out for shadow sessions.
         ret << wxT(" --aux=\"1\"");
     }
-    
+
     m_bNumLockEnabled = wxGetKeyState (WXK_NUMLOCK);
     if(m_bNumLockEnabled){
-	ret << wxT(" --numlock=\"on\"");
+        ret << wxT(" --numlock=\"on\"");
     }
     else{
-	ret << wxT(" --numlock=\"off\"");
+        ret << wxT(" --numlock=\"off\"");
     }
-    
+
     return ret;
 }
 
@@ -1157,6 +1151,7 @@ MyXmlConfig::operator ==(const MyXmlConfig &other)
     if (m_iXdmListPort != other.m_iXdmListPort) return false;
     if (m_iXdmQueryPort != other.m_iXdmQueryPort) return false;
     if (m_iPcscPort != other.m_iPcscPort) return false;
+    if (m_iUsbIpPort != other.m_iUsbIpPort) return false;
 
     if (m_eCacheDisk != other.m_eCacheDisk) return false;
     if (m_eCacheMemory != other.m_eCacheMemory) return false;
@@ -1211,7 +1206,7 @@ MyXmlConfig::LoadFromString(const wxString &content, bool isPush)
 MyXmlConfig::LoadFromFile(const wxString &filename)
 {
     {
-        wxLogNull dummy; 
+        wxLogNull dummy;
         wxFile *f = new wxFile(filename);
         if ((!f->IsOpened()) || f->Eof()) {
             delete f;
@@ -1777,6 +1772,7 @@ MyXmlConfig::loadFromStream(wxInputStream &is, bool isPush)
                         m_bEnableSharedSmartCard = getBool(opt, wxT("SharingSmartCard"), m_bEnableSharedSmartCard);
                         m_iCupsPort = getLong(opt, wxT("IPPPort"), m_iCupsPort);
                         m_iSmbPort = getLong(opt, wxT("SmbDefaultPort"), m_iSmbPort);
+                        m_iUsbIpPort = getLong(opt, wxT("UsbIpDefaultPort"), m_iUsbIpPort);
                         m_bUseCups = getBool(opt, wxT("IPPPrinting"), m_bUseCups);
                         m_bEnableSmbSharing = getBool(opt, wxT("Shares"), m_bEnableSmbSharing);
                         m_iPcscPort = getLong(opt, wxT("PcscDefaultPort"), m_iPcscPort);
@@ -1881,27 +1877,15 @@ MyXmlConfig::loadFromStream(wxInputStream &is, bool isPush)
                             opt = opt->GetNext();
                             continue;
                         }
-                        if (key == wxT("Serial")) {
+                        if (key == wxT("BusID")) {
                             optcount++;
-                            dev.m_sSerial = getString(opt, wxT("Serial"), wxEmptyString);
+                            dev.m_sBusID = getString(opt, wxT("BusID"), wxEmptyString);
                             opt = opt->GetNext();
                             continue;
                         }
-                        if (key == wxT("VendorID")) {
+                        if (key == wxT("UsbID")) {
                             optcount++;
-                            dev.m_iVendorID = getLong(opt, wxT("VendorID"), 0);
-                            opt = opt->GetNext();
-                            continue;
-                        }
-                        if (key == wxT("ProductID")) {
-                            optcount++;
-                            dev.m_iProductID = getLong(opt, wxT("ProductID"), 0);
-                            opt = opt->GetNext();
-                            continue;
-                        }
-                        if (key == wxT("Class")) {
-                            optcount++;
-                            dev.m_iClass = getLong(opt, wxT("Class"), 0);
+                            dev.m_sUsbID = getString(opt, wxT("UsbID"), wxEmptyString);
                             opt = opt->GetNext();
                             continue;
                         }
@@ -1917,7 +1901,7 @@ MyXmlConfig::loadFromStream(wxInputStream &is, bool isPush)
                         }
                         opt = opt->GetNext();
                     }
-                    if ((7 == optcount) && (dev.m_eMode != SharedUsbDevice::MODE_UNKNOWN))
+                    if ((5 == optcount) && (dev.m_eMode != SharedUsbDevice::MODE_UNKNOWN))
                         m_aUsbForwards.Add(dev);
                     cfgnode = cfgnode->GetNext();
                     continue;
@@ -2021,7 +2005,21 @@ MyXmlConfig::sGetSessionPassword()
             ret = m_sPassword;
     }
     return ret;
-}
+    }
+
+    wxString MyXmlConfig::sGetUsbIpDevices() const
+    {
+        // make string: #bus_id#bus_id2#bus_id3#..."
+        wxString devlist;
+        for (size_t i = 0; i < m_aUsbForwards.GetCount(); i++)
+            devlist << wxT("#") << m_aUsbForwards[i].m_sBusID;
+
+        if( devlist.empty() )
+            devlist << wxT("#");
+
+        devlist << wxT("#");
+        return devlist;
+    }
 
     void
 MyXmlConfig::sSetUsername(const wxString &s)
@@ -2035,7 +2033,7 @@ MyXmlConfig::sSetUsername(const wxString &s)
     }
 }
 
-    void 
+    void
 MyXmlConfig::bAddOption(wxXmlNode *group, const wxString &name, const bool val)
 {
     wxXmlNode *n = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("option"));
@@ -2242,7 +2240,7 @@ MyXmlConfig::SaveToFile()
     g = AddGroup(r, wxT("Images"));
 
     // deprecated but written by NX client, m_bDisableJpeg
-    iAddOption(g, wxT("Disable JPEG Compression"), 0); 
+    iAddOption(g, wxT("Disable JPEG Compression"), 0);
 
     // deprecated but written by NX client, m_bDisableImageCompression
     bAddOption(g, wxT("Disable all image optimisations"), false);
@@ -2330,11 +2328,12 @@ MyXmlConfig::SaveToFile()
     iAddOption(g, wxT("SmbDefaultPort"), m_iSmbPort);
     iAddOption(g, wxT("PcscDefaultPort"), m_iPcscPort);
     sAddOption(g, wxT("PcscDefaultSocketPatch"), m_sPcscSocketPath);
+    iAddOption(g, wxT("UsbIpDefaultPort"), m_iUsbIpPort);
 
     if (m_aUsedShareGroups.GetCount()) {
         g = AddGroup(r, wxT("share chosen"));
         iAddOption(g, wxT("Share number"), m_iUsedShareGroups);
-        wxString sDefaultPrinter = wxEmptyString; 
+        wxString sDefaultPrinter = wxEmptyString;
         for (i = 0; i < m_aUsedShareGroups.GetCount(); i++) {
             optval = wxString::Format(wxT("Share%d"), i);
             sAddOption(g, optval, m_aUsedShareGroups[i]);
@@ -2513,10 +2512,8 @@ MyXmlConfig::SaveToFile()
         g = AddGroup(r, wxString::Format(wxT("UsbForward%d"), i));
         sAddOption(g, wxT("Vendor"), m_aUsbForwards[i].m_sVendor);
         sAddOption(g, wxT("Product"), m_aUsbForwards[i].m_sProduct);
-        sAddOption(g, wxT("Serial"), m_aUsbForwards[i].m_sSerial);
-        iAddOption(g, wxT("VendorID"), m_aUsbForwards[i].m_iVendorID);
-        iAddOption(g, wxT("ProductID"), m_aUsbForwards[i].m_iProductID);
-        iAddOption(g, wxT("Class"), m_aUsbForwards[i].m_iClass);
+        sAddOption(g, wxT("BusID"), m_aUsbForwards[i].m_sBusID);
+        sAddOption(g, wxT("UsbID"), m_aUsbForwards[i].m_sUsbID);
         switch (m_aUsbForwards[i].m_eMode) {
             case SharedUsbDevice::MODE_UNKNOWN:
                 sAddOption(g, wxT("Mode"), wxT("unknown"));

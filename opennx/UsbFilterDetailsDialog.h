@@ -105,23 +105,17 @@ public:
 
 ////@begin UsbFilterDetailsDialog member function declarations
 
-    wxString GetVendorID() const { return m_sVendorID ; }
-    void SetVendorID(wxString value) { m_sVendorID = value ; }
+    wxString GetUsbID() const { return m_sUsbID ; }
+    void SetUsbID(const wxString& value) { m_sUsbID = value ; }
 
-    wxString GetProductID() const { return m_sProductID ; }
-    void SetProductID(wxString value) { m_sProductID = value ; }
-
-    wxString GetDeviceClass() const { return m_sDeviceClass ; }
-    void SetDeviceClass(wxString value) { m_sDeviceClass = value ; }
+    wxString GetBusID() const { return m_sBusID ; }
+    void SetBusID(const wxString& value) { m_sBusID = value ; }
 
     wxString GetVendor() const { return m_sVendor ; }
-    void SetVendor(wxString value) { m_sVendor = value ; }
+    void SetVendor(const wxString& value) { m_sVendor = value ; }
 
     wxString GetProduct() const { return m_sProduct ; }
-    void SetProduct(wxString value) { m_sProduct = value ; }
-
-    wxString GetSerial() const { return m_sSerial ; }
-    void SetSerial(wxString value) { m_sSerial = value ; }
+    void SetProduct( const wxString& value) { m_sProduct = value ; }
 
     bool GetStoreFilter() const { return m_bStoreFilter ; }
     void SetStoreFilter(bool value) { m_bStoreFilter = value ; }
@@ -153,20 +147,16 @@ public:
     wxCheckBox* m_pCtrlRemember;
     wxPanel* m_pCtrlDevSelect;
     wxComboBox* m_pCtrlDevlist;
-    wxTextCtrl* m_pCtrlVendorID;
-    wxTextCtrl* m_pCtrlProductID;
-    wxTextCtrl* m_pCtrlDevClass;
+    wxTextCtrl* m_pCtrlBusID;
+    wxTextCtrl* m_pCtrlUsbID;
     wxTextCtrl* m_pCtrlVendor;
     wxTextCtrl* m_pCtrlProduct;
-    wxTextCtrl* m_pCtrlSerial;
     wxComboBox* m_pCtrlMode;
 private:
-    wxString m_sVendorID;
-    wxString m_sProductID;
-    wxString m_sDeviceClass;
+    wxString m_sBusID;
+    wxString m_sUsbID;
     wxString m_sVendor;
     wxString m_sProduct;
-    wxString m_sSerial;
     bool m_bStoreFilter;
 ////@end UsbFilterDetailsDialog member variables
 

@@ -12,7 +12,7 @@ bin_PROGRAMS = rxclient pconnect $(TRACELOG) $(WATCHREADER) \
 # $(WATCHUSBIP)
 
 EXTRA_PROGRAMS = tracelog$(EXEEXT) watchreader$(EXEEXT) \
-	watchusbip$(EXEEXT) macfindreader$(EXEEXT) macuninstall$(EXEEXT) \
+	macfindreader$(EXEEXT) macuninstall$(EXEEXT) \
 	mactestkbd$(EXEEXT) testxauth$(EXEEXT)
 
 rxclient_SOURCES = AboutDialog.cpp AsyncProcess.cpp LibOpenSC.cpp \
@@ -26,10 +26,10 @@ rxclient_SOURCES = AboutDialog.cpp AsyncProcess.cpp LibOpenSC.cpp \
 	SessionAdmin.cpp SessionList.cpp SessionProperties.cpp \
 	SimpleXauth.cpp ShareProperties.cpp TextViewer.cpp \
 	UnixImageSettingsDialog.cpp UsbFilterDetailsDialog.cpp \
-	UsbIp.cpp VncImageSettingsDialog.cpp VncPropertyDialog.cpp \
+	VncImageSettingsDialog.cpp VncPropertyDialog.cpp \
 	wxprec.cpp WinShare.cpp X11PropertyDialog.cpp xh_richtext.cpp \
 	MacOSX.c WrappedStatic.cpp SupressibleMessageDialog.cpp \
-	XdmPropertyDialog.cpp PCSCModule.cpp ModuleManager.cpp
+	XdmPropertyDialog.cpp PCSCModule.cpp UsbIpModule.cpp ModuleManager.cpp
 
 noinst_HEADERS = AboutDialog.h AboutDialog_symbols.h AsyncProcess.h \
 	LibOpenSC.h CardWaiterDialog.h CardWaiterDialog_symbols.h \
@@ -50,11 +50,11 @@ noinst_HEADERS = AboutDialog.h AboutDialog_symbols.h AsyncProcess.h \
 	ShareProperties_symbols.h TextViewer.h TextViewer_symbols.h \
 	TraceLogFrame.h TraceLogFrame_symbols.h UnixImageSettingsDialog.h \
 	UnixImageSettingsDialog_symbols.h UsbFilterDetailsDialog.h \
-	UsbFilterDetailsDialog_symbols.h UsbIp.h \
+	UsbFilterDetailsDialog_symbols.h \
 	VncImageSettingsDialog.h VncImageSettingsDialog_symbols.h \
 	VncPropertyDialog.h VncPropertyDialog_symbols.h WinShare.h \
 	X11PropertyDialog.h X11PropertyDialog_symbols.h trace.h tracelogApp.h \
-	watchReaderApp.h watchUsbIpApp.h xh_richtext.h MacUninstallApp.h \
+	watchReaderApp.h xh_richtext.h MacUninstallApp.h \
 	WrappedStatic.h SupressibleMessageDialog.h SupressibleMessageDialog_symbols.h \
 	TraceLogRemote_symbols.h TraceLogRemote.h \
 	opensc/errors.h opensc/opensc.h opensc/scconf.h opensc/types.h opensc/pkcs15.h \
@@ -85,15 +85,6 @@ watchreader_LDADD = $(WATCHREADER_RES) $(WX_LIBS) $(X_LIBS) \
 watchreader_CPPFLAGS = $(WX_CPPFLAGS) $(X_CFLAGS) -DAPP_WATCHREADER
 watchreader_CXXFLAGS = $(WX_CXXFLAGS)
 watchreader_CFLAGS = $(WX_CFLAGS)
-
-watchusbip_SOURCES = watchUsbIpApp.cpp UsbIp.cpp Icon.cpp LibUSB.cpp \
-	md5.c MyValidator.cpp MyXmlConfig.cpp osdep.c pwcrypt.cpp mylog.cpp \
-	UsbFilterDetailsDialog.cpp wxprec.cpp xh_richtext.cpp MyDynlib.cpp
-watchusbip_LDADD = $(WX_LIBS) $(X_LIBS) $(X_PRE_LIBS) $(X_EXTRA_LIBS) \
-	$(APP_LDADD)
-watchusbip_CPPFLAGS = $(WX_CPPFLAGS) $(X_CFLAGS) -DAPP_WATCHUSBIP
-watchusbip_CXXFLAGS = $(WX_CXXFLAGS)
-watchusbip_CFLAGS = $(WX_CFLAGS)
 
 tracelog_SOURCES = tracelogApp.cpp TraceLogFrame.cpp \
 	DebugStringGrabber.cpp wxprec.cpp Icon.cpp TraceLogRemote.cpp
@@ -128,9 +119,9 @@ EXTRA_watchreader_SOURCES = watchreader.rc
 rxclient_LDADD = $(OPENNX_RES) $(WX_LIBS) $(X_LIBS) $(X_PRE_LIBS) \
 	$(X_EXTRA_LIBS) $(APP_LDADD) $(LIBCURL)
 rxclient_DEPENDENCIES = $(OPENNX_RES) $(PLATFORM_DEPENDENCIES)
-rxclient_CPPFLAGS = $(WX_CPPFLAGS) $(PLATFORM_INCLUDES) $(X_CFLAGS) -DAPP_OPENNX
-rxclient_CXXFLAGS = $(WX_CXXFLAGS)
-rxclient_CFLAGS = $(WX_CFLAGS)
+rxclient_CPPFLAGS = $(WX_CPPFLAGS) $(PLATFORM_INCLUDES) $(X_CFLAGS) -DAPP_OPENNX -DUSE_USBIP_SYSTEM_INTERFACE
+rxclient_CXXFLAGS = $(WX_CXXFLAGS) -DUSE_USBIP_SYSTEM_INTERFACE
+rxclient_CFLAGS = $(WX_CFLAGS) -DUSE_USBIP_SYSTEM_INTERFACE
 
 
 GETTEXTIZE = $(shell which gettextize)
@@ -204,8 +195,6 @@ $(top_srcdir)/opennxApp.cpp: memres.h
 opennxApp.cpp: memres.h
 
 tracelogApp.cpp: memres.h
-
-watchUsbIpApp.cpp: memres.h
 
 SUFFIXES = .rc
 

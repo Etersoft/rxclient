@@ -174,16 +174,6 @@ if test "$ac_cv_enable_opensc" = "YES" ; then
     AC_DEFINE(SUPPORT_OPENSC,1,[Set to 1 for enabling OPENSC support])
 fi
 
-ac_cv_enable_usbip=NO
-AC_ARG_ENABLE([usbip],
-	AS_HELP_STRING([--enable-usbip],
-		[Enable usbip support (Default: NO, currently on Linux only)]),
-	[ test "$enableval" = "yes" && ac_cv_enable_usbip=YES ]
-)
-if test "$ac_cv_enable_usbip" = "YES" ; then
-    AC_DEFINE(SUPPORT_USBIP,1,[Set to 1 for enabling USBIP support])
-fi
-
 ac_cv_enable_debug=NO
 AC_ARG_ENABLE([debug],
 	AS_HELP_STRING([--enable-debug],
@@ -291,7 +281,6 @@ TRACELOG=
 TRACELOG_RES=
 WATCHREADER=
 WATCHREADER_RES=
-WATCHUSBIP=
 MACFIDREADER=
 MACUNINSTALL=
 MACTESTKBD=
@@ -340,9 +329,6 @@ case $target_os in
     *)
         APP_LDADD="-lstdc++ -lX11 -lXmu -lXau"
         WATCHREADER='watchreader$(EXEEXT)'
-        if test "$ac_cv_enable_usbip" = "YES" ; then
-            WATCHUSBIP='watchusbip$(EXEEXT)'
-        fi
         ;;
 esac
 AC_SUBST(APP_LDADD)
@@ -351,7 +337,6 @@ AC_SUBST(TRACELOG)
 AC_SUBST(TRACELOG_RES)
 AC_SUBST(WATCHREADER)
 AC_SUBST(WATCHREADER_RES)
-AC_SUBST(WATCHUSBIP)
 AC_SUBST(BUNDLE)
 AC_SUBST(OSRESDEPS)
 AC_SUBST(MACFINDREADER)
@@ -469,10 +454,6 @@ AC_CHECK_HEADERS([cups/cups.h cups.h samba-4.0/libsmbclient.h libsmbclient.h usb
 
 if test "$ac_cv_enable_opensc" = "YES" -a "$ac_cv_header_opensc_opensc_h" != "yes"; then
     AC_MSG_ERROR([Need opensc/opensc.h when compiling with opensc support])
-fi
-
-if test "$ac_cv_enable_usbip" = "YES" -a "$ac_cv_header_usb_h" != "yes"; then
-    AC_MSG_ERROR([Need usb.h when compiling with usbip support])
 fi
 
 # ISCC env variable

@@ -79,11 +79,19 @@ wxString PCSCModule::getNxSshExtraParam( const MyXmlConfig* pCfg ) const
     return IModule::getNxSshExtraParam(pCfg);
 }
 // ----------------------------------------------------------------------------
-wxString PCSCModule::getSessionExtraParam( const MyXmlConfig *pCfg ) const
+wxString PCSCModule::getSessionExtraParam( const MyXmlConfig *pCfg, const MySession* sess ) const
 {
     if( !pCfg->bGetEnableSharedSmartCard() )
-        return IModule::getSessionExtraParam(pCfg);
+        return IModule::getSessionExtraParam(pCfg, sess);
 
+    if( sess->lGetProtocolVersion() < SupportedNXProtocolVersion /* 3.5.2 */ )
+    {
+        ::myLogTrace(MYTRACETAG,
+                     wxT("(pcsc): ProtocolVersion='%s' not supported. Must be >= 3.5.2"),
+                     to_c_str(sess->sGetProtocolVersion() ));
+
+        return IModule::getSessionExtraParam(pCfg,sess);
+    }
 
     if( smartcard->FileExists() || pcsc->FileExists() )
     {
@@ -98,7 +106,7 @@ wxString PCSCModule::getSessionExtraParam( const MyXmlConfig *pCfg ) const
         return p;
     }
 
-    return IModule::getSessionExtraParam(pCfg);
+    return IModule::getSessionExtraParam(pCfg, sess);
 }
 // ----------------------------------------------------------------------------
 wxString PCSCModule::getNxProxyExtraParam( const MyXmlConfig* pCfg, const MySession* sess ) const
@@ -108,7 +116,10 @@ wxString PCSCModule::getNxProxyExtraParam( const MyXmlConfig* pCfg, const MySess
 
     if( sess->lGetProtocolVersion() < SupportedNXProtocolVersion /* 3.5.2 */ )
     {
-        ::myLogTrace(MYTRACETAG, wxT("(pcsc): ProtocolVersion='%s' not supported. Must be >= 3.5.2"), to_c_str(sess->sGetProtocolVersion() ));
+        ::myLogTrace(MYTRACETAG,
+                     wxT("(pcsc): ProtocolVersion='%s' not supported. Must be >= 3.5.2"),
+                     to_c_str(sess->sGetProtocolVersion() ));
+
         return IModule::getNxProxyExtraParam(pCfg,sess);
     }
 
@@ -130,7 +141,9 @@ void PCSCModule::runAfterNxSsh( const MyXmlConfig* pCfg, const MySession* sess, 
 
     if( sess->lGetProtocolVersion() < SupportedNXProtocolVersion /* 3.5.2 */ )
     {
-        ::myLogTrace(MYTRACETAG, wxT("(pcsc): ProtocolVersion='%s' not supported. Must be >= 3.5.2"), to_c_str(sess->sGetProtocolVersion() ));
+        ::myLogTrace(MYTRACETAG,
+                     wxT("(pcsc): ProtocolVersion='%s' not supported. Must be >= 3.5.2"),
+                     to_c_str(sess->sGetProtocolVersion() ));
         return;
     }
 
