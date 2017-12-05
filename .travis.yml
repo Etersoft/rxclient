@@ -49,5 +49,9 @@ addons:
       description: "A client for RX@Etersoft Terminal Server"
     notification_email: pv@etersoft.ru
     build_command_prepend: "make clean"
+    # build_command_prepend: "cov-configure --comptype g++ --compiler g++ --template"
     build_command: make -j4
     branch_pattern: travis
+
+after_success:
+  - cat cov-int/build-log.txt
