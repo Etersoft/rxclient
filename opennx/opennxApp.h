@@ -56,7 +56,6 @@ class opennxApp : public wxApp
          * compiled in, return true, otherwise return false.
          */
         bool NxSmartCardSupport() { return m_bNxSmartCardSupport; }
-        bool LibUSBAvailable() { return m_bLibUSBAvailable; }
         bool NxProxyAvailable() { return m_bNxProxyAvailable; }
         bool AutoLogin() { return m_bAutoLogin; }
         bool Silent() { return m_bSilent; }
@@ -117,7 +116,6 @@ class opennxApp : public wxApp
         enum mode m_eMode;
         bool m_bNxSmartCardSupport;
         bool m_bRunproc;
-        bool m_bLibUSBAvailable;
         bool m_bRequireWatchReader;
         bool m_bRequireStartUsbIp;
         bool m_bTestCardWaiter;
@@ -134,7 +132,6 @@ class opennxApp : public wxApp
         bool setSelfPath();
         void setUserDir();
         void checkNxSmartCardSupport();
-        void checkLibUSB();
         void checkNxProxy();
         wxString findExecutable(wxString name);
         void exitApp(char * message);

@@ -1,6 +1,3 @@
-# Enable USBIP support
-%def_without usbip
-
 %define oname opennx
 
 Name: rxclient
@@ -17,10 +14,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %oname-%version.tar
 
-%if_with usbip
-Requires: usbip2-nxclient
-%endif
-
 # Automatically added by buildreq on Sat Sep 19 2009
 BuildRequires: gcc-c++ imake libSM-devel libXmu-devel
 BuildRequires: libopensc-devel libsmbclient-devel
@@ -33,7 +26,7 @@ BuildRequires: nx
 # due _ln_sr
 BuildRequires: rpm-build-intro >= 1.9.18
 
-Requires: nx >= 3.5.1.1
+Requires: nx > 3.5.2-alt1
 Requires: nxssh
 
 Provides: opennx = %version
@@ -50,13 +43,7 @@ RX Client is a NX 3.5 compatible client based on OpenNX code.
 
 %build
 %autoreconf
-%configure \
-    --localedir=%_datadir/locale \
-%if_with usbip
-    --enable-usbip \
-%endif
-    --with-nxproto=3.3.0
-
+%configure --localedir=%_datadir/locale --with-nxproto=3.3.0
 %make_build
 
 %install
@@ -71,11 +58,6 @@ install -D -m0755 bin/nxssh.sh %buildroot%_bindir/nxssh.sh
 rm -f %buildroot%_desktopdir/*.directory
 install -D -m0644 docs/pconnect.1 %buildroot%_man1dir/pconnect.1
 
-%if_with usbip
-install -d -m 755 %buildroot%_sysconfdir/udev/rules.d
-install -m 644 etc/*.rules %buildroot%_sysconfdir/udev/rules.d
-%endif
-
 # we need this names due wxDynamicLibrary (see eterbug #11676)
 mkdir -p %buildroot%_libdir/%name/
 for lib in libsmbclient.so libcups.so ; do
@@ -85,11 +67,6 @@ done
 
 
 %find_lang %name
-
-%if_with usbip
-%pre
-%_sbindir/groupadd -r opennx || :
-%endif
 
 %files -f %name.lang
 %_bindir/%name
@@ -109,9 +86,6 @@ done
 %_iconsdir/hicolor/512x512/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_iconsdir/hicolor/*/mimetypes/rx-desktop.*
-%if_with usbip
-%_sysconfdir/udev
-%endif
 
 %changelog
 * Fri Mar 16 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt16

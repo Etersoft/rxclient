@@ -72,7 +72,6 @@
 #include "LibOpenSC.h"
 #include "osdep.h"
 #include "xh_richtext.h"
-#include "UsbIp.h"
 #include "CardWaiterDialog.h"
 #include "SupressibleMessageDialog.h"
 #include "ModuleManager.h"
@@ -100,7 +99,6 @@ IMPLEMENT_APP(opennxApp);
     ,m_iReader(-1)
     ,m_bNxSmartCardSupport(false)
     ,m_bRunproc(false)
-    ,m_bLibUSBAvailable(false)
     ,m_bRequireWatchReader(false)
     ,m_bRequireStartUsbIp(false)
     ,m_bTestCardWaiter(false)
@@ -610,21 +608,14 @@ opennxApp::preInit()
         wxConfigBase::Get()->Write(wxT("Config/CupsPath"), tmp);
         wxConfigBase::Get()->Flush();
   //  }
-#ifdef SUPPORT_USBIP
-    if (!wxConfigBase::Get()->Read(wxT("Config/UsbipdSocket"), &tmp)) {
-        tmp = wxT("/var/run/usbipd2.socket");
-        wxConfigBase::Get()->Write(wxT("Config/UsbipdSocket"), tmp);
-        wxConfigBase::Get()->Flush();
+
+
+    if( ModuleManager::instance().exists("usbip") ) {
+        if (!wxConfigBase::Get()->Read(wxT("Config/UsbipPort"), &tmp)) {
+            wxConfigBase::Get()->Write(wxT("Config/UsbipPort"), 3240);
+            wxConfigBase::Get()->Flush();
+        }
     }
-    if (!wxConfigBase::Get()->Read(wxT("Config/UsbipPort"), &tmp)) {
-        wxConfigBase::Get()->Write(wxT("Config/UsbipPort"), 3420);
-        wxConfigBase::Get()->Flush();
-    }
-    if (!wxConfigBase::Get()->Read(wxT("Config/UsbipTunnelTimeout"), &tmp)) {
-        wxConfigBase::Get()->Write(wxT("Config/UsbipTunnelTimeout"), 20);
-        wxConfigBase::Get()->Flush();
-    }
-#endif
 
     wxConfigBase::Get()->Read(wxT("Config/SystemNxDir"), &tmp);
 #ifdef __WXMSW__
@@ -702,7 +693,6 @@ opennxApp::preInit()
         }
     }
 
-    checkLibUSB();
     checkNxSmartCardSupport();
     checkNxProxy();
     return true;
@@ -730,16 +720,6 @@ int opennxApp::FilterEvent(wxEvent& event)
         }
     }
     return -1;
-}
-
-void opennxApp::checkLibUSB()
-{
-#ifdef SUPPORT_USBIP
-    USB u;
-    m_bLibUSBAvailable = u.IsAvailable();
-#else
-    m_bLibUSBAvailable = false;
-#endif
 }
 
 void opennxApp::checkNxSmartCardSupport()
@@ -858,6 +838,9 @@ void opennxApp::OnInitCmdLine(wxCmdLineParser& parser)
             _("Specify window-ID for dialog mode."), wxCMD_LINE_VAL_NUMBER);
     parser.AddOption(wxEmptyString, wxT("trace"),
             _("Specify wxWidgets trace mask."));
+    parser.AddSwitch(wxEmptyString, wxT("check-modules"),
+            _("Check which modules are connected."));
+
 #ifdef __WXDEBUG__
     parser.AddSwitch(wxEmptyString, wxT("waittest"),
             _("Test CardWaiterDialog"));
@@ -1039,6 +1022,15 @@ bool opennxApp::OnCmdLineParsed(wxCmdLineParser& parser)
             wxLog::AddTraceMask(tag);
         }
     }
+
+    if (parser.Found(wxT("check-modules"))) {
+        std::cout << std::endl;
+        std::cout << "Available modules:" << std::endl
+                  << "==================" << std::endl;
+        std::cout << ModuleManager::instance().modulesInfo() << std::endl;
+        return false;
+    }
+
     return true;
 }
 
@@ -1313,94 +1305,7 @@ bool opennxApp::OnInit()
         wxLog::SetLogLevel(0);
     }
     bool ret = realInit();
-#ifdef SUPPORT_USBIP
-    if (m_bRequireStartUsbIp) {
-        long usessionTO = wxConfigBase::Get()->Read(wxT("Config/UsbipTunnelTimeout"), 20);
-        wxString usock = wxConfigBase::Get()->Read(wxT("Config/UsbipdSocket"),
-                wxT("/var/run/usbipd2.socket"));
-        UsbIp usbip;
-        if (usbip.Connect(usock)) {
-            size_t i, j, k;
-            ::myLogTrace(MYTRACETAG, wxT("connected to usbipd2"));
-            usbip.SetSession(m_sSessionID);
-            ArrayOfUsbForwards af = m_pSessionCfg->aGetUsbForwards();
-            ArrayOfUsbIpDevices aid = usbip.GetDevices();
-            ArrayOfUSBDevices ad;
-            if (LibUSBAvailable()) {
-                USB u;
-                ad = u.GetDevices();
-            }
-            for (i = 0; i < af.GetCount(); i++)
-                if (SharedUsbDevice::MODE_REMOTE == af[i].m_eMode) {
-                    if (!LibUSBAvailable()) {
-                        wxLogError(_("libusb is not available. No USB devices will be exported"));
-                        m_bRequireStartUsbIp = false;
-                        break;
-                    }
-                    ::myLogTrace(MYTRACETAG, wxT("possibly exported USB device: %04x/%04x %s"),
-                            af[i].m_iVendorID, af[i].m_iProductID, to_c_str(af[i].toShortString()));
-                    for (j = 0; j < ad.GetCount(); j++)
-                        if (af[i].MatchHotplug(ad[j])) {
-                            ::myLogTrace(MYTRACETAG, wxT("Match on USB dev %s"), to_c_str(ad[j].toString()));
-                            for (k = 0; k < aid.GetCount(); k++) {
-                                if (aid[k].GetUsbBusID().IsSameAs(ad[j].GetBusID())) {
-                                    wxString exBusID = aid[k].GetUsbIpBusID();
-                                    ::myLogTrace(MYTRACETAG, wxT("Exporting usbup-busid %s (libusb-busid %s)"), to_c_str(exBusID), to_c_str(ad[j].GetBusID()));
-                                    if (!usbip.WaitForSession(usessionTO)) {
-                                        wxLogError(_("USBIP tunnel registration timeout"));
-                                        m_bRequireStartUsbIp = false;
-                                    }
-                                    if (!usbip.ExportDevice(exBusID))
-                                        wxLogError(_("Unable to export USB device %s"), af[i].toShortString().c_str());
-                                }
-                            }
-                        }
-                }
-        } else {
-            wxLogError(_("Could not connect to usbipd2. No USB devices will be exported"));
-            m_bRequireStartUsbIp = false;
-        }
-    }
 
-    if (m_bRequireStartUsbIp) {
-        wxString appDir;
-        wxConfigBase::Get()->Read(wxT("Config/SystemNxDir"), &appDir);
-        wxFileName fn(appDir, wxEmptyString);
-        fn.AppendDir(wxT("bin"));
-#ifdef __WXMSW__
-        fn.SetName(wxT("watchusbip.exe"));
-#else
-        fn.SetName(wxT("watchusbip"));
-#endif
-        wxString watchcmd = fn.GetShortPath();
-        wxString cfgname(m_pSessionCfg->sGetFileName());
-        if (cfgname.StartsWith(wxT("http://")) ||
-                cfgname.StartsWith(wxT("https://")) ||
-                cfgname.StartsWith(wxT("ftp://"))) {
-            // If config was loaded from network, make a local copy for
-            // watchusbip. watchusbip will delete it after reading.
-            wxConfigBase::Get()->Read(_T("Config/UserNxDir"), &cfgname);
-            wxString sTmp = _T("temp");
-            cfgname += wxFileName::GetPathSeparator() + sTmp;
-            cfgname += wxFileName::GetPathSeparator() + m_sSessionID + _T(".nxs");
-            m_pSessionCfg->sSetFileName(cfgname);
-            m_pSessionCfg->SaveToFile();
-        }
-        ::myLogTrace(MYTRACETAG, wxT("cfgfile='%s'"), to_c_str(cfgname));
-        watchcmd << wxT(" -s ") << m_sSessionID << wxT(" -p ")
-            << m_nNxSshPID << wxT(" -c \"") << cfgname << wxT("\"");
-#ifdef __WXDEBUG__
-        watchcmd << wxT(" --trace=UsbIp,watchUsbIpApp");
-#endif
-        ::myLogTrace(MYTRACETAG, wxT("starting %s"), to_c_str(watchcmd));
-        {
-            wxLogNull noerrors;
-            wxExecute(watchcmd);
-        }
-        while (Pending())
-            Dispatch();
-    }
-#endif
     if (m_bRequireWatchReader) {
         ::myLogTrace(MYTRACETAG, wxT("require Watchreader: m_iReader = %d, m_nNxSshPID = %ld"), m_iReader, m_nNxSshPID);
         if (-1 != m_iReader) {

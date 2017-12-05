@@ -155,12 +155,10 @@ void UsbFilterDetailsDialog::Init()
     m_pCtrlRemember = NULL;
     m_pCtrlDevSelect = NULL;
     m_pCtrlDevlist = NULL;
-    m_pCtrlVendorID = NULL;
-    m_pCtrlProductID = NULL;
-    m_pCtrlDevClass = NULL;
+    m_pCtrlBusID = NULL;
+    m_pCtrlUsbID = NULL;
     m_pCtrlVendor = NULL;
     m_pCtrlProduct = NULL;
-    m_pCtrlSerial = NULL;
     m_pCtrlMode = NULL;
     ////@end UsbFilterDetailsDialog member initialisation
 }
@@ -170,12 +168,10 @@ void UsbFilterDetailsDialog::SetDeviceList(const ArrayOfUSBDevices &a)
     m_aUsbForwards.Clear();
     for (size_t i = 0; i < a.GetCount(); i++) {
         SharedUsbDevice dev;
-        dev.m_iVendorID = a[i].GetVendorID();
-        dev.m_iProductID = a[i].GetProductID();
-        dev.m_iClass = a[i].GetDeviceClass();
         dev.m_sVendor = a[i].GetVendor();
         dev.m_sProduct = a[i].GetProduct();
-        dev.m_sSerial = a[i].GetSerial();
+        dev.m_sBusID = a[i].GetBusID();
+        dev.m_sUsbID = a[i].GetUsbID();
         m_aUsbForwards.Add(dev);
     }
 }
@@ -225,28 +221,23 @@ void UsbFilterDetailsDialog::CreateControls()
     m_pCtrlRemember = XRCCTRL(*this, "ID_CHECKBOX_FILTER_STORE", wxCheckBox);
     m_pCtrlDevSelect = XRCCTRL(*this, "ID_PANEL_DEVSELECT", wxPanel);
     m_pCtrlDevlist = XRCCTRL(*this, "ID_COMBOBOX_USBDEVS", wxComboBox);
-    m_pCtrlVendorID = XRCCTRL(*this, "ID_TEXTCTRL_USB_VENDORID", wxTextCtrl);
-    m_pCtrlProductID = XRCCTRL(*this, "ID_TEXTCTRL_USB_PRODUCTID", wxTextCtrl);
-    m_pCtrlDevClass = XRCCTRL(*this, "ID_TEXTCTRL_USB_CLASS", wxTextCtrl);
+    m_pCtrlBusID = XRCCTRL(*this, "ID_TEXTCTRL_USB_BUSID", wxTextCtrl);
+    m_pCtrlUsbID = XRCCTRL(*this, "ID_TEXTCTRL_USB_USBID", wxTextCtrl);
     m_pCtrlVendor = XRCCTRL(*this, "ID_TEXTCTRL_USB_VENDOR", wxTextCtrl);
     m_pCtrlProduct = XRCCTRL(*this, "ID_TEXTCTRL_USB_PRODUCT", wxTextCtrl);
-    m_pCtrlSerial = XRCCTRL(*this, "ID_TEXTCTRL_USB_SERIAL", wxTextCtrl);
-    m_pCtrlMode = XRCCTRL(*this, "ID_COMBOBOX_MODE", wxComboBox);
+    m_pCtrlMode = XRCCTRL(*this, "ID_COMBOBOX_USB_MODE", wxComboBox);
+
     // Set validators
     if (FindWindow(XRCID("ID_CHECKBOX_FILTER_STORE")))
         FindWindow(XRCID("ID_CHECKBOX_FILTER_STORE"))->SetValidator( wxGenericValidator(& m_bStoreFilter) );
-    if (FindWindow(XRCID("ID_TEXTCTRL_USB_VENDORID")))
-        FindWindow(XRCID("ID_TEXTCTRL_USB_VENDORID"))->SetValidator( MyValidator(MyValidator::MYVAL_HEX, & m_sVendorID) );
-    if (FindWindow(XRCID("ID_TEXTCTRL_USB_PRODUCTID")))
-        FindWindow(XRCID("ID_TEXTCTRL_USB_PRODUCTID"))->SetValidator( MyValidator(MyValidator::MYVAL_HEX, & m_sProductID) );
-    if (FindWindow(XRCID("ID_TEXTCTRL_USB_CLASS")))
-        FindWindow(XRCID("ID_TEXTCTRL_USB_CLASS"))->SetValidator( MyValidator(MyValidator::MYVAL_HEX, & m_sDeviceClass) );
+    if (FindWindow(XRCID("ID_TEXTCTRL_USB_BUSID")))
+        FindWindow(XRCID("ID_TEXTCTRL_USB_BUSID"))->SetValidator( wxGenericValidator(& m_sBusID) );
+    if (FindWindow(XRCID("ID_TEXTCTRL_USB_USBID")))
+        FindWindow(XRCID("ID_TEXTCTRL_USB_USBID"))->SetValidator( wxGenericValidator(& m_sUsbID) );
     if (FindWindow(XRCID("ID_TEXTCTRL_USB_VENDOR")))
         FindWindow(XRCID("ID_TEXTCTRL_USB_VENDOR"))->SetValidator( wxGenericValidator(& m_sVendor) );
     if (FindWindow(XRCID("ID_TEXTCTRL_USB_PRODUCT")))
         FindWindow(XRCID("ID_TEXTCTRL_USB_PRODUCT"))->SetValidator( wxGenericValidator(& m_sProduct) );
-    if (FindWindow(XRCID("ID_TEXTCTRL_USB_SERIAL")))
-        FindWindow(XRCID("ID_TEXTCTRL_USB_SERIAL"))->SetValidator( wxGenericValidator(& m_sSerial) );
     ////@end UsbFilterDetailsDialog content construction
 
     SetDialogMode(m_eMode);
@@ -292,15 +283,26 @@ wxIcon UsbFilterDetailsDialog::GetIconResource( const wxString& name )
 void UsbFilterDetailsDialog::OnComboboxUsbdevsSelected( wxCommandEvent& event )
 {
     wxUnusedVar(event);
-    int i = m_pCtrlDevlist->GetSelection();
-    if (i != wxNOT_FOUND) {
-        SharedUsbDevice dev = m_aUsbForwards[i];
-        m_sVendorID = wxString::Format(wxT("%04X"), dev.m_iVendorID);
-        m_sProductID = wxString::Format(wxT("%04X"), dev.m_iProductID);
-        m_sDeviceClass = wxString::Format(wxT("%02X"), dev.m_iClass);
+    if (m_pCtrlDevlist->GetSelection() != wxNOT_FOUND) {
+
+        SharedUsbDevice dev; // = m_aUsbForwards[i];
+        const wxString selectText = m_pCtrlDevlist->GetStringSelection();
+
+        // SharedUsbDevice dev; // = m_aUsbForwards[m_pCtrlDevlist->GetSelection()]; <-- this does not work
+        // I'm forced to look for an element, because wxComboBox
+        // it seems to re-sort the elements.
+        for (size_t i = 0; i < m_aUsbForwards.GetCount(); i++) {
+            if( selectText == m_aUsbForwards[i].toShortString() ) {
+                dev = m_aUsbForwards[i];
+                break;
+            }
+        }
+
+
         m_sVendor = dev.m_sVendor;
         m_sProduct = dev.m_sProduct;
-        m_sSerial = dev.m_sSerial;
+        m_sBusID = dev.m_sBusID;
+        m_sUsbID = dev.m_sUsbID;
         TransferDataToWindow();
     }
 }

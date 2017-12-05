@@ -13,16 +13,20 @@
 #include "trace.h"
 ENABLE_TRACE;
 
+#include <sstream>
+#include <iomanip>
+
 #include "ModuleManager.h"
 
 // ------------------
 // list of modules
 #include "PCSCModule.h"
+#include "UsbIpModule.h"
 // ----------------------------------------------------------------------------
 ModuleManager::ModuleManager() {
-
     // build modules map
     modules["pcsc"] = PCSCModule::create();
+    modules["usbip"] = UsbIpModule::create();
 }
 // ----------------------------------------------------------------------------
 ModuleManager& ModuleManager::instance() {
@@ -37,6 +41,19 @@ bool ModuleManager::exists( const std::string& name ) const {
         return it->second->exist();
 
     return false;
+}
+// ----------------------------------------------------------------------------
+std::string ModuleManager::modulesInfo() const
+{
+    //! \todo: add print version, short description, etc
+    std::ostringstream s;
+    for( const auto& m: modules ) {
+        s << std::setw(6) << std::right << m.first << ": "
+           << (m.second->exist() ? "yes" : "no")
+           << std::endl;
+    }
+
+    return s.str();
 }
 // ----------------------------------------------------------------------------
 std::shared_ptr<IModule> ModuleManager::getModule( const std::string &name )
@@ -66,11 +83,11 @@ wxString ModuleManager::getNxSshExtraParam(const MyXmlConfig* cfg ) const
     return p;
 }
 // ----------------------------------------------------------------------------
-wxString ModuleManager::getSessionExtraParam(const MyXmlConfig *cfg ) const
+wxString ModuleManager::getSessionExtraParam(const MyXmlConfig *cfg , const MySession *sess) const
 {
     wxString p = wxEmptyString;
     for( const auto& m: modules )
-        p << m.second->getSessionExtraParam(cfg);
+        p << m.second->getSessionExtraParam(cfg,sess);
 
     return p;
 }

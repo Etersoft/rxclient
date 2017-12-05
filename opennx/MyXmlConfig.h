@@ -83,10 +83,8 @@ class SharedUsbDevice : public wxObject
         Mode m_eMode;
         wxString m_sVendor;
         wxString m_sProduct;
-        wxString m_sSerial;
-        int m_iClass;
-        int m_iVendorID;
-        int m_iProductID;
+        wxString m_sBusID;
+        wxString m_sUsbID;
 };
 
 WX_DECLARE_OBJARRAY(SharedUsbDevice, ArrayOfUsbForwards);
@@ -227,7 +225,7 @@ class MyXmlConfig
         bool bGetVirtualDesktop() { return m_bVirtualDesktop; }
         bool bGetVncRememberPassword() { return m_bVncRememberPassword; }
         bool bGetVncUseNxAuth() { return m_bVncUseNxAuth; }
-        bool bGetEnableUSBIP() { return m_bEnableUSBIP; }
+        bool bGetEnableUSBIP() const { return m_bEnableUSBIP; }
         bool bGetDisableDirectDraw() { return m_bDisableDirectDraw; }
         bool bGetDisableDeferredUpdates() { return m_bDisableDeferredUpdates; }
         bool bGetGrabKeyboard() { return m_bGrabKeyboard; }
@@ -262,10 +260,11 @@ class MyXmlConfig
         int iGetXdmListPort() { return m_iXdmListPort; }
         int iGetXdmQueryPort() { return m_iXdmQueryPort; }
         int iGetPcscPort() const { return m_iPcscPort; }
+        int iGetUsbIpPort() const { return m_iUsbIpPort; }
 
         wxString sGetCommandLine() { return m_sCommandLine; }
         wxString sGetCupsPath() { return m_sCupsPath; }
-        wxString sGetFileName() { return m_sFileName; }
+        wxString sGetFileName() const { return m_sFileName; }
         wxString sGetGuestUser() { return m_sGuestUser; }
         wxString sGetGuestPassword() { return m_sGuestPassword; }
         wxString sGetKbdLayoutLanguage() { return m_sKbdLayoutLanguage; }
@@ -288,6 +287,7 @@ class MyXmlConfig
         wxString sGetXdmListHost() { return m_sXdmListHost; }
         wxString sGetXdmQueryHost() { return m_sXdmQueryHost; }
         wxString sGetPcscSocketPath() const { return m_sPcscSocketPath; }
+        wxString sGetUsbIpDevices() const;
 
         // For use by MySession
         wxString sGetSessionUser();
@@ -363,6 +363,7 @@ class MyXmlConfig
         void iSetXdmListPort(int i) { m_iXdmListPort = i; }
         void iSetXdmQueryPort(int i) { m_iXdmQueryPort = i; }
         void iSetPcscPort(int i) { m_iPcscPort = i; }
+        void iSetUsbIpPort( int p) { m_iUsbIpPort = p; }
 
         void sSetCommandLine(const wxString &s) { m_sCommandLine = s; }
         void sSetCupsPath(const wxString &s) { m_sCupsPath = s; }
@@ -487,6 +488,7 @@ class MyXmlConfig
         int m_iXdmQueryPort;
         int m_iClipFilter;
         int m_iPcscPort;
+        int m_iUsbIpPort;
 
         wxString m_sCommandLine;
         wxString m_sCupsPath;
