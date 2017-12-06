@@ -28,7 +28,7 @@ build and public:
     expire_in: 10 days
 
   only:
-    - devel/gitlab-ci
+    - master
 
   tags:
     - rx-build
@@ -46,7 +46,7 @@ testsuite:
     expire_in: 10 days
 
   only:
-    - ci/latest-build
+    - master
 
   tags:
     - rx-tests
