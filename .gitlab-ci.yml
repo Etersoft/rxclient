@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - build_p7
 
 build and public:
   stage: build
@@ -14,7 +15,6 @@ build and public:
     - /usr/bin/rpmlog -q -r -l
     - korinf -f rxclient.spec x86_64/ALTLinux/p8 /var/ftp/pvt/Etersoft/RX@Etersoft/unstable
     - korinf -f rxclient.spec x86_64/ALTLinux/Sisyphus /var/ftp/pvt/Etersoft/RX@Etersoft/unstable
-    # korinf -f rxclient.spec x86_64/ALTLinux/p7 /var/ftp/pvt/Etersoft/RX@Etersoft/unstable
     - git push -f gitlab HEAD:ci/latest-build
 
     # Приходиться делать так, потому-что gitlab-runner не позволяет обращаться к ресурсам лежащим вне сборочного каталога
@@ -50,3 +50,27 @@ testsuite:
 
   tags:
     - rx-tests
+
+# т.к. тесты не зависят от сборки на p7
+# то, сборка для p7 вынесена в отдельную стадию
+# причём рассчёт на то, что в первой стадии исходники для сборки уже опубликованы
+build for p7:
+  stage: build_p7
+  script:
+    # /tmp/.private/.. нужен для hasher, т.к. он не позволяет собирать с другим каталогом, а по умолчанию
+    # у gitlab-runner выставляется /tmp
+    - export TMPDIR=/tmp/.private/${USER}; export TMP=${TMPDIR}
+    - korinf -f rxclient.spec x86_64/ALTLinux/p7 /var/ftp/pvt/Etersoft/RX@Etersoft/unstable
+
+    # Приходиться делать так, потому-что gitlab-runner не позволяет обращаться к ресурсам лежащим вне сборочного каталога
+    - mkdir -p RPM/log; cp -rf ${HOME}/RPM/log/*rxclient*.log RPM/log/
+    - mkdir -p korinf-log; cp -rf ${HOME}/RPM/tmp/korinf-log/* korinf-log/
+
+  artifacts:
+    paths:
+    - RPM/log
+    - korinf-log
+    expire_in: 10 days
+
+  only:
+    - master
