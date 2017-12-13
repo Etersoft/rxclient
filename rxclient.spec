@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt7
+Release: alt8
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -114,6 +114,55 @@ done
 %endif
 
 %changelog
+* Wed Dec 13 2017 Pavel Vainerman <pv@altlinux.ru> 0.18-alt8
+- fix using server key from session config file (eterbug #12195)
+- add initial support of smartcard authentication
+- turn off smart card auth for Windows
+- add 'const' in function initSmartCard
+- add parameter "silent" to opennxapp parameters
+- hide all dialogs when rxclient runned in silent mode
+- djelf - 03_win32exec; nxwin close
+- djelf - 04_noencrypt; fix nonencrypted
+- djelf - 05_AddStateWait03; add STATE_WAIT
+- djelf - 05_Async; fix AsyncProcess
+- djelf - 08_Win32Geometry
+- djelf - 14_TraceAll; new option --trace=All
+- djelf - 19_TestStartNXWin
+- djelf - 20_AddHomeVar; cygwin HOME
+- djelf - 21_NoKillNXssh; win32 only
+- djelf - 22_RussNameComputer
+- djelf - 23-WinCompIsWinNT
+- fix nxwin nonmultiwindow modes crash (Djelf-08_Win32Geometry)
+- win32 only: add nodecoration mode (Djelf)
+- send --screeninfo identical of original nxclient
+- no browse local resources if sharing is off
+- win32: change environment for new cygwin
+- win32: add more compatibility with original nxclient
+- win32: wx3 build #1
+- win32: don't build PA, use 6.0 binarys from  x2goclient-contrib
+- win32: don't start pa at session configure
+- encode/decode smb passwords comes back
+- annoying messages suppression
+- win32: startsession params change
+- win32: win32: by Djelf: fix unhide of nxwin again
+- win32: try to fix unhide desktop under w7-10
+- win32: some dimbor's mingw build stuff
+- win32: fix strangeness with X11PropertyDialog
+- update about screen
+- win32: change windows APPID
+- add compability with wx2.8
+- win32: change path to pulseaudio headers
+- fix by merge request discussion
+- small translation improving
+- fix virtualdesktop sessions (eterbug #12330)
+- disable yesno and warn dialogs for --silent mode (eterbug #12338)
+- fix variable name (eterbug #12330)
+- added .gitlab-ci.yml
+- added test build for p7
+- enable CI for 'master'
+- (gilab ci): reformat file
+- (gitlab-ci): made a separate stage for build for p7
+
 * Mon Nov 13 2017 Pavel Vainerman <pv@altlinux.ru> 0.18-alt7
 - added require for nx (nxssh)
 
