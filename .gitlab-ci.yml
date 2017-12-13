@@ -15,7 +15,7 @@ build and public:
     - /usr/bin/rpmlog -q -r -l
     - korinf -f rxclient.spec x86_64/ALTLinux/p8 /var/ftp/pvt/Etersoft/RX@Etersoft/unstable
     - korinf -f rxclient.spec x86_64/ALTLinux/Sisyphus /var/ftp/pvt/Etersoft/RX@Etersoft/unstable
-    - git push -f gitlab HEAD:ci/latest-build
+    - git push -f --tags gitlab HEAD:ci/latest-build
 
     # Приходиться делать так, потому-что gitlab-runner не позволяет обращаться к ресурсам лежащим вне сборочного каталога
     - mkdir -p RPM/log; cp -rf ${HOME}/RPM/log/*rxclient*.log RPM/log/
