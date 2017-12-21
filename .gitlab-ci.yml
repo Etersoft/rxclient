@@ -75,3 +75,6 @@ build for p7:
 
   only:
     - master
+    
+  tags:
+    - rx-build
