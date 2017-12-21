@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt8
+Release: alt9
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -114,6 +114,9 @@ done
 %endif
 
 %changelog
+* Fri Dec 22 2017 Pavel Vainerman <pv@altlinux.ru> 0.18-alt9
+- up version
+
 * Wed Dec 13 2017 Pavel Vainerman <pv@altlinux.ru> 0.18-alt8
 - fix using server key from session config file (eterbug #12195)
 - add initial support of smartcard authentication
