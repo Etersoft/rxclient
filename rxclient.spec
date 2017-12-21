@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt10
+Release: alt11
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -114,6 +114,10 @@ done
 %endif
 
 %changelog
+* Fri Dec 22 2017 Etersoft Builder <builder@etersoft.ru> 0.18-alt11
+- (gitlab-ci): push to master after build
+- up version
+
 * Fri Dec 22 2017 Pavel Vainerman <pv@altlinux.ru> 0.18-alt10
 - up version (2)
 
