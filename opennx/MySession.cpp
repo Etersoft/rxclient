@@ -1864,7 +1864,7 @@ MySession::isCupsRunning()
     bool
 MySession::prepareCups()
 {
-    long cupsport = wxConfigBase::Get()->Read(wxT("Config/CupsPort"), -1);
+    long cupsport = m_pCfg->iGetCupsPort();
     if (cupsport == -1) {
         cupsport = getFirstFreePort(20000);
         if (0 == cupsport) {
