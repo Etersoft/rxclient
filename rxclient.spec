@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt13
+Release: alt14
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -114,6 +114,9 @@ done
 %endif
 
 %changelog
+* Mon Dec 25 2017 Etersoft Builder <builder@etersoft.ru> 0.18-alt14
+- rewrite CupsPort config in .opennx before check isCupsRunning
+
 * Mon Dec 25 2017 Etersoft Builder <builder@etersoft.ru> 0.18-alt13
 - use cups port from rxclient settings (eterbug #12404)
 
