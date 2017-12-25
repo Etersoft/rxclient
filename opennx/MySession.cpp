@@ -1871,8 +1871,8 @@ MySession::prepareCups()
             wxLogWarning(_("Could not assign a free port for CUPS printing"));
             return false;
         }
-        wxConfigBase::Get()->Write(wxT("Config/CupsPort"), cupsport);
     }
+    wxConfigBase::Get()->Write(wxT("Config/CupsPort"), cupsport);
     ::myLogTrace(MYTRACETAG, wxT("Check for cupsd running at port %d"), cupsport);
     if (isCupsRunning())
         return true;
