@@ -75,6 +75,7 @@
 #include "UsbIp.h"
 #include "CardWaiterDialog.h"
 #include "SupressibleMessageDialog.h"
+#include "ModuleManager.h"
 
 #include "memres.h"
 
@@ -94,6 +95,7 @@ IMPLEMENT_APP(opennxApp);
     : wxApp()
     ,m_pCfg(NULL)
     ,m_pSessionCfg(NULL)
+    ,m_nPcsdPort(-1)
     ,m_nNxSshPID(-1)
     ,m_iReader(-1)
     ,m_bNxSmartCardSupport(false)
@@ -754,17 +756,14 @@ void opennxApp::checkNxSmartCardSupport()
     wxConfigBase::Get()->Read(wxT("Config/SystemNxDir"), &sysdir);
     wxFileName fn(sysdir, wxEmptyString);
     fn.AppendDir(wxT("bin"));
-#ifdef __WXMSW__
-    fn.SetName(wxT("nxssh.exe"));
-#else
-#if wxCHECK_VERSION(3,0,0)
-        fn.SetName(wxT("nxssh"));
-#else
-        fn.SetName(wxT("nxssh.sh"));        
-#endif
-#endif
+
+    fn.SetName(ModuleManager::getDefaultNxSshCmd());
+    if( ModuleManager::instance().exists("pcsc") )
+        fn.SetName( ModuleManager::instance().getNxSshCmd("pcsc") );
+
     if (!fn.FileExists())
         return;
+
     time_t last_mtime;
     long last_size;
     time_t mtime = fn.GetModificationTime().GetTicks();
@@ -1379,7 +1378,8 @@ bool opennxApp::OnInit()
             // If config was loaded from network, make a local copy for
             // watchusbip. watchusbip will delete it after reading.
             wxConfigBase::Get()->Read(_T("Config/UserNxDir"), &cfgname);
-            cfgname += wxFileName::GetPathSeparator() + _T("temp");
+            wxString sTmp = _T("temp");
+            cfgname += wxFileName::GetPathSeparator() + sTmp;
             cfgname += wxFileName::GetPathSeparator() + m_sSessionID + _T(".nxs");
             m_pSessionCfg->sSetFileName(cfgname);
             m_pSessionCfg->SaveToFile();
@@ -1418,6 +1418,25 @@ bool opennxApp::OnInit()
             wxExecute(watchcmd);
         }
     }
+
+    if ( NxSmartCardSupport() )
+    {
+        wxString appDir;
+        wxConfigBase::Get()->Read(wxT("Config/SystemNxDir"), &appDir);
+        wxFileName fn(appDir, wxEmptyString);
+        fn.AppendDir(wxT("bin"));
+        fn.SetName(wxT("nx-pcsc-helper.sh"));
+        wxString cmd = fn.GetShortPath();
+        cmd << wxT(" client ") << wxGetApp().GetNxSshPID()
+            << wxT(" ") << wxGetApp().GetPcsdSocket()
+            << wxT(" ") << wxGetApp().GetPcsdPort();
+
+        ::myLogTrace(MYTRACETAG, wxT("executing %s"), to_c_str(cmd));
+        std::cout << "(pcscd): " << cmd << std::endl;
+//        wxExecute(cmd);
+    }
+
+
     while (wxGetApp().Pending())
         wxGetApp().Dispatch();
     if (!ret) {

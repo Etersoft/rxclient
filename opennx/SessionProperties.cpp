@@ -71,7 +71,7 @@
 #include "opennxApp.h"
 #include "osdep.h"
 #include "PulseAudio.h"
-#include "FakeModule.h"
+#include "ModuleManager.h"
 
 ////@begin XPM images
 ////@end XPM images
@@ -612,7 +612,7 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
 #endif
 
     //Hide shared smart card flag if bash module not exists
-    FindWindow(XRCID("ID_CHECKBOX_SHRSMARDCARD"))->Show(FakeModule::instance().exists());
+    FindWindow(XRCID("ID_CHECKBOX_SHRSMARDCARD"))->Show(ModuleManager::instance().exists("pcsc"));
 
     // Populate keyboard layout combobox
     size_t idx1 = (size_t)-1;

@@ -261,6 +261,7 @@ class MyXmlConfig
         int iGetXdmBroadcastPort() { return m_iXdmBroadcastPort; }
         int iGetXdmListPort() { return m_iXdmListPort; }
         int iGetXdmQueryPort() { return m_iXdmQueryPort; }
+        int iGetPcscPort() const { return m_iPcscPort; }
 
         wxString sGetCommandLine() { return m_sCommandLine; }
         wxString sGetCupsPath() { return m_sCupsPath; }
@@ -281,11 +282,12 @@ class MyXmlConfig
         wxString sGetRdpUsername() { return m_sRdpUsername; }
         wxString sGetServerHost() { return m_sServerHost; }
         wxString sGetSshKey() { return m_sSshKey; }
-        wxString sGetUsername() { return m_sUsername; }
+        wxString sGetUsername() const { return m_sUsername; }
         wxString sGetVncHostName() { return m_sVncHostName; }
         wxString sGetVncPassword() { return m_sVncPassword; }
         wxString sGetXdmListHost() { return m_sXdmListHost; }
         wxString sGetXdmQueryHost() { return m_sXdmQueryHost; }
+        wxString sGetPcscSocketPath() const { return m_sPcscSocketPath; }
 
         // For use by MySession
         wxString sGetSessionUser();
@@ -360,6 +362,7 @@ class MyXmlConfig
         void iSetXdmBroadcastPort(int i) { m_iXdmBroadcastPort = i; }
         void iSetXdmListPort(int i) { m_iXdmListPort = i; }
         void iSetXdmQueryPort(int i) { m_iXdmQueryPort = i; }
+        void iSetPcscPort(int i) { m_iPcscPort = i; }
 
         void sSetCommandLine(const wxString &s) { m_sCommandLine = s; }
         void sSetCupsPath(const wxString &s) { m_sCupsPath = s; }
@@ -483,6 +486,7 @@ class MyXmlConfig
         int m_iXdmListPort;
         int m_iXdmQueryPort;
         int m_iClipFilter;
+        int m_iPcscPort;
 
         wxString m_sCommandLine;
         wxString m_sCupsPath;
@@ -508,6 +512,7 @@ class MyXmlConfig
         wxString m_sVncPassword;
         wxString m_sXdmListHost;
         wxString m_sXdmQueryHost;
+        wxString m_sPcscSocketPath;
 
         ConnectionSpeed m_eConnectionSpeed;
         DesktopType m_eDesktopType;
