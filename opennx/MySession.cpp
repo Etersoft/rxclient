@@ -53,7 +53,7 @@
 #include "Icon.h"
 #include "SupressibleMessageDialog.h"
 #include "PulseAudio.h"
-#include "FakeModule.h"
+#include "ModuleManager.h"
 
 #include <wx/filename.h>
 #include <wx/regex.h>
@@ -919,12 +919,10 @@ MySession::OnSshEvent(wxCommandEvent &event)
                     break;
                 case STATE_SSH_SHARED_SETTING:
                     {
-                        wxString pssh = wxT("sshsharing");
-                        if(m_pCfg->bGetEnableSharedSmartCard() && FakeModule::instance().exists()) {
-                            pssh << wxT(" --pcscd=\"1\"");
-                        } else {
-                            pssh << wxT(" --pcscd=\"0\"");
-                        }
+                        wxString pssh = wxEmptyString;
+                        if(m_pCfg->bGetEnableSharedSmartCard() && ModuleManager::instance().exists("pcsc"))
+                            pssh << ModuleManager::instance().getSessionExtraParam("pcsc",m_pCfg);
+
                         printSsh(pssh);
                         m_eConnectState = STATE_LOGIN;
                     }
@@ -2175,20 +2173,15 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         fn.AppendDir(wxT("bin"));
 
         wxString appendcmd = wxEmptyString;
-#ifdef __WXMSW__
-        fn.SetName(wxT("nxssh.exe"));
-#else
-        if (m_pCfg->bGetEnableSharedSmartCard() && FakeModule::instance().exists()) {
-            fn.SetName(FakeModule::fileName);
-            appendcmd << wxT(" pcsc ") << m_pCfg->sGetUsername();
-        } else {
-#if wxCHECK_VERSION(3,0,0)
-        fn.SetName(wxT("nxssh"));
-#else
-        fn.SetName(wxT("nxssh.sh"));
-#endif
+
+        auto& mman = ModuleManager::instance();
+
+        fn.SetName(ModuleManager::getDefaultNxSshCmd());
+
+        if (m_pCfg->bGetEnableSharedSmartCard() && mman.exists("pcsc")) {
+            fn.SetName(mman.getNxSshCmd("pcsc"));
+            appendcmd << mman.getNxSshExtraParam("pcsc",m_pCfg);
         }
-#endif
 
         m_sTempDir = m_sUserDir;
         m_sTempDir << wxFileName::GetPathSeparator() << wxT("temp")
@@ -2502,6 +2495,8 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         MyIPC nxssh;
         m_pNxSsh = &nxssh;
 
+        ModuleManager::instance().runBeforeNxSsh(m_pCfg);
+
         wxLogInfo(wxT("Starting %s"), nxsshcmd.c_str());
         do {
             m_bRemoveKey = false;
@@ -2562,7 +2557,15 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
             if (m_bRemoveKey)
                 clearSshKeys(m_sOffendingKey);
         } while (m_bRemoveKey);
+
+
+        // call before detach!
+        long nxsshPID = nxssh.GetPID();
+        wxGetApp().SetNxSshPID(nxsshPID);
+
         nxssh.Detach();
+
+        ModuleManager::instance().runAfterNxSsh(m_pCfg,nxsshPID);
 
 #ifdef __WXMSW__
         if (m_iXserverPID)
@@ -2571,7 +2574,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 
         if (m_pCfg->bGetEnableUSBIP()) {
             ::myLogTrace(MYTRACETAG, wxT("Enabling UsbIp"));
-            wxGetApp().SetNxSshPID(nxssh.GetPID());
+//            wxGetApp().SetNxSshPID(nxssh.GetPID());
             wxGetApp().SetSessionCfg(*m_pCfg);
             wxGetApp().SetSessionID(m_sSessionID.Right(32));
             wxGetApp().SetRequireStartUsbIp(true);

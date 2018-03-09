@@ -38,6 +38,10 @@
 #include "wx/wx.h"
 #endif
 
+#ifndef PCSD_DEFAULT_PATH
+#define PCSD_DEFAULT_PATH "/var/run/pcscd/pcscd.comm"
+#endif
+
 #include <wx/filename.h>
 #include <wx/xml/xml.h>
 #include <wx/arrimpl.cpp>
@@ -56,6 +60,7 @@ class wxConfigBase;
 #include "LibUSB.h"
 #include "MyXmlConfig.h"
 #include "WinShare.h"
+#include "ModuleManager.h"
 
 #ifdef APP_OPENNX
 # include "opennxApp.h"
@@ -286,6 +291,7 @@ MyXmlConfig::init()
     m_iXdmBroadcastPort = 177;
     m_iXdmListPort = 177;
     m_iXdmQueryPort = 177;
+    m_iPcscPort = 3241;
 
     m_eCacheDisk = CACHEDISK_32MB;
     m_eCacheMemory = CACHEMEM_8MB;
@@ -322,6 +328,10 @@ MyXmlConfig::init()
     m_sVncPassword = wxEmptyString;
     m_sXdmListHost = wxT("localhost");
     m_sXdmQueryHost = wxT("localhost");
+
+    wxConfigBase::Get()->Read(wxT("Config/PcscdSocketPath"), &m_sPcscSocketPath);
+    if (m_sPcscSocketPath.IsEmpty())
+        m_sPcscSocketPath = wxT(PCSD_DEFAULT_PATH);
 
     m_pMd5Password = NULL;
     m_pClrPassword = NULL;
@@ -418,6 +428,7 @@ MyXmlConfig::operator =(const MyXmlConfig &other)
     m_iXdmBroadcastPort = other.m_iXdmBroadcastPort;
     m_iXdmListPort = other.m_iXdmListPort;
     m_iXdmQueryPort = other.m_iXdmQueryPort;
+    m_iPcscPort = other.m_iPcscPort;
 
     m_eCacheDisk = other.m_eCacheDisk;
     m_eCacheMemory = other.m_eCacheMemory;
@@ -450,6 +461,7 @@ MyXmlConfig::operator =(const MyXmlConfig &other)
     m_sVncPassword = other.m_sVncPassword;
     m_sXdmListHost = other.m_sXdmListHost;
     m_sXdmQueryHost = other.m_sXdmQueryHost;
+    m_sPcscSocketPath = other.m_sPcscSocketPath;
 
     m_aShareGroups = other.m_aShareGroups;
     m_aUsedShareGroups = other.m_aUsedShareGroups;
@@ -480,6 +492,10 @@ MyXmlConfig::sGetProxyParams(const long protocolVersion)
     // FIXME: use real settings
     ret << wxT(",font=1");
     ret << wxT(",aux=1");
+
+    if( m_bEnableSharedSmartCard && ModuleManager::instance().exists("pcsc") )
+        ret <<  ModuleManager::instance().getNxProxyExtraParam("pcsc",this);
+
     return ret;
 }
 
@@ -926,7 +942,7 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
         ret << wxT(" --mediahelper=\"esd\"");
     }
     if (m_bEnableSharedSmartCard) {
-        ret << wxT(" --pcscd=\"1\"");
+        ret << ModuleManager::instance().getSessionExtraParam("pcsc",this);
     }
     // Original always uses those?!
     ret << wxT(" --strict=\"0\"");
@@ -1138,6 +1154,7 @@ MyXmlConfig::operator ==(const MyXmlConfig &other)
     if (m_iXdmBroadcastPort != other.m_iXdmBroadcastPort) return false;
     if (m_iXdmListPort != other.m_iXdmListPort) return false;
     if (m_iXdmQueryPort != other.m_iXdmQueryPort) return false;
+    if (m_iPcscPort != other.m_iPcscPort) return false;
 
     if (m_eCacheDisk != other.m_eCacheDisk) return false;
     if (m_eCacheMemory != other.m_eCacheMemory) return false;
@@ -1170,6 +1187,7 @@ MyXmlConfig::operator ==(const MyXmlConfig &other)
     if (m_sVncPassword != other.m_sVncPassword) return false;
     if (m_sXdmListHost != other.m_sXdmListHost) return false;
     if (m_sXdmQueryHost != other.m_sXdmQueryHost) return false;
+    if (m_sPcscSocketPath != other.m_sPcscSocketPath) return false;
 
     if (cmpUsedShareGroups(m_aUsedShareGroups, other.m_aUsedShareGroups)) return false;
     if (cmpShareGroups(m_aShareGroups, other.m_aShareGroups)) return false;
@@ -1759,6 +1777,7 @@ MyXmlConfig::loadFromStream(wxInputStream &is, bool isPush)
                         m_iSmbPort = getLong(opt, wxT("SmbDefaultPort"), m_iSmbPort);
                         m_bUseCups = getBool(opt, wxT("IPPPrinting"), m_bUseCups);
                         m_bEnableSmbSharing = getBool(opt, wxT("Shares"), m_bEnableSmbSharing);
+                        m_iPcscPort = getLong(opt, wxT("PcscDefaultPort"), m_iPcscPort);
                         opt = opt->GetNext();
                     }
                     cfgnode = cfgnode->GetNext();
@@ -2307,6 +2326,8 @@ MyXmlConfig::SaveToFile()
     bAddOption(g, wxT("IPPPrinting"), m_bUseCups);
     iAddOption(g, wxT("IPPPort"), m_iCupsPort);
     iAddOption(g, wxT("SmbDefaultPort"), m_iSmbPort);
+    iAddOption(g, wxT("PcscDefaultPort"), m_iPcscPort);
+    sAddOption(g, wxT("PcscDefaultSocketPatch"), m_sPcscSocketPath);
 
     if (m_aUsedShareGroups.GetCount()) {
         g = AddGroup(r, wxT("share chosen"));

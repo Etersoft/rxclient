@@ -245,6 +245,9 @@ AC_SUBST(WX_PREFIX)
 WX_CFLAGS="$OSX_SDKFLAGS $WX_CFLAGS"
 WX_CXXFLAGS="$OSX_SDKFLAGS $WX_CXXFLAGS"
 
+# enable c++11 support (by default)
+CXXFLAGS="$CXXFLAGS --std=c++11"
+
 # Check, if wxLogStream is available
 save_CPPFLAGS="$CPPFLAGS"
 save_CXXFLAGS="$CXXFLAGS"

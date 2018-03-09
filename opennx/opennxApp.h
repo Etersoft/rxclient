@@ -67,8 +67,12 @@ class opennxApp : public wxApp
         void SetNxSshPID(long l) { m_nNxSshPID = l; }
         void SetReader(int i) { m_iReader = i; }
         void SetSessionCfg(MyXmlConfig &);
-        void SetSessionID(const wxString &s) { m_sSessionID = s; };
+        void SetSessionID(const wxString &s) { m_sSessionID = s; }
         void EnableContextHelp(wxWindow *w);
+
+        long GetNxSshPID() const { return m_nNxSshPID; }
+        long GetPcsdPort() const { return m_nPcsdPort; }
+        wxString GetPcsdSocket() const { return m_sPcsdSocket; }
 
         virtual bool OnInit();
         virtual void OnInitCmdLine(wxCmdLineParser& parser);
@@ -103,6 +107,8 @@ class opennxApp : public wxApp
         wxString m_sDialogMessage;
         wxString m_sCaCert;
         wxString m_sExportFile;
+        wxString m_sPcsdSocket;
+        long m_nPcsdPort;
         long m_nNxSshPID;
         long m_nOtherPID;
         long m_nWindowID;
