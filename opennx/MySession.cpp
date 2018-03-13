@@ -920,8 +920,11 @@ MySession::OnSshEvent(wxCommandEvent &event)
                 case STATE_SSH_SHARED_SETTING:
                     {
                         wxString pssh = wxEmptyString;
-                        if(m_pCfg->bGetEnableSharedSmartCard() && ModuleManager::instance().exists("pcsc"))
-                            pssh << ModuleManager::instance().getSessionExtraParam("pcsc",m_pCfg);
+
+                        // only for "pcsc"
+                        auto m_pcsc = ModuleManager::instance().getModule("pcsc");
+                        if( m_pcsc )
+                            pssh << m_pcsc->getSessionExtraParam(m_pCfg);
 
                         printSsh(pssh);
                         m_eConnectState = STATE_LOGIN;
@@ -2178,9 +2181,11 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 
         fn.SetName(ModuleManager::getDefaultNxSshCmd());
 
-        if (m_pCfg->bGetEnableSharedSmartCard() && mman.exists("pcsc")) {
-            fn.SetName(mman.getNxSshCmd("pcsc"));
-            appendcmd << mman.getNxSshExtraParam("pcsc",m_pCfg);
+        // only for "pcsc" module
+        auto m_pcsc = mman.getModule("pcsc");
+        if( m_pcsc ) {
+            fn.SetName(m_pcsc->getNxSshCmd(m_pCfg, mman.getDefaultNxSshCmd()));
+            appendcmd << m_pcsc->getNxSshExtraParam(m_pCfg);
         }
 
         m_sTempDir = m_sUserDir;

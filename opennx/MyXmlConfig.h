@@ -206,7 +206,7 @@ class MyXmlConfig
         bool bGetDisableXagent() { return m_bDisableXagent; }
         bool bGetDisableZlibCompression() { return m_bDisableZlibCompression; }
         bool bGetEnableMultimedia() { return m_bEnableMultimedia; }
-        bool bGetEnableSharedSmartCard() { return m_bEnableSharedSmartCard; }
+        bool bGetEnableSharedSmartCard() const { return m_bEnableSharedSmartCard; }
         bool bGetEnableSmbSharing() { return m_bEnableSmbSharing; }
         bool bGetEnableSSL() { return m_bEnableSSL; }
         bool bGetExternalProxy() { return m_bExternalProxy; }

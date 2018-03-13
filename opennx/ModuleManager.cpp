@@ -5,7 +5,7 @@
 #include "wx/wxprec.h"
 
 #ifndef WX_PRECOMP
-    #include "wx/wx.h"
+#include "wx/wx.h"
 #endif
 
 #include <wx/config.h>
@@ -39,40 +39,49 @@ bool ModuleManager::exists( const std::string& name ) const {
     return false;
 }
 // ----------------------------------------------------------------------------
-wxString ModuleManager::getNxSshCmd( const std::string& name ) const
+std::shared_ptr<IModule> ModuleManager::getModule( const std::string &name )
 {
     auto it = modules.find(name);
     if( it != modules.end() )
-        return it->second->getNxSshCmd(getDefaultNxSshCmd());
+        return it->second;
+
+    return nullptr;
+}
+// ----------------------------------------------------------------------------
+wxString ModuleManager::getNxSshCmd( const std::string& name, const MyXmlConfig *cfg ) const
+{
+    auto it = modules.find(name);
+    if( it != modules.end() )
+        return it->second->getNxSshCmd(cfg, getDefaultNxSshCmd());
 
     return getDefaultNxSshCmd();
 }
 // ----------------------------------------------------------------------------
-wxString ModuleManager::getNxSshExtraParam( const std::string &name, const MyXmlConfig* cfg ) const
+wxString ModuleManager::getNxSshExtraParam(const MyXmlConfig* cfg ) const
 {
-    auto it = modules.find(name);
-    if( it != modules.end() )
-        return it->second->getNxSshExtraParam(cfg);
+    wxString p = wxEmptyString;
+    for( const auto& m: modules )
+        p << m.second->getNxSshExtraParam(cfg);
 
-    return wxEmptyString;
+    return p;
 }
 // ----------------------------------------------------------------------------
-wxString ModuleManager::getSessionExtraParam( const std::string &name, const MyXmlConfig *cfg ) const
+wxString ModuleManager::getSessionExtraParam(const MyXmlConfig *cfg ) const
 {
-    auto it = modules.find(name);
-    if( it != modules.end() )
-        return it->second->getSessionExtraParam(cfg);
+    wxString p = wxEmptyString;
+    for( const auto& m: modules )
+        p << m.second->getSessionExtraParam(cfg);
 
-    return wxEmptyString;
+    return p;
 }
 // ----------------------------------------------------------------------------
-wxString ModuleManager::getNxProxyExtraParam(const std::string &name, const MyXmlConfig *cfg) const
+wxString ModuleManager::getNxProxyExtraParam( const MyXmlConfig *cfg ) const
 {
-    auto it = modules.find(name);
-    if( it != modules.end() )
-        return it->second->getNxProxyExtraParam(cfg);
+    wxString p = wxEmptyString;
+    for( const auto& m: modules )
+        p << m.second->getNxProxyExtraParam(cfg);
 
-    return wxEmptyString;
+    return p;
 }
 // ----------------------------------------------------------------------------
 wxString ModuleManager::getDefaultNxSshCmd()
