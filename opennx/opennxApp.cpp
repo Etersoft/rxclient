@@ -757,9 +757,11 @@ void opennxApp::checkNxSmartCardSupport()
     wxFileName fn(sysdir, wxEmptyString);
     fn.AppendDir(wxT("bin"));
 
-    fn.SetName(ModuleManager::getDefaultNxSshCmd());
-    if( ModuleManager::instance().exists("pcsc") )
-        fn.SetName( ModuleManager::instance().getNxSshCmd("pcsc") );
+    auto m_pcsc = ModuleManager::instance().getModule("pcsc");
+    if( !m_pcsc )
+        return;
+
+    fn.SetName( m_pcsc->getNxSshCmd(m_pSessionCfg, ModuleManager::instance().getDefaultNxSshCmd()) );
 
     if (!fn.FileExists())
         return;
@@ -1418,24 +1420,6 @@ bool opennxApp::OnInit()
             wxExecute(watchcmd);
         }
     }
-
-    if ( NxSmartCardSupport() )
-    {
-        wxString appDir;
-        wxConfigBase::Get()->Read(wxT("Config/SystemNxDir"), &appDir);
-        wxFileName fn(appDir, wxEmptyString);
-        fn.AppendDir(wxT("bin"));
-        fn.SetName(wxT("nx-pcsc-helper.sh"));
-        wxString cmd = fn.GetShortPath();
-        cmd << wxT(" client ") << wxGetApp().GetNxSshPID()
-            << wxT(" ") << wxGetApp().GetPcsdSocket()
-            << wxT(" ") << wxGetApp().GetPcsdPort();
-
-        ::myLogTrace(MYTRACETAG, wxT("executing %s"), to_c_str(cmd));
-        std::cout << "(pcscd): " << cmd << std::endl;
-//        wxExecute(cmd);
-    }
-
 
     while (wxGetApp().Pending())
         wxGetApp().Dispatch();

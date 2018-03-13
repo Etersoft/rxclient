@@ -23,7 +23,7 @@ public:
 
     // get command for run (exec file)
     // see details in https://bugs.etersoft.ru/..
-    virtual wxString getNxSshCmd( const wxString& defaultCmd ) const
+    virtual wxString getNxSshCmd( const MyXmlConfig* cfg, const wxString& defaultCmd ) const
     {
         return defaultCmd;
     }

@@ -21,17 +21,19 @@ public:
     static ModuleManager& instance();
     bool exists( const std::string& moduleName ) const;
 
+    std::shared_ptr<IModule> getModule( const std::string& moduleName );
+
     // config
     static wxString getDefaultNxSshCmd();
-    wxString getNxSshCmd( const std::string& moduleName ) const;
+    wxString getNxSshCmd( const std::string& moduleName, const MyXmlConfig* cfg ) const;
 
-    wxString getNxSshExtraParam( const std::string& moduleName, const MyXmlConfig* cfg ) const;
+    wxString getNxSshExtraParam( const MyXmlConfig* cfg ) const;
 
     // format: ' --param1=val1 --param2=val2  ...'
-    wxString getSessionExtraParam( const std::string& moduleName, const MyXmlConfig* cfg ) const;
+    wxString getSessionExtraParam( const MyXmlConfig* cfg ) const;
 
     // format: ,param1=val1,param2=val2,...
-    wxString getNxProxyExtraParam( const std::string& moduleName, const MyXmlConfig* cfg ) const;
+    wxString getNxProxyExtraParam( const MyXmlConfig* cfg ) const;
 
     // -----------------------------------------
     // HOOKS (call for all registered modules)

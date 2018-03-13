@@ -493,8 +493,8 @@ MyXmlConfig::sGetProxyParams(const long protocolVersion)
     ret << wxT(",font=1");
     ret << wxT(",aux=1");
 
-    if( m_bEnableSharedSmartCard && ModuleManager::instance().exists("pcsc") )
-        ret <<  ModuleManager::instance().getNxProxyExtraParam("pcsc",this);
+    // Get params from modules
+    ret <<  ModuleManager::instance().getNxProxyExtraParam(this);
 
     return ret;
 }
@@ -941,9 +941,10 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
     if (m_bEnableMultimedia) {
         ret << wxT(" --mediahelper=\"esd\"");
     }
-    if (m_bEnableSharedSmartCard) {
-        ret << ModuleManager::instance().getSessionExtraParam("pcsc",this);
-    }
+
+    // Get params from modules
+    ret << ModuleManager::instance().getSessionExtraParam(this);
+
     // Original always uses those?!
     ret << wxT(" --strict=\"0\"");
     if (bNew) {

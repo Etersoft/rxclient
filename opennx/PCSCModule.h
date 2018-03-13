@@ -12,7 +12,7 @@ class MyXmlConfig;
 // Module for support pcscd socket forwarding
 //
 class PCSCModule:
-    public IModule
+        public IModule
 {
 private:
 
@@ -25,7 +25,7 @@ public:
     static std::shared_ptr<IModule> create();
 
     virtual bool exist() override;
-    virtual wxString getNxSshCmd( const wxString& defaultName ) const override;
+    virtual wxString getNxSshCmd( const MyXmlConfig* cfg, const wxString& defaultName ) const override;
     virtual wxString getNxSshExtraParam( const MyXmlConfig* cfg ) const override;
     virtual wxString getSessionExtraParam( const MyXmlConfig* cfg ) const override;
     virtual wxString getNxProxyExtraParam( const MyXmlConfig* cfg ) const override;

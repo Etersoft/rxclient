@@ -5,7 +5,7 @@
 #include "wx/wxprec.h"
 
 #ifndef WX_PRECOMP
-    #include "wx/wx.h"
+#include "wx/wx.h"
 #endif
 
 #include <wx/filesys.h>
@@ -50,16 +50,22 @@ bool PCSCModule::exist() {
     return smartcard->FileExists() || pcsc->FileExists();
 }
 // ----------------------------------------------------------------------------
-wxString PCSCModule::getNxSshCmd( const wxString& defaultName ) const
+wxString PCSCModule::getNxSshCmd( const MyXmlConfig* pCfg, const wxString& defaultName ) const
 {
+    if( !pCfg->bGetEnableSharedSmartCard() )
+        return IModule::getNxSshCmd(pCfg, defaultName);
+
     if( smartcard->FileExists() )
         return wxT("nxssh.ext.sh");
 
-    return IModule::getNxSshCmd(defaultName);
+    return IModule::getNxSshCmd(pCfg, defaultName);
 }
 // ----------------------------------------------------------------------------
 wxString PCSCModule::getNxSshExtraParam( const MyXmlConfig* pCfg ) const
 {
+    if( !pCfg->bGetEnableSharedSmartCard() )
+        return IModule::getNxSshExtraParam(pCfg);
+
     if( smartcard->FileExists() )
     {
         wxString p;
@@ -72,6 +78,10 @@ wxString PCSCModule::getNxSshExtraParam( const MyXmlConfig* pCfg ) const
 // ----------------------------------------------------------------------------
 wxString PCSCModule::getSessionExtraParam( const MyXmlConfig *pCfg ) const
 {
+    if( !pCfg->bGetEnableSharedSmartCard() )
+        return IModule::getSessionExtraParam(pCfg);
+
+
     //
     // format: ' --param1=val1 --param2=val2  ...'
     //
@@ -98,6 +108,9 @@ wxString PCSCModule::getSessionExtraParam( const MyXmlConfig *pCfg ) const
 // ----------------------------------------------------------------------------
 wxString PCSCModule::getNxProxyExtraParam( const MyXmlConfig* pCfg ) const
 {
+    if( !pCfg->bGetEnableSharedSmartCard() )
+        return IModule::getNxProxyExtraParam(pCfg);
+
     //
     // format: ,param1=val1,param2=val2,...
     //
@@ -114,6 +127,9 @@ wxString PCSCModule::getNxProxyExtraParam( const MyXmlConfig* pCfg ) const
 // ----------------------------------------------------------------------------
 void PCSCModule::runAfterNxSsh( const MyXmlConfig* pCfg, int nxsshPID )
 {
+    if( !pCfg->bGetEnableSharedSmartCard() )
+        return;
+
     if( pcsc->FileExists() )
     {
         wxString cmd = pcsc->GetShortPath();
