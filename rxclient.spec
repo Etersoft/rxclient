@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt14
+Release: alt15
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -114,6 +114,11 @@ done
 %endif
 
 %changelog
+* Tue Mar 13 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt15
+- (gitlab-ci): apt-get --> epm and other minor fixes
+- (pcscd): added support for pcscd forwarding - added first implementation of ModuleManager - added first implementation of PCSCModule
+- moduleManager interface refactoring
+
 * Mon Dec 25 2017 Etersoft Builder <builder@etersoft.ru> 0.18-alt14
 - rewrite CupsPort config in .opennx before check isCupsRunning
 
