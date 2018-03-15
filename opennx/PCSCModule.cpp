@@ -19,9 +19,12 @@
 ENABLE_TRACE;
 
 #include "MyXmlConfig.h"
+#include "MySession.h"
 #include "PCSCModule.h"
 
 class wxConfigBase;
+// ----------------------------------------------------------------------------
+static long SupportedNXProtocolVersion = 197890; /* 3.5.2 */
 // ----------------------------------------------------------------------------
 std::shared_ptr<IModule> PCSCModule::create()
 {
@@ -82,10 +85,6 @@ wxString PCSCModule::getSessionExtraParam( const MyXmlConfig *pCfg ) const
         return IModule::getSessionExtraParam(pCfg);
 
 
-    //
-    // format: ' --param1=val1 --param2=val2  ...'
-    //
-
     if( smartcard->FileExists() || pcsc->FileExists() )
     {
         // WARNING:
@@ -99,6 +98,8 @@ wxString PCSCModule::getSessionExtraParam( const MyXmlConfig *pCfg ) const
         if( smartcard->FileExists() )
             p << wxT(" sshsharing");
 
+        // format: ' --param1=val1 --param2=val2  ...'
+
         p << wxT(" --pcscd=\"") << pCfg->iGetPcscPort() << wxT("\"");
         return p;
     }
@@ -106,15 +107,18 @@ wxString PCSCModule::getSessionExtraParam( const MyXmlConfig *pCfg ) const
     return IModule::getSessionExtraParam(pCfg);
 }
 // ----------------------------------------------------------------------------
-wxString PCSCModule::getNxProxyExtraParam( const MyXmlConfig* pCfg ) const
+wxString PCSCModule::getNxProxyExtraParam( const MyXmlConfig* pCfg, const MySession* sess ) const
 {
     if( !pCfg->bGetEnableSharedSmartCard() )
-        return IModule::getNxProxyExtraParam(pCfg);
+        return IModule::getNxProxyExtraParam(pCfg,sess);
 
-    //
+    if( sess->lGetProtocolVersion() < SupportedNXProtocolVersion /* 3.5.2 */ )
+    {
+        ::myLogTrace(MYTRACETAG, wxT("(pcsc): ProtocolVersion='%s' not supported. Must be >= 3.5.2"), to_c_str(sess->sGetProtocolVersion() ));
+        return IModule::getNxProxyExtraParam(pCfg,sess);
+    }
+
     // format: ,param1=val1,param2=val2,...
-    //
-
     if( pcsc->FileExists() )
     {
         wxString p;
@@ -122,13 +126,19 @@ wxString PCSCModule::getNxProxyExtraParam( const MyXmlConfig* pCfg ) const
         return p;
     }
 
-    return IModule::getNxProxyExtraParam(pCfg);
+    return IModule::getNxProxyExtraParam(pCfg,sess);
 }
 // ----------------------------------------------------------------------------
-void PCSCModule::runAfterNxSsh( const MyXmlConfig* pCfg, int nxsshPID )
+void PCSCModule::runAfterNxSsh( const MyXmlConfig* pCfg, const MySession* sess, int nxsshPID )
 {
     if( !pCfg->bGetEnableSharedSmartCard() )
         return;
+
+    if( sess->lGetProtocolVersion() < SupportedNXProtocolVersion /* 3.5.2 */ )
+    {
+        ::myLogTrace(MYTRACETAG, wxT("(pcsc): ProtocolVersion='%s' not supported. Must be >= 3.5.2"), to_c_str(sess->sGetProtocolVersion() ));
+        return;
+    }
 
     if( pcsc->FileExists() )
     {

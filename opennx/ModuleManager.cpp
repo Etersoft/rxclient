@@ -75,11 +75,11 @@ wxString ModuleManager::getSessionExtraParam(const MyXmlConfig *cfg ) const
     return p;
 }
 // ----------------------------------------------------------------------------
-wxString ModuleManager::getNxProxyExtraParam( const MyXmlConfig *cfg ) const
+wxString ModuleManager::getNxProxyExtraParam( const MyXmlConfig *cfg, const MySession* sess ) const
 {
     wxString p = wxEmptyString;
     for( const auto& m: modules )
-        p << m.second->getNxProxyExtraParam(cfg);
+        p << m.second->getNxProxyExtraParam(cfg, sess);
 
     return p;
 }
@@ -97,12 +97,12 @@ wxString ModuleManager::getDefaultNxSshCmd()
 #endif
 }
 // ----------------------------------------------------------------------------
-void ModuleManager::runBeforeNxSsh( const MyXmlConfig* cfg )
+void ModuleManager::runBeforeNxSsh( const MyXmlConfig* cfg, const MySession* sess )
 {
     for( const auto& m: modules )
     {
         try {
-            m.second->runBeforeNxSsh(cfg);
+            m.second->runBeforeNxSsh(cfg, sess);
         }
         catch( std::exception& ex ) {
             ::myLogTrace(MYTRACETAG, wxT("(runBeforeNxSsh): catch '%s'"), ex.what());
@@ -110,12 +110,12 @@ void ModuleManager::runBeforeNxSsh( const MyXmlConfig* cfg )
     }
 }
 // ----------------------------------------------------------------------------
-void ModuleManager::runAfterNxSsh( const MyXmlConfig* cfg, int nxsshPID )
+void ModuleManager::runAfterNxSsh( const MyXmlConfig* cfg, const MySession* sess, int nxsshPID )
 {
     for( const auto& m: modules )
     {
         try {
-            m.second->runAfterNxSsh(cfg, nxsshPID);
+            m.second->runAfterNxSsh(cfg, sess, nxsshPID);
         }
         catch( std::exception& ex ) {
             ::myLogTrace(MYTRACETAG, wxT("(runAfterNxSsh): catch '%s'"), ex.what());

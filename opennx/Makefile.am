@@ -6,8 +6,10 @@ DIST_SUBDIRS = po docs packaging/win32 packaging/MacOSX
 
 noinst_PROGRAMS = pulsetest $(TESTXAUTH) $(MACTESTKBD)
 
-bin_PROGRAMS = rxclient pconnect $(TRACELOG) $(WATCHREADER) $(WATCHUSBIP) \
+bin_PROGRAMS = rxclient pconnect $(TRACELOG) $(WATCHREADER) \
 	       $(MACFINDREADER) $(MACUNINSTALL)
+
+# $(WATCHUSBIP)
 
 EXTRA_PROGRAMS = tracelog$(EXEEXT) watchreader$(EXEEXT) \
 	watchusbip$(EXEEXT) macfindreader$(EXEEXT) macuninstall$(EXEEXT) \

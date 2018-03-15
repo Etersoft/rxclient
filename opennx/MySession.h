@@ -85,6 +85,9 @@ public:
     bool bGetPidFromFile();
     void CheckState();
     bool IsValid() { return m_bValid; }
+    long lGetProtocolVersion() const { return m_lProtocolVersion; }
+    wxString sGetProtocolVersion() const { return m_sProtocolVersion; }
+
     MySession &operator =(const MySession &src);
 
     // connection setup
