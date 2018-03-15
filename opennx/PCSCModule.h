@@ -7,6 +7,7 @@
 #include "IModule.h"
 
 class MyXmlConfig;
+class MySession;
 
 //
 // Module for support pcscd socket forwarding
@@ -28,7 +29,7 @@ public:
     virtual wxString getNxSshCmd( const MyXmlConfig* cfg, const wxString& defaultName ) const override;
     virtual wxString getNxSshExtraParam( const MyXmlConfig* cfg ) const override;
     virtual wxString getSessionExtraParam( const MyXmlConfig* cfg ) const override;
-    virtual wxString getNxProxyExtraParam( const MyXmlConfig* cfg ) const override;
-    virtual void runAfterNxSsh( const MyXmlConfig* cfg, int nxsshPID ) override;
+    virtual wxString getNxProxyExtraParam( const MyXmlConfig* cfg, const MySession* sess ) const override;
+    virtual void runAfterNxSsh( const MyXmlConfig* cfg, const MySession* sess, int nxsshPID ) override;
 };
 #endif

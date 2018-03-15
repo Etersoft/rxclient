@@ -493,9 +493,6 @@ MyXmlConfig::sGetProxyParams(const long protocolVersion)
     ret << wxT(",font=1");
     ret << wxT(",aux=1");
 
-    // Get params from modules
-    ret <<  ModuleManager::instance().getNxProxyExtraParam(this);
-
     return ret;
 }
 
@@ -556,6 +553,10 @@ MyXmlConfig::sGetListParams(const long protocolVersion)
                         ret << wxT("default\"");
                     else
                         ret << wxT("application\"");
+                    break;
+
+                 default:
+                    ret << wxT("lxde\"");
                     break;
             }
             break;

@@ -6,6 +6,7 @@
 #include "IModule.h"
 
 class MyXmlConfig;
+class MySession;
 
 class ModuleManager {
 private:
@@ -33,12 +34,12 @@ public:
     wxString getSessionExtraParam( const MyXmlConfig* cfg ) const;
 
     // format: ,param1=val1,param2=val2,...
-    wxString getNxProxyExtraParam( const MyXmlConfig* cfg ) const;
+    wxString getNxProxyExtraParam( const MyXmlConfig* cfg, const MySession* sess ) const;
 
     // -----------------------------------------
     // HOOKS (call for all registered modules)
     // -----------------------------------------
-    void runBeforeNxSsh( const MyXmlConfig* cfg );
-    void runAfterNxSsh( const MyXmlConfig* cfg, int nxsshPID );
+    void runBeforeNxSsh( const MyXmlConfig* cfg, const MySession* sess );
+    void runAfterNxSsh( const MyXmlConfig* cfg, const MySession* sess, int nxsshPID );
 };
 #endif

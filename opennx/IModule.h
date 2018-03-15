@@ -3,6 +3,7 @@
 #include <wx/string.h>
 
 class MyXmlConfig;
+class MySession;
 
 class IModule
 {
@@ -40,14 +41,14 @@ public:
     }
 
     // format: ,param1=val1,param2=val2,...
-    virtual wxString getNxProxyExtraParam( const MyXmlConfig* cfg ) const
+    virtual wxString getNxProxyExtraParam( const MyXmlConfig* cfg, const MySession* sess ) const
     {
         return wxEmptyString;
     }
 
     // HOOKS
-    virtual void runBeforeNxSsh( const MyXmlConfig* cfg ){}
-    virtual void runAfterNxSsh( const MyXmlConfig* cfg, int nxsshPID ){}
+    virtual void runBeforeNxSsh( const MyXmlConfig* cfg, const MySession* sess ){}
+    virtual void runAfterNxSsh( const MyXmlConfig* cfg, const MySession* sess, int nxsshPID ){}
 };
 
 #endif

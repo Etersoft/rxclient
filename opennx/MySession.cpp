@@ -1688,7 +1688,12 @@ MySession::startProxy()
     popts << wxT("nx,cookie=") << m_sProxyCookie;
     if (m_lProtocolVersion < 0x00030000)
         popts << wxT(",root=") << cygPath(m_sUserDir);
+
     popts << m_pCfg->sGetProxyParams(m_lProtocolVersion);
+
+    // Get params from modules
+    popts <<  ModuleManager::instance().getNxProxyExtraParam(m_pCfg, this);
+
     if (!m_sSubscription.IsEmpty())
         popts << wxT(",product=") << m_sSubscription;
     if (m_pCfg->bGetEnableSmbSharing()) {
@@ -2500,7 +2505,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         MyIPC nxssh;
         m_pNxSsh = &nxssh;
 
-        ModuleManager::instance().runBeforeNxSsh(m_pCfg);
+        ModuleManager::instance().runBeforeNxSsh(m_pCfg, this);
 
         wxLogInfo(wxT("Starting %s"), nxsshcmd.c_str());
         do {
@@ -2570,7 +2575,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 
         nxssh.Detach();
 
-        ModuleManager::instance().runAfterNxSsh(m_pCfg,nxsshPID);
+        ModuleManager::instance().runAfterNxSsh(m_pCfg, this, nxsshPID);
 
 #ifdef __WXMSW__
         if (m_iXserverPID)
