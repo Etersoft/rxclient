@@ -5,7 +5,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt15
+Release: alt16
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -114,6 +114,9 @@ done
 %endif
 
 %changelog
+* Fri Mar 16 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt16
+- (pcscd): added check nx version (protocol version)
+
 * Tue Mar 13 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt15
 - (gitlab-ci): apt-get --> epm and other minor fixes
 - (pcscd): added support for pcscd forwarding - added first implementation of ModuleManager - added first implementation of PCSCModule
