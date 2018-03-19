@@ -26,7 +26,6 @@
 #include <wx/string.h>
 #include <wx/object.h>
 #include <memory>
-#include <unordered_map>
 // ----------------------------------------------------------------------------
 class USB;
 
