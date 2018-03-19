@@ -23,6 +23,7 @@
 #endif
 // ----------------------------------------------------------------------------
 #include <iostream>
+#include <map>
 #include <wx/process.h>
 #include <wx/regex.h>
 #include <wx/file.h>
@@ -87,7 +88,7 @@ namespace {
     };
 }
 
-typedef std::unordered_map<wxString, USBInfo> IDSMap;
+typedef std::map<wxString, USBInfo> IDSMap;
 
 // devices info (from IDS file). loaded once (!)
 static IDSMap dbDeviceInfo;
