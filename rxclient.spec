@@ -1,8 +1,8 @@
 %define oname opennx
 
 Name: rxclient
-Version: 0.18
-Release: alt17
+Version: 0.19
+Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -88,6 +88,9 @@ done
 %_iconsdir/hicolor/*/mimetypes/rx-desktop.*
 
 %changelog
+* Thu Apr 05 2018 Pavel Vainerman <pv@altlinux.ru> 0.19-alt1
+- release
+
 * Tue Mar 20 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt17
 - (usbip): USE_USBIP_SYSTEM_INTERFACE - added IDS-file parser - added 'usbip list' parser - read USB device info from IDS file (usbip): use tcp connection for usbipd (usbip): added options 'usbip' and 'usbipdev' (usbip): added module 'UsbIpModule' for usb forwarding, cleanup old code (modules): added print information about modules (--check-modules) update nx require DELETED old code to support usbip
 - (gitlab-ci): move 'build for p7' to main build task
