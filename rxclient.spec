@@ -26,7 +26,7 @@ BuildRequires: nx
 # due _ln_sr
 BuildRequires: rpm-build-intro >= 1.9.18
 
-Requires: nx > 3.5.2-alt1
+Requires: nx-libs >= 3.5.2.31-alt1
 Requires: nxssh
 
 Provides: opennx = %version
