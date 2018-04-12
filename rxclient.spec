@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt2
+Release: alt3
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -88,6 +88,9 @@ done
 %_iconsdir/hicolor/*/mimetypes/rx-desktop.*
 
 %changelog
+* Thu Apr 12 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt3
+- update require to nx-libs
+
 * Tue Apr 10 2018 Pavel Vainerman <pv@altlinux.ru> 0.19-alt2
 - fixed eterbug #12816
 
