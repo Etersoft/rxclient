@@ -17,6 +17,7 @@ Url: http://sourceforge.net/projects/opennx
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %oname-%version.tar
+Source1: rxclient.conf
 
 %if_with usbip
 Requires: usbip2-nxclient
@@ -80,6 +81,8 @@ for lib in libsmbclient.so libcups.so ; do
     ln -s $rlib %buildroot%_libdir/%name/$lib
 done
 
+mkdir -p %buildroot%_sysconfdir/%name/
+cp %SOURCE1 %buildroot%_sysconfdir/%name/
 
 %find_lang %name
 
@@ -109,6 +112,8 @@ done
 %if_with usbip
 %_sysconfdir/udev
 %endif
+%dir %_sysconfdir/%name
+%config %_sysconfdir/%name/*.conf
 
 %changelog
 * Fri Nov 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.4
