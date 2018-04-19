@@ -712,13 +712,15 @@ MyIPC::OnErrReceived(wxCommandEvent &event)
                             m_iErrCollect = 6;
                             break;
                         }
-                        if (msg.Contains(wxT("Connection refused")) ||
+                        if (msg.Contains(wxT("onnection refused")) ||
                                 msg.Contains(wxT("onnection closed")) ||
                                 msg.Contains(wxT("no address associated")) ||
                                 msg.Contains(wxT("failed with error")) ||
                                 msg.Contains(wxT("Smartcard init failed")) ||
                                 msg.Contains(wxT("PIN code verification failed")) ||
                                 msg.Contains(wxT("No certificates found on smartcard")) ||
+                                msg.Contains(wxT("Could not resolve hostname")) ||
+                                msg.Contains(wxT("No route to host")) ||
                                 msg.Contains(wxT("proxy error:"))
                                 ) {
                             upevent.SetString(msg);
