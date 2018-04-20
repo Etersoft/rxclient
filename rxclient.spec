@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt4
+Release: alt5
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -93,6 +93,10 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Sat Apr 21 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt5
+- added reading of parameters for the nxssh from the configuration file (user and global)
+- added source1
+
 * Fri Apr 20 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt4
 - increased pause before terminate nxssh output processing. fix eterbug #12814
 
