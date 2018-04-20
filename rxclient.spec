@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt3
+Release: alt4
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -88,6 +88,9 @@ done
 %_iconsdir/hicolor/*/mimetypes/rx-desktop.*
 
 %changelog
+* Fri Apr 20 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt4
+- increased pause before terminate nxssh output processing. fix eterbug #12814
+
 * Thu Apr 12 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt3
 - update require to nx-libs
 
