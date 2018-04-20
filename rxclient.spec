@@ -13,6 +13,7 @@ Url: http://sourceforge.net/projects/opennx
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %oname-%version.tar
+Source1: rxclient.conf
 
 # Automatically added by buildreq on Sat Sep 19 2009
 BuildRequires: gcc-c++ imake libSM-devel libXmu-devel
