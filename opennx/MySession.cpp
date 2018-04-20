@@ -2246,6 +2246,23 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
             << wxT(" -o 'RhostsRSAAuthentication no'")
             << wxT(" -o 'PubkeyAuthentication yes'");
 
+        // get users options for nxssh
+        wxString optUser = wxEmptyString;
+        wxConfigBase::Get()->Read(wxT("Config/NxSshOptions"), &optUser);
+        if( !optUser.IsEmpty() )
+            nxsshcmd << wxT(" ") << optUser;
+
+        // get global options for nxssh
+        {
+            wxString globconf;
+            globconf << wxFileName::GetPathSeparator() << wxT("etc")
+                     << wxFileName::GetPathSeparator() << wxT("rxclient")
+                     << wxFileName::GetPathSeparator() << wxT("rxclient.conf");
+
+            wxString optGlobal = getParamFromConfigFile(globconf, wxT("/Config/NxSshOptions"));
+            if( !optGlobal.IsEmpty() )
+                nxsshcmd << wxT(" ") << optGlobal;
+        }
 
         m_bIsShadow = (m_pCfg->eGetSessionType() == MyXmlConfig::STYPE_SHADOW);
         if (m_pCfg->bGetRemoveOldSessionFiles())
@@ -2600,4 +2617,19 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         return true;
     }
     return false;
+}
+
+wxString MySession::getParamFromConfigFile( const wxString& filename, const wxString& name )
+{
+    if( !wxFileName::FileExists(filename) )
+        return wxEmptyString;
+
+    wxFileInputStream cfgfile(filename);
+    if( !cfgfile.IsOk() )
+        return wxEmptyString;
+
+    wxFileConfig cfg(cfgfile);
+    wxString param = wxEmptyString;
+    cfg.Read(name, &param);
+    return param;
 }

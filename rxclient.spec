@@ -65,6 +65,8 @@ for lib in libsmbclient.so libcups.so ; do
     %_ln_sr %buildroot$rlib %buildroot%_libdir/%name/$lib
 done
 
+mkdir -p %buildroot%_sysconfdir/%name/
+cp %SOURCE1 %buildroot%_sysconfdir/%name/
 
 %find_lang %name
 
@@ -86,6 +88,8 @@ done
 %_iconsdir/hicolor/512x512/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_iconsdir/hicolor/*/mimetypes/rx-desktop.*
+%dir %_sysconfdir/%name
+%config %_sysconfdir/%name/*.conf
 
 %changelog
 * Fri Apr 20 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt4

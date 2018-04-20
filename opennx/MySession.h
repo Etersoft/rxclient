@@ -93,6 +93,8 @@ public:
     // connection setup
     bool Create(MyXmlConfig& cfg, const wxString password, wxWindow *parent = NULL);
 
+    wxString getParamFromConfigFile( const wxString& filename, const wxString& name );
+
 private:
     // locals for connection setup
     typedef enum {
