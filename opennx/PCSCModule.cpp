@@ -45,7 +45,7 @@ PCSCModule::PCSCModule()
     smartcard->SetName(wxT("nxssh.ext.sh"));
 
     pcsc->AppendDir(wxT("bin"));
-    pcsc->SetName(wxT("nx-pcsc-helper.sh"));
+    pcsc->SetName(wxT("nx-pcsc-helper"));
 }
 
 // ----------------------------------------------------------------------------
