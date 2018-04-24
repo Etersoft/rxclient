@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt5
+Release: alt6
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -93,6 +93,10 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Tue Apr 24 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt6
+- fixed helper name for pcsc module (eterbug #12848)
+- added support for errror "Connection timed out" added default timeout for connection 1 sec and 2 attempts
+
 * Sat Apr 21 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt5
 - added reading of parameters for the nxssh from the configuration file (user and global)
 - added source1
