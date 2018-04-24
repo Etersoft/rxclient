@@ -715,6 +715,7 @@ MyIPC::OnErrReceived(wxCommandEvent &event)
                         if (msg.Contains(wxT("onnection refused")) ||
                                 msg.Contains(wxT("onnection closed")) ||
                                 msg.Contains(wxT("no address associated")) ||
+                                msg.Contains(wxT("onnection timed out")) ||
                                 msg.Contains(wxT("failed with error")) ||
                                 msg.Contains(wxT("Smartcard init failed")) ||
                                 msg.Contains(wxT("PIN code verification failed")) ||
