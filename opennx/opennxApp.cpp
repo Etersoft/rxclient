@@ -103,6 +103,7 @@ IMPLEMENT_APP(opennxApp);
     ,m_bRequireStartUsbIp(false)
     ,m_bTestCardWaiter(false)
     ,m_bAutoLogin(false)
+    ,m_bConfigReadOnly(false)
     ,m_bAutoResume(false)
     ,m_bKillErrors(false)
     ,m_bSilent(false)
@@ -825,6 +826,8 @@ void opennxApp::OnInitCmdLine(wxCmdLineParser& parser)
 
     parser.AddSwitch(wxEmptyString, wxT("autologin"),
             _("Automatically login to the specified session."));
+    parser.AddSwitch(wxEmptyString, wxT("readonly"),
+            _("Disable changing session by user."));
     parser.AddSwitch(wxEmptyString, wxT("autoresume"),
             _("Automatically resume/takeover a session with the same name."));
     parser.AddSwitch(wxEmptyString, wxT("killerrors"),
@@ -1012,6 +1015,8 @@ bool opennxApp::OnCmdLineParsed(wxCmdLineParser& parser)
     }
     if (parser.Found(wxT("autologin")))
         m_bAutoLogin = true;
+    if (parser.Found(wxT("readonly")))
+        m_bConfigReadOnly = true;
     if (parser.Found(wxT("autoresume")))
         m_bAutoResume = true;
     if (parser.Found(wxT("killerrors")))

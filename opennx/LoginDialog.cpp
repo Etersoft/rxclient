@@ -503,6 +503,17 @@ void LoginDialog::OnComboboxSessionSelected( wxCommandEvent& event )
     }
     if (!m_bGuestLogin)
         SetInitialFocus();
+
+    if (wxGetApp().ReadOnly())
+    {
+        m_pCtrlUsername->Enable(false);
+        m_pCtrlPassword->Enable(false);
+        m_pCtrlUseSmartCard->Enable(false);
+        m_pCtrlGuestLogin->Enable(false);
+        m_pCtrlConfigure->Enable(false);
+        m_pCtrlWizardButton->Enable(false);
+    }
+
     event.Skip();
 }
 
