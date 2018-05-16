@@ -226,8 +226,9 @@ AsyncProcess::OnTerminate(int pid, int status)
     wxLog::FlushActive();
     m_iStatus = status;
     if (m_thread && m_thread->IsRunning()) {
-        while ((m_cOutWatch.Time() < 2000) || (m_cErrWatch.Time() < 2000))
+        while ((m_cOutWatch.Time() < 6000) || (m_cErrWatch.Time() < 6000)) 
             wxThread::Sleep(100);
+        
         m_thread->Delete();
         while (m_thread->IsRunning())
             wxThread::Sleep(100);
