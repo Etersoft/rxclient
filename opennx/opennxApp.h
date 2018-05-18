@@ -58,6 +58,7 @@ class opennxApp : public wxApp
         bool NxSmartCardSupport() { return m_bNxSmartCardSupport; }
         bool NxProxyAvailable() { return m_bNxProxyAvailable; }
         bool AutoLogin() { return m_bAutoLogin; }
+        bool ReadOnly() { return m_bConfigReadOnly; }
         bool Silent() { return m_bSilent; }
         bool AutoResume() { return m_bAutoResume; }
 
@@ -121,6 +122,7 @@ class opennxApp : public wxApp
         bool m_bTestCardWaiter;
         bool m_bNxProxyAvailable;
         bool m_bAutoLogin;
+        bool m_bConfigReadOnly;
         bool m_bAutoResume;
         bool m_bKillErrors;
         bool m_bSilent;
