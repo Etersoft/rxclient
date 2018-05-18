@@ -6,7 +6,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt1.M70C.4
+Release: alt1.M70C.5
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -116,6 +116,11 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.5
+- read nxssh parameters from configuration file (eterbug #12813)
+- increased pause before terminate nxssh output processing (eterbug #12814)
+- implement read-only mode for rxclient (eterbug #12856)
+
 * Fri Nov 24 2017 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.4
 - add parameter "silent" to opennxapp parameters
 - hide all dialogs when rxclient runned in silent mode
