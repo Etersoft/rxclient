@@ -1693,6 +1693,9 @@ MySession::startProxy()
 
     popts << m_pCfg->sGetProxyParams(m_lProtocolVersion);
 
+    // set proxy timeout
+    popts  << wxT(",timeout=") << lGetProxyTimeout();
+
     // Get params from modules
     popts <<  ModuleManager::instance().getNxProxyExtraParam(m_pCfg, this);
 
@@ -2156,6 +2159,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
     m_bCollectResources = false;
     m_bIsShadow = false;
     m_bNextCmd = false;
+    m_lProxyTimeout = 30;
     m_sSessionID = wxEmptyString;
     m_pParent = parent;
     MyXmlConfig cfg(cfgpar.sGetFileName());
@@ -2252,6 +2256,9 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         if( !optUser.IsEmpty() )
             nxsshcmd << wxT(" ") << optUser;
 
+        wxString optProxyTimeout = wxEmptyString;
+        wxConfigBase::Get()->Read(wxT("Config/NxProxyTimeout"), &optProxyTimeout);
+
         // get global options for nxssh
         {
             wxString globconf;
@@ -2262,7 +2269,13 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
             wxString optGlobal = getParamFromConfigFile(globconf, wxT("/Config/NxSshOptions"));
             if( !optGlobal.IsEmpty() )
                 nxsshcmd << wxT(" ") << optGlobal;
+
+            if( optProxyTimeout.IsEmpty() )
+                optProxyTimeout = getParamFromConfigFile(globconf, wxT("/Config/NxProxyTimeout"));
         }
+
+        if( !optProxyTimeout.IsEmpty() )
+            optProxyTimeout.ToLong(&m_lProxyTimeout);
 
         m_bIsShadow = (m_pCfg->eGetSessionType() == MyXmlConfig::STYPE_SHADOW);
         if (m_pCfg->bGetRemoveOldSessionFiles())

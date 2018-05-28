@@ -87,6 +87,7 @@ public:
     bool IsValid() { return m_bValid; }
     long lGetProtocolVersion() const { return m_lProtocolVersion; }
     wxString sGetProtocolVersion() const { return m_sProtocolVersion; }
+    long lGetProxyTimeout() const { return m_lProxyTimeout; }
 
     MySession &operator =(const MySession &src);
 
@@ -171,6 +172,8 @@ private:
     long m_lEsdPort;
     long m_lProtocolVersion;
     unsigned long m_nSessionPushLength;
+    long m_lProxyTimeout;
+
     wxLog *m_pSshLog;
     MyIPC *m_pNxSsh;
     MyXmlConfig *m_pCfg;
