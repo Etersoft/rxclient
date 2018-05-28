@@ -1,3 +1,9 @@
+variables:
+    # Как долго хранить тестовые сборки, дней
+    DEV_EXPIRE_IN: "7"
+    # Каталог куда собираются тестовые сборки
+    DEV_RPMDIR: "/var/ftp/pvt/Etersoft/RX@Etersoft/CI"
+
 stages:
   - build
   - test
@@ -51,3 +57,30 @@ testsuite:
 
   tags:
     - rx-tests
+
+test build:
+  stage: build
+  script:
+    - export TMPDIR=/tmp/.private/${USER}; export TMP=${TMPDIR}
+    - export RPMDIR=${DEV_RPMDIR}/$CI_BUILD_ID
+    - mkdir -p $RPMDIR/sources
+    - eterremove remove --days $DEV_EXPIRE_IN dirs ${DEV_RPMDIR} || echo "ignore remove error.."
+    - /usr/bin/rpmlog -q -r -l
+    - korinf -f rxclient.spec x86_64/ALTLinux/p8 ${RPMDIR}
+    - korinf -f rxclient.spec x86_64/ALTLinux/Sisyphus ${RPMDIR}
+    #- korinf -f rxclient.spec x86_64/ALTLinux/p7 ${RPMDIR}
+
+    # copy logs to artifacts
+    - ( mkdir -p RPM/log; cp -rf ${HOME}/RPM/log/*rxclient*.log RPM/log/ )
+    - ( mkdir -p korinf-log; cp -rf ${HOME}/RPM/tmp/korinf-log/* korinf-log/ )
+  artifacts:
+    paths:
+    - RPM/log
+    - korinf-log
+    expire_in: 3 days
+
+  only:
+    - /^ci-.*/
+
+  tags:
+    - rx-build
