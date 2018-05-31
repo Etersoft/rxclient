@@ -1670,6 +1670,9 @@ MySession::startProxy()
     } else
         popts << wxT(",connect=") << m_sHost;
 
+    // set proxy timeout
+    popts  << wxT(",timeout=") << lGetProxyTimeout();
+
     // Undocumented feature of the original:
     // If a file ~/.nx/options exists, it's content is
     // appended to the regular options.
@@ -2075,6 +2078,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
     m_bCollectResources = false;
     m_bIsShadow = false;
     m_bNextCmd = false;
+    m_lProxyTimeout = 10;
     m_sSessionID = wxEmptyString;
     m_pParent = parent;
     MyXmlConfig cfg(cfgpar.sGetFileName());
@@ -2128,6 +2132,9 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         if( !optUser.IsEmpty() )
             nxsshcmd << wxT(" ") << optUser;
 
+        wxString optProxyTimeout = wxEmptyString;
+        wxConfigBase::Get()->Read(wxT("Config/NxProxyTimeout"), &optProxyTimeout);
+
         // get global options for nxssh
         {
             wxString globconf;
@@ -2138,7 +2145,13 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
             wxString optGlobal = getParamFromConfigFile(globconf, wxT("/Config/NxSshOptions"));
             if( !optGlobal.IsEmpty() )
                 nxsshcmd << wxT(" ") << optGlobal;
+
+            if( optProxyTimeout.IsEmpty() )
+                optProxyTimeout = getParamFromConfigFile(globconf, wxT("/Config/NxProxyTimeout"));
         }
+
+        if( !optProxyTimeout.IsEmpty() )
+            optProxyTimeout.ToLong(&m_lProxyTimeout);
 
         m_sTempDir = m_sUserDir;
         m_sTempDir << wxFileName::GetPathSeparator() << wxT("temp")

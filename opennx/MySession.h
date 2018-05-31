@@ -85,6 +85,7 @@ public:
     bool bGetPidFromFile();
     void CheckState();
     bool IsValid() { return m_bValid; }
+    long lGetProxyTimeout() const { return m_lProxyTimeout; }
     MySession &operator =(const MySession &src);
 
     // connection setup
@@ -165,6 +166,7 @@ private:
     long m_lEsdPort;
     long m_lProtocolVersion;
     unsigned long m_nSessionPushLength;
+    long m_lProxyTimeout;
     wxLog *m_pSshLog;
     MyIPC *m_pNxSsh;
     MyXmlConfig *m_pCfg;
