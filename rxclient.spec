@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt6
+Release: alt7
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -93,6 +93,14 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Jun 07 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt7
+- added new CI build for tests
+- added NxProxyTimeout config option (eterbug #12907)
+- (CI): remove artifacts for test builds (korinf itself stores logs)
+- added test build for i586 (32bit)
+- fix desktop file for rxclient (admin) (eterbug #12919)
+- set rxclient icon for rxclient-admin (eterbug #12919)
+
 * Tue Apr 24 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt6
 - fixed helper name for pcsc module (eterbug #12848)
 - added support for errror "Connection timed out" added default timeout for connection 1 sec and 2 attempts
