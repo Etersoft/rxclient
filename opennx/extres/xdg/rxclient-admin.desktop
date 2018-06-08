@@ -2,8 +2,8 @@
 Version=1.0
 Encoding=UTF-8
 Type=Application
-Exec=opennx --admin
-Icon=rxclient-admin
+Exec=rxclient --admin
+Icon=rxclient
 Comment=Manage RX@Etersoft sessions
 Comment[de]=Verwalte RX@Etersoft Sitzungen
 Comment[ru]=Управление сессиями RX@Etersoft
