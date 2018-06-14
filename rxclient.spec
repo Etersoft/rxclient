@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt7
+Release: alt8
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -93,6 +93,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Jun 14 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt8
+- fix type (eterbug #12930)
+
 * Thu Jun 07 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt7
 - added new CI build for tests
 - added NxProxyTimeout config option (eterbug #12907)
