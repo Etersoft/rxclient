@@ -1646,7 +1646,7 @@ MyXmlConfig::loadFromStream(wxInputStream &is, bool isPush)
                     while (opt) {
                         m_bDisableBackingstore = getBool(opt, wxT("Disable backingstore"),
                                 m_bDisableBackingstore);
-                        m_bDisableComposite = getBool(opt, wxT("Disable coposite"),
+                        m_bDisableComposite = getBool(opt, wxT("Disable composite"),
                                 m_bDisableComposite);
 
                         m_iImageEncoding = getLong(opt, wxT("Image Compression Type"), m_iImageEncoding);
@@ -2246,7 +2246,7 @@ MyXmlConfig::SaveToFile()
     bAddOption(g, wxT("Disable all image optimisations"), false);
 
     bAddOption(g, wxT("Disable backingstore"), m_bDisableBackingstore);
-    bAddOption(g, wxT("Disable coposite"), m_bDisableComposite);
+    bAddOption(g, wxT("Disable composite"), m_bDisableComposite);
 
     // deprecated bAddOption(g, wxT("Disable image streaming"), m_bDisableStreaming);
 
