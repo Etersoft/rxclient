@@ -2,13 +2,13 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt8
+Release: alt9
 
 Summary: A client for RX@Etersoft Terminal Server
 
 License: LGPL/GPL
 Group: Networking/Remote access
-Url: http://sourceforge.net/projects/opennx
+Url: https://wiki.etersoft.ru/RX
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -21,8 +21,6 @@ BuildRequires: libopensc-devel libsmbclient-devel
 BuildRequires: xorg-cf-files zip libcups-devel
 BuildRequires: libXau-devel
 BuildRequires: libwxGTK3.1-devel xxd
-# check:
-BuildRequires: nx
 
 # due _ln_sr
 BuildRequires: rpm-build-intro >= 1.9.18
@@ -93,6 +91,10 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Wed Jun 20 2018 Vitaly Lipatov <lav@altlinux.ru> 0.19-alt9
+- change Url to our page
+- drop nx buildreq
+
 * Thu Jun 14 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt8
 - fix type (eterbug #12930)
 
