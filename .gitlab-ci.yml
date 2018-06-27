@@ -44,8 +44,7 @@ testsuite:
   stage: test
   script:
     - epm --auto Install rxclient
-    # токен задаётся как VARIABLE в свойствах проекта
-    - git clone https://gitlab-ci-token:${RX_TESTSUITE_TOKEN}@gitlab.eterfund.ru/rx-etersoft/rx-testsuite.git
+    - git clone git@gitlab.eterfund.ru:rx-etersoft/rx-testsuite.git
     - cd rx-testsuite && ./rx-tests-start-all
   artifacts:
     paths:
