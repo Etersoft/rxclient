@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt9
+Release: alt10
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -91,6 +91,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Jun 28 2018 Pavel Vainerman <pv@altlinux.ru> 0.19-alt10
+- test build
+
 * Wed Jun 20 2018 Vitaly Lipatov <lav@altlinux.ru> 0.19-alt9
 - change Url to our page
 - drop nx buildreq
