@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt10
+Release: alt11
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -91,6 +91,10 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Jun 28 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt11
+- (CI): minor fixes in pipeline
+- (CI): test build
+
 * Thu Jun 28 2018 Pavel Vainerman <pv@altlinux.ru> 0.19-alt10
 - test build
 
