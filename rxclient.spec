@@ -6,7 +6,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt6.M70C
+Release: alt1.M70C.9
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -116,26 +116,22 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
-* Thu Aug 16 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt6.M70C
-- (CI): new build event
+* Thu Aug 16 2018 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.9
+- new build
 
-* Wed Aug 15 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt5.M70C
+* Wed Aug 15 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt1.M70C.8
 - init default cups port from config (eterbug #13075, eterbug #13069)
-- (CI): added package directory info, install rx-etersoft server from unstable repo
 
-* Thu Aug 09 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt4.M70C
-- (CI): (c7): moved templates daas to a special project 'rx-daas-templates'
-
-* Thu Aug 09 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt3.M70C
-- (CI): added an event to the telegram channel (c7 branch)
-
-* Wed Aug 08 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt2.M70C
+* Wed Aug 08 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt1.M70C.7
 - added NxProxyTimeout config option (eterbug #12917)
 - fix desktop file (eterbig #12919)
 - fix typo (eterbug 12930)
 - fix path for cups mime files (eterbug #13067)
-- (CI): added test build with docker
-- (CI): added special build for c7
+
+* Fri Jun 29 2018 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.6
+- added NxProxyTimeout config option (eterbug #12917)
+- fix desktop file (eterbig #12919)
+- fix typo (eterbug 12930)
 
 * Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.5
 - read nxssh parameters from configuration file (eterbug #12813)
