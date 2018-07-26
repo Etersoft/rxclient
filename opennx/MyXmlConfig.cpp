@@ -488,8 +488,10 @@ MyXmlConfig::sGetProxyParams(const long protocolVersion)
         << wxT(",shpix=") << (m_bDisableShpix ? 0 : 1)
         ;
     // FIXME: use real settings
-    ret << wxT(",font=1");
     ret << wxT(",aux=1");
+
+    // DISABLED! see https://bugs.etersoft.ru/show_bug.cgi?id=13048
+    // ret << wxT(",font=1");
     return ret;
 }
 
