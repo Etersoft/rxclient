@@ -3,10 +3,12 @@ variables:
     DEV_EXPIRE_IN: "7"
     # Каталог куда собираются тестовые сборки
     DEV_RPMDIR: "/var/ftp/pvt/Etersoft/RX@Etersoft/CI"
+    BUILD_ID: "$CI_PIPELINE_ID"
 
 stages:
   - build
   - test
+  - cleanup
 
 build and public:
   stage: build
@@ -61,19 +63,84 @@ test build:
   stage: build
   script:
     - export TMPDIR=/tmp/.private/${USER}; export TMP=${TMPDIR}
-    - export RPMDIR=${DEV_RPMDIR}/$CI_BUILD_ID
+    - export RPMDIR=${DEV_RPMDIR}/$BUILD_ID
     - mkdir -p $RPMDIR/sources
-    - eterremove remove --days $DEV_EXPIRE_IN dirs ${DEV_RPMDIR} || echo "ignore remove error.."
+    #- eterremove remove --days $DEV_EXPIRE_IN --notest dirs ${DEV_RPMDIR} || echo "ignore remove error.."
     - /usr/bin/rpmlog -q -r -l
-    - korinf -f rxclient.spec x86_64/ALTLinux/p8 ${RPMDIR}
+    #- korinf -f rxclient.spec x86_64/ALTLinux/p8 ${RPMDIR}
     - korinf -f rxclient.spec x86_64/ALTLinux/Sisyphus ${RPMDIR}
-    - korinf -f rxclient.spec x86_64/ALTLinux/p7 ${RPMDIR}
+    #- korinf -f rxclient.spec x86_64/ALTLinux/p7 ${RPMDIR}
     # 32 bit
-    - korinf -f rxclient.spec ALTLinux/p8 ${RPMDIR}
-    - korinf -f rxclient.spec ALTLinux/Sisyphus ${RPMDIR}
-    - korinf -f rxclient.spec ALTLinux/p7 ${RPMDIR}
+    #- korinf -f rxclient.spec ALTLinux/p8 ${RPMDIR}
+    #- korinf -f rxclient.spec ALTLinux/Sisyphus ${RPMDIR}
+    #- korinf -f rxclient.spec ALTLinux/p7 ${RPMDIR}
   only:
     - /^ci-.*/
+    - /^docker-ci-.*/
 
   tags:
     - rx-build
+
+    
+Testing:
+  stage: test
+  #when: manual
+  before_script:
+    - export DAAS_OUTDIR="$CI_PROJECT_DIR/daas-rxclient"
+    - export DAAS_IMAGE_POSTFIX="-$CI_COMMIT_REF_NAME-build$BUILD_ID"
+    - export "SERVICE_NAME=rxclient-$BUILD_ID"
+    - subst "s|{{BUILD_ID}}|$BUILD_ID|g" $CI_PROJECT_DIR/.daas/addons/rx-test.list
+    - daas gen 
+    - |
+      echo "SERVICE_NAME=$SERVICE_NAME" > "$DAAS_OUTDIR/rxclient-$BUILD_ID/.env"
+      echo "BUILD_ID=$BUILD_ID" >> "$DAAS_OUTDIR/rxclient-$BUILD_ID/.env"
+  script:
+    - cd $DAAS_OUTDIR/rxclient-$BUILD_ID/
+    - docker-compose build --force-rm
+    #- $HOME/bin/start-rx-etersoft-test-server.sh
+    - docker-compose up -d
+    - export RX_SERVER_IP=$(curl -s http://localhost:8500/v1/catalog/service/$SERVICE_NAME | jq '.[].ServiceAddress' | sed 's|"||g')
+    #- cat $CI_PROJECT_DIR/.daas/templates/rx-rxclient.nxs.tpl | sed "s|RX_SERVER_IP|${RX_SERVER_IP}|g" > $HOME/$RXCLIENT_CONFDIR/rx-$BUILD_ID.nxs
+    #- chmod a+rw $HOME/$RXCLIENT_CONFDIR/rxrxclient-$BUILD_ID.nxs || echo "ignore chmod error.."
+    # удаляем старые файлы конфигурации
+    #- find $HOME/$RXCLIENT_CONFDIR/ -mindepth 1 -mtime +$DEV_EXPIRE_IN -print -delete || echo "ignore delete old configs error"
+    - | 
+      echo "           RXCLIENT IP: $RX_SERVER_IP"
+      echo "REMOTE CONNECT COMMAND: ssh -p $CI_BUILD_ID guest@$(hostname -s)"
+
+  only:
+    - /^docker-ci-.*/
+
+  tags:
+    - rx-test-builder
+    
+Cleanup:
+  stage: cleanup
+  when: manual
+  before_script:
+    - export DAAS_OUTDIR="$CI_PROJECT_DIR/daas-rxclient"
+    - export "SERVICE_NAME=rxclient-$BUILD_ID"
+  script:
+    - echo "Stop & remove containers"
+    - daas gen 
+    - cd $DAAS_OUTDIR/rxclient-$BUILD_ID/
+    - docker-compose down
+    #- docker image prune -f
+    #- docker container prune -f
+    #- docker volume prune -f
+  tags:
+    - rx-test-builder
+  only:
+    - /^docker-ci-.*/
+
+Stop all rx containers:
+  stage: cleanup
+  when: manual
+  script:
+    - export RX_CLIST=$(docker ps | grep rxclient | grep build | awk '{print $1}')
+    - test -n "$RX_CLIST" && docker stop $RX_CLIST
+    - test -n "$RX_CLIST" && docker rm $RX_CLIST
+  tags:
+    - rx-test-builder
+  only:
+    - /^docker-ci-.*/

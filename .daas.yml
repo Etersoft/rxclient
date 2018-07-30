@@ -1,0 +1,34 @@
+version: 0.3
+
+project:
+ name: "rxclient"
+ apt:
+   sources:
+     - "rpm ftp://server/pub ALTLinux/Sisyphus/x86_64 classic"
+     - "rpm ftp://server/pub ALTLinux/Sisyphus/noarch classic"
+     #- rpm http://ftp.altlinux.org/pub/distributions/ALTLinux Sisyphus/x86_64 classic
+     #- rpm http://ftp.altlinux.org/pub/distributions/ALTLinux Sisyphus/noarch classic
+
+ groups:
+   rx:
+     nodes:
+       rxclient:
+         context: "rxclient-$BUILD_ID"
+         skip_compose: yes
+         image: x64.sisyphus-rxclient
+         start_command: start-rx.sh
+         hostname: "rxclient-$BUILD_ID"
+         environment:
+           - "SERVICE_NAME=$SERVICE_NAME"
+           - "SERVICE_TAGS=rxclient,build-$BUILD_ID"
+         ports:
+           - "$CI_BUILD_ID:22"
+         copy:
+           - "rx-test.list:/etc/apt/sources.list.d/"
+           - "03-logging.conf:/etc/rx-etersoft/node.conf.d/"
+           - "guest:/home/guest/"
+           
+         before_command: 
+           - epm repolist && epm update
+           - epm i --auto rxclient
+           - chown -R guest:guest /home/guest/.nx /home/guest/.opennx /home/guest/Desktop
