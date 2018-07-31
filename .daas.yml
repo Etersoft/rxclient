@@ -14,7 +14,6 @@ project:
      nodes:
        rxclient:
          context: "rxclient-$BUILD_ID"
-         skip_compose: yes
          image: x64.sisyphus-rxclient
          start_command: start-rx.sh
          hostname: "rxclient-$BUILD_ID"
@@ -23,6 +22,8 @@ project:
            - "SERVICE_TAGS=rxclient,build-$BUILD_ID"
          ports:
            - "$CI_BUILD_ID:22"
+         volumes:
+          - "./rxclient-config:/home/guest/.nx/config"
          copy:
            - "rx-test.list:/etc/apt/sources.list.d/"
            - "03-logging.conf:/etc/rx-etersoft/node.conf.d/"
@@ -32,3 +33,16 @@ project:
            - epm repolist && epm update
            - epm i --auto rxclient
            - chown -R guest:guest /home/guest/.nx /home/guest/.opennx /home/guest/Desktop
+
+       rx-etersoft:
+         context: "rxclient-rx-server-$BUILD_ID"
+         image: x64.sisyphus-rx-etersoft
+         start_command: start-rx.sh
+         hostname: "rx-server-$BUILD_ID"
+         environment:
+           - "SERVICE_NAME=$SERVER_NAME"
+           - "SERVICE_TAGS=rxclient,build-$BUILD_ID"
+         copy:
+           - "03-logging.conf:/etc/rx-etersoft/node.conf.d/"
+         ports:
+           - "$BUILD_ID:22"
