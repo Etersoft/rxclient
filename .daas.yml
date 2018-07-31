@@ -18,7 +18,7 @@ project:
          start_command: start-rx.sh
          hostname: "rxclient-$BUILD_ID"
          environment:
-           - "SERVICE_NAME=$SERVICE_NAME"
+           - "SERVICE_NAME=$RXCLIENT_NAME"
            - "SERVICE_TAGS=rxclient,build-$BUILD_ID"
          ports:
            - "$CI_BUILD_ID:22"
@@ -40,7 +40,7 @@ project:
          start_command: start-rx.sh
          hostname: "rx-server-$BUILD_ID"
          environment:
-           - "SERVICE_NAME=$SERVER_NAME"
+           - "SERVICE_NAME=$RXSERVER_NAME"
            - "SERVICE_TAGS=rxclient,build-$BUILD_ID"
          copy:
            - "03-logging.conf:/etc/rx-etersoft/node.conf.d/"

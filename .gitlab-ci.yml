@@ -4,6 +4,8 @@ variables:
     # Каталог куда собираются тестовые сборки
     DEV_RPMDIR: "/var/ftp/pvt/Etersoft/RX@Etersoft/CI"
     BUILD_ID: "$CI_PIPELINE_ID"
+    # Каталог внутри которого создаются каталоги для контейнеров
+    CONTAINER_DIR: "docker-rxclient-containers"
 
 stages:
   - build
@@ -86,22 +88,23 @@ Testing:
   stage: test
   #when: manual
   before_script:
-    - export DAAS_OUTDIR="$CI_PROJECT_DIR/daas-rxclient"
+    - export DAAS_OUTDIR="$HOME/$CONTAINER_DIR/build$BUILD_ID"
     - export DAAS_IMAGE_POSTFIX="-$CI_COMMIT_REF_NAME-build$BUILD_ID"
-    - export "SERVICE_NAME=rxclient-$BUILD_ID"
-    - export "SERVER_NAME=rx-etersoft-$BUILD_ID"
+    - export "RXCLIENT_NAME=rxclient-$BUILD_ID"
+    - export "RXSERVER_NAME=rx-etersoft-$BUILD_ID"
     - subst "s|{{BUILD_ID}}|$BUILD_ID|g" $CI_PROJECT_DIR/.daas/addons/rx-test.list
     - daas gen 
     - |
-      echo "SERVICE_NAME=$SERVICE_NAME" > "$DAAS_OUTDIR/rxclient-$BUILD_ID/.env"
+      echo "RXCLIENT_NAME=$RXCLIENT_NAME" > "$DAAS_OUTDIR/rxclient-$BUILD_ID/.env"
       echo "BUILD_ID=$BUILD_ID" >> "$DAAS_OUTDIR/rxclient-$BUILD_ID/.env"
     - mkdir -p $DAAS_OUTDIR/rxclient-config
   script:
     - cd $DAAS_OUTDIR
     - docker-compose build --force-rm
     - docker-compose up -d
-    - export RX_CLIENT_IP=$(curl -s http://localhost:8500/v1/catalog/service/$SERVICE_NAME | jq '.[].ServiceAddress' | sed 's|"||g')
-    - export RX_SERVER_IP=$(curl -s http://localhost:8500/v1/catalog/service/$SERVER_NAME | jq '.[].ServiceAddress' | sed 's|"||g')
+    - sleep 5
+    - export RX_CLIENT_IP=$(curl -s http://localhost:8500/v1/catalog/service/$RXCLIENT_NAME | jq '.[].ServiceAddress' | sed 's|"||g')
+    - export RX_SERVER_IP=$(curl -s http://localhost:8500/v1/catalog/service/$RXSERVER_NAME | jq '.[].ServiceAddress' | sed 's|"||g')
     - cat $CI_PROJECT_DIR/.daas/templates/rx-server.nxs.tpl | sed "s|RX_SERVER_IP|${RX_SERVER_IP}|g" > $DAAS_OUTDIR/rxclient-config/rx-server.nxs
     - chmod a+rw $DAAS_OUTDIR/rxclient-config/rx-server.nxs || echo "ignore chmod error.."
     - | 
@@ -119,7 +122,7 @@ Cleanup:
   stage: cleanup
   when: manual
   before_script:
-    - export DAAS_OUTDIR="$CI_PROJECT_DIR/daas-rxclient"
+    - export DAAS_OUTDIR="$HOME/$CONTAINER_DIR/build$BUILD_ID"
     - export "SERVICE_NAME=rxclient-$BUILD_ID"
   script:
     - echo "Stop & remove containers"
