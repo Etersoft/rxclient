@@ -1873,8 +1873,8 @@ MySession::prepareCups()
     }
 
     tmp = m_sSysDir;
-    tmp << wxFileName::GetPathSeparator() << wxT("rxclient")
-        << wxFileName::GetPathSeparator() << wxT("share")
+    tmp << wxFileName::GetPathSeparator() << wxT("share")
+    	<< wxFileName::GetPathSeparator() << wxT("rxclient")
         << wxFileName::GetPathSeparator() << wxT("cups")
         << wxFileName::GetPathSeparator();
     wxCopyFile(tmp + wxT("mime.convs"), sCupsDir + wxT("mime.convs"));
