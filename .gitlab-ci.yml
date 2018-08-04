@@ -1,0 +1,98 @@
+variables:
+    # Как долго хранить тестовые сборки, дней
+    DEV_EXPIRE_IN: "7"
+    # Каталог куда собираются тестовые сборки
+    DEV_RPMDIR: "/var/ftp/pvt/Etersoft/RX@Etersoft/CI"
+    BUILD_ID: "$CI_PIPELINE_ID"
+    # Каталог внутри которого создаются каталоги для контейнеров
+    CONTAINER_DIR: "docker-rxclient-containers"
+
+stages:
+  - build
+  - test
+  - cleanup
+
+test build:
+  stage: build
+  script:
+    - export TMPDIR=/tmp/.private/${USER}; export TMP=${TMPDIR}
+    - export RPMDIR=${DEV_RPMDIR}/$BUILD_ID
+    - mkdir -p $RPMDIR/sources
+    #- eterremove remove --days $DEV_EXPIRE_IN --notest dirs ${DEV_RPMDIR} || echo "ignore remove error.."
+    - /usr/bin/rpmlog -q -r -l
+    - korinf -f rxclient.spec x86_64/ALTLinux/p8 ${RPMDIR}
+    - korinf -f rxclient.spec x86_64/ALTLinux/c7 ${RPMDIR}
+    # 32 bit
+    - korinf -f rxclient.spec ALTLinux/p8 ${RPMDIR}
+    - korinf -f rxclient.spec ALTLinux/c7 ${RPMDIR}
+  only:
+    - /^ci-.*/
+    - /^docker-ci-.*/
+
+  tags:
+    - rx-build
+
+    
+Testing:
+  stage: test
+  #when: manual
+  before_script:
+    - export DAAS_OUTDIR="$HOME/$CONTAINER_DIR/build$BUILD_ID"
+    - export DAAS_IMAGE_POSTFIX="-$CI_COMMIT_REF_NAME-build$BUILD_ID"
+    - export "RXCLIENT_NAME=rxclient-$BUILD_ID"
+    - export "RXSERVER_NAME=rxserver-$BUILD_ID"
+    - subst "s|{{BUILD_ID}}|$BUILD_ID|g" $CI_PROJECT_DIR/.daas/addons/rx-test.list
+    - daas gen 
+    - |
+      echo "RXCLIENT_NAME=$RXCLIENT_NAME" > "$DAAS_OUTDIR/rxclient-$BUILD_ID/.env"
+      echo "BUILD_ID=$BUILD_ID" >> "$DAAS_OUTDIR/rxclient-$BUILD_ID/.env"
+    - mkdir -p $DAAS_OUTDIR/rxclient-config
+  script:
+    - cd $DAAS_OUTDIR
+    - docker-compose build --force-rm
+    - docker-compose up -d
+    - sleep 5
+    - export RX_CLIENT_IP=$(curl -s http://localhost:8500/v1/catalog/service/$RXCLIENT_NAME | jq '.[].ServiceAddress' | sed 's|"||g')
+    - export RX_SERVER_IP=$(curl -s http://localhost:8500/v1/catalog/service/$RXSERVER_NAME | jq '.[].ServiceAddress' | sed 's|"||g')
+    - cat $CI_PROJECT_DIR/.daas/templates/rx-server.nxs.tpl | sed "s|RX_SERVER_IP|${RX_SERVER_IP}|g" > $DAAS_OUTDIR/rxclient-config/rx-server.nxs
+    - chmod a+rw $DAAS_OUTDIR/rxclient-config/rx-server.nxs || echo "ignore chmod error.."
+    - | 
+      echo "           RXCLIENT IP: $RX_CLIENT_IP"
+      echo "REMOTE CONNECT COMMAND: ssh -p $CI_BUILD_ID guest@$(hostname -s)"
+      echo "             RX-SERVER: $RX_SERVER_IP"
+
+  only:
+    - /^docker-ci-.*/
+
+  tags:
+    - rx-test-builder
+    
+Cleanup:
+  stage: cleanup
+  when: manual
+  before_script:
+    - export DAAS_OUTDIR="$HOME/$CONTAINER_DIR/build$BUILD_ID"
+    - export "SERVICE_NAME=rxclient-$BUILD_ID"
+  script:
+    - echo "Stop & remove containers"
+    - daas down
+    # - rm -rf $DAAS_OUTDIR
+    #- docker image prune -f
+    #- docker container prune -f
+    #- docker volume prune -f
+  tags:
+    - rx-test-builder
+  only:
+    - /^docker-ci-.*/
+
+Stop all rx containers:
+  stage: cleanup
+  when: manual
+  script:
+    - export RX_CLIST=$(docker ps | grep rxclient | grep build | awk '{print $1}')
+    - test -n "$RX_CLIST" && docker stop $RX_CLIST
+    - test -n "$RX_CLIST" && docker rm $RX_CLIST
+  tags:
+    - rx-test-builder
+  only:
+    - /^docker-ci-.*/

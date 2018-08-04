@@ -1,0 +1,55 @@
+version: 0.3
+
+project:
+ name: "rxclient"
+ apt:
+   sources:
+     - "rpm ftp://server/pub ALTLinux/p8/branch/x86_64 classic"
+     - "rpm ftp://server/pub ALTLinux/p8/branch/noarch classic"
+     #- rpm http://ftp.altlinux.org/pub/distributions/ALTLinux p8/branch/x86_64 classic
+     #- rpm http://ftp.altlinux.org/pub/distributions/ALTLinux p8/branch/noarch classic
+
+ groups:
+   rx:
+     nodes:
+       rxclient:
+         context: "rxclient-$BUILD_ID"
+         image: x64.p8-rxclient
+         start_command: start-rx.sh
+         hostname: "rxclient-$BUILD_ID"
+         environment:
+           - "SERVICE_NAME=$RXCLIENT_NAME"
+           - "SERVICE_TAGS=rxclient,build-$BUILD_ID"
+         ports:
+           - "$CI_BUILD_ID:22"
+         volumes:
+          - "./rxclient-config:/home/guest/.nx/config"
+         copy:
+           - "rx-test.list:/etc/apt/sources.list.d/"
+           - "03-logging.conf:/etc/nxserver/node.conf.d/"
+           - "guest:/home/guest/"
+           - "guest.sudoers:/etc/sudoers.d/guest"
+           
+         before_command: 
+           - epm repolist && epm update
+           - epm i --auto rxclient
+           - chown -R guest:guest /home/guest/.nx /home/guest/.opennx /home/guest/Desktop
+           - subst 's|#PubkeyAcceptedKeyTypes ssh-ed|PubkeyAcceptedKeyTypes ssh-dss,ssh-ed|g' /etc/openssh/sshd_config
+
+       rxserver:
+         context: "rxclient-rxserver-$BUILD_ID"
+         image: x64.p8-rxserver
+         start_command: start-rx.sh
+         hostname: "rx-server-$BUILD_ID"
+         environment:
+           - "SERVICE_NAME=$RXSERVER_NAME"
+           - "SERVICE_TAGS=rxclient,build-$BUILD_ID"
+         copy:
+           - "03-logging.conf:/etc/nxserver/node.conf.d/"
+           - "guest.sudoers:/etc/sudoers.d/guest"
+         ports:
+           - "$BUILD_ID:22"
+
+         before_command: 
+           - subst 's|#PubkeyAcceptedKeyTypes ssh-ed|PubkeyAcceptedKeyTypes ssh-dss,ssh-ed|g' /etc/openssh/sshd_config
+           
