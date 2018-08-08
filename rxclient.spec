@@ -6,7 +6,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt2.M70C
+Release: alt3.M70C
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -116,6 +116,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Aug 09 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt3.M70C
+- (CI): added an event to the telegram channel (c7 branch)
+
 * Wed Aug 08 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt2.M70C
 - added NxProxyTimeout config option (eterbug #12917)
 - fix desktop file (eterbig #12919)
