@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt12
+Release: alt13
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -91,6 +91,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Aug 09 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt13
+- (CI): added an event to the telegram channel
+
 * Tue Jul 31 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt12
 - (gitlab-ci): Added docker test after build (eterbug #13053)
 - (gitlab-ci): Added run test server (eterbug #13053)
