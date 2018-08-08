@@ -6,7 +6,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt1.M70C.5
+Release: alt2.M70C
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -116,6 +116,14 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Wed Aug 08 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt2.M70C
+- added NxProxyTimeout config option (eterbug #12917)
+- fix desktop file (eterbig #12919)
+- fix typo (eterbug 12930)
+- fix path for cups mime files (eterbug #13067)
+- (CI): added test build with docker
+- (CI): added special build for c7
+
 * Fri May 18 2018 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.5
 - read nxssh parameters from configuration file (eterbug #12813)
 - increased pause before terminate nxssh output processing (eterbug #12814)
