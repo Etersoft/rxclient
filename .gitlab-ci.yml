@@ -12,6 +12,30 @@ stages:
   - test
   - cleanup
 
+build and public:
+  stage: build
+  script:
+    - export TMPDIR=/tmp/.private/${USER}; export TMP=${TMPDIR}
+    - git remote | grep -q gitlab || git remote add gitlab git@gitlab.eterfund.ru:rx-etersoft/rxclient.git
+    - /usr/bin/rpmlog -q -r -l
+    - korinf -f rxclient.spec x86_64/ALTLinux/c7 /var/ftp/pvt/Etersoft/RX@Etersoft/c7
+    - korinf -f rxclient.spec ALTLinux/c7 /var/ftp/pvt/Etersoft/RX@Etersoft/c7
+    - git push -f --tags gitlab HEAD:c7
+    - mkdir -p RPM/log; cp -rf ${HOME}/RPM/log/*rxclient*.log RPM/log/
+    - mkdir -p korinf-log; cp -rf ${HOME}/RPM/tmp/korinf-log/* korinf-log/
+
+  artifacts:
+    paths:
+    - RPM/log
+    - korinf-log
+    expire_in: 10 days
+
+  only:
+    - c7
+
+  tags:
+    - rx-build
+
 test build:
   stage: build
   script:
@@ -26,8 +50,8 @@ test build:
     - korinf -f rxclient.spec ALTLinux/p8 ${RPMDIR}
     - korinf -f rxclient.spec ALTLinux/c7 ${RPMDIR}
   only:
-    - /^ci-.*/
-    - /^docker-ci-.*/
+    - /^ci-c7-.*/
+    - /^docker-ci-c7-.*/
 
   tags:
     - rx-build
@@ -62,7 +86,7 @@ Testing:
       echo "             RX-SERVER: $RX_SERVER_IP"
 
   only:
-    - /^docker-ci-.*/
+    - /^docker-ci-c7-.*/
 
   tags:
     - rx-test-builder
@@ -83,7 +107,7 @@ Cleanup:
   tags:
     - rx-test-builder
   only:
-    - /^docker-ci-.*/
+    - /^docker-ci-c7-.*/
 
 Stop all rx containers:
   stage: cleanup
@@ -95,4 +119,4 @@ Stop all rx containers:
   tags:
     - rx-test-builder
   only:
-    - /^docker-ci-.*/
+    - /^docker-ci-c7-.*/
