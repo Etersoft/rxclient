@@ -65,11 +65,17 @@ Testing:
   stage: test
   #when: manual
   before_script:
+    - export DAAS_TEMPLATES_DIR="$HOME/.daas/templates"
+    - export DAAS_ADDONS_DIR="$HOME/.daas/addons"
     - export DAAS_OUTDIR="$HOME/$CONTAINER_DIR/build$BUILD_ID"
     - export DAAS_IMAGE_POSTFIX="-$CI_COMMIT_REF_NAME-build$BUILD_ID"
     - export "RXCLIENT_NAME=rxclient-$BUILD_ID"
     - export "RXSERVER_NAME=rxserver-$BUILD_ID"
-    - subst "s|{{BUILD_ID}}|$BUILD_ID|g" $CI_PROJECT_DIR/.daas/addons/rx-test.list
+    - |
+      mkdir -p $CI_PROJECT_DIR/.daas/addons/
+      cp $DAAS_ADDONS_DIR/rx-test.list $CI_PROJECT_DIR/.daas/addons/
+      subst "s|{{BUILD_ID}}|$BUILD_ID|g" $CI_PROJECT_DIR/.daas/addons/rx-test.list
+      subst "s|Sisyphus|p8|g" $CI_PROJECT_DIR/.daas/addons/rx-test.list
     - daas gen 
     - |
       echo "RXCLIENT_NAME=$RXCLIENT_NAME" > "$DAAS_OUTDIR/rxclient-$BUILD_ID/.env"
@@ -82,12 +88,15 @@ Testing:
     - sleep 5
     - export RX_CLIENT_IP=$(curl -s http://localhost:8500/v1/catalog/service/$RXCLIENT_NAME | jq '.[].ServiceAddress' | sed 's|"||g')
     - export RX_SERVER_IP=$(curl -s http://localhost:8500/v1/catalog/service/$RXSERVER_NAME | jq '.[].ServiceAddress' | sed 's|"||g')
-    - cat $CI_PROJECT_DIR/.daas/templates/rx-server.nxs.tpl | sed "s|RX_SERVER_IP|${RX_SERVER_IP}|g" > $DAAS_OUTDIR/rxclient-config/rx-server.nxs
+    - |
+      mkdir -p $CI_PROJECT_DIR/.daas/templates/
+      cp $DAAS_TEMPLATES_DIR/rx-server.nxs.tpl $CI_PROJECT_DIR/.daas/templates/
+      cat $CI_PROJECT_DIR/.daas/templates/rx-server.nxs.tpl | sed "s|RX_SERVER_IP|${RX_SERVER_IP}|g" > $DAAS_OUTDIR/rxclient-config/rx-server.nxs
     - chmod a+rw $DAAS_OUTDIR/rxclient-config/rx-server.nxs || echo "ignore chmod error.."
     - | 
-      echo "           RXCLIENT IP: $RX_CLIENT_IP"
-      echo "REMOTE CONNECT COMMAND: ssh -p $CI_BUILD_ID guest@$(hostname -s)"
-      echo "             RX-SERVER: $RX_SERVER_IP"
+      echo "               RXCLIENT IP: $RX_CLIENT_IP"
+      echo "REMOTE CONNECT TO RXCLIENT: ssh -p $CI_BUILD_ID guest@$(hostname -s)"
+      echo "                 RX-SERVER: $RX_SERVER_IP"
 
   only:
     - /^docker-ci-c7-.*/
@@ -99,6 +108,8 @@ Cleanup:
   stage: cleanup
   when: manual
   before_script:
+    - export DAAS_TEMPLATES_DIR="$HOME/.daas/templates"
+    - export DAAS_ADDONS_DIR="$HOME/.daas/addons"
     - export DAAS_OUTDIR="$HOME/$CONTAINER_DIR/build$BUILD_ID"
     - export "SERVICE_NAME=rxclient-$BUILD_ID"
   script:

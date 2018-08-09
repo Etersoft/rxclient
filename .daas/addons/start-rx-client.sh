@@ -2,8 +2,11 @@
 
 update_chrooted conf
 
+control su public
+
 serv sshd start
 serv freenx-server start
+serv cups start
 
 ip a
 

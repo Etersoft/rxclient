@@ -15,7 +15,7 @@ project:
        rxclient:
          context: "rxclient-$BUILD_ID"
          image: x64.p8-rxclient
-         start_command: start-rx.sh
+         start_command: start-rx-client.sh
          hostname: "rxclient-$BUILD_ID"
          environment:
            - "SERVICE_NAME=$RXCLIENT_NAME"
@@ -28,13 +28,14 @@ project:
            - "rx-test.list:/etc/apt/sources.list.d/"
            - "03-logging.conf:/etc/nxserver/node.conf.d/"
            - "guest:/home/guest/"
-           - "guest.sudoers:/etc/sudoers.d/guest"
+           - "[0400]guest.sudo:/etc/sudoers.d/guest"
            
          before_command: 
            - epm repolist && epm update
            - epm i --auto rxclient
            - chown -R guest:guest /home/guest/.nx /home/guest/.opennx /home/guest/Desktop
            - subst 's|#PubkeyAcceptedKeyTypes ssh-ed|PubkeyAcceptedKeyTypes ssh-dss,ssh-ed|g' /etc/openssh/sshd_config
+           - chown root:root /etc/sudoers.d/guest
 
        rxserver:
          context: "rxclient-rxserver-$BUILD_ID"
@@ -46,7 +47,9 @@ project:
            - "SERVICE_TAGS=rxclient,build-$BUILD_ID"
          copy:
            - "03-logging.conf:/etc/nxserver/node.conf.d/"
-           - "guest.sudoers:/etc/sudoers.d/guest"
+           - "guest.sudo:/etc/sudoers.d/guest"
+         before_command: 
+           - chown root:root /etc/sudoers.d/guest
          ports:
            - "$BUILD_ID:22"
 
