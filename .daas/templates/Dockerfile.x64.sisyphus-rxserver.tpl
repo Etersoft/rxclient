@@ -19,10 +19,15 @@ xmodmap xrdb xsetroot iproute2 lxde-lite rx-etersoft \
 
 {% include "base/Dockerfile.basic.tpl" %}
 
+COPY i18n /etc/sysconfig/
+COPY root.i18n /root/.i18n
+
 # start default services
 RUN service sshd start
 RUN service consolesaver start
 
-RUN useradd guest && usermod -a -G users guest && usermod -a -G lp guest && echo "guest:123" | chpasswd
+RUN useradd guest && usermod -a -G users guest && usermod -a -G lp,wheel guest && echo "guest:123" | chpasswd
+RUN control su public
+RUN control sudo public
 
 {%- include "base/Dockerfile.start-command.tpl" %}

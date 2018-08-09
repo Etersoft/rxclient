@@ -106,9 +106,9 @@ Testing:
     - cat $CI_PROJECT_DIR/.daas/templates/rx-server.nxs.tpl | sed "s|RX_SERVER_IP|${RX_SERVER_IP}|g" > $DAAS_OUTDIR/rxclient-config/rx-server.nxs
     - chmod a+rw $DAAS_OUTDIR/rxclient-config/rx-server.nxs || echo "ignore chmod error.."
     - | 
-      echo "           RXCLIENT IP: $RX_CLIENT_IP"
-      echo "REMOTE CONNECT COMMAND: ssh -p $CI_BUILD_ID guest@$(hostname -s)"
-      echo "             RX-SERVER: $RX_SERVER_IP"
+      echo "               RXCLIENT IP: $RX_CLIENT_IP"
+      echo "REMOTE CONNECT TO RXCLIENT: ssh -p $CI_BUILD_ID guest@$(hostname -s)"
+      echo "                 RX-SERVER: $RX_SERVER_IP"
 
   only:
     - /^docker-ci-.*/

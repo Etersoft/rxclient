@@ -19,10 +19,15 @@ xmodmap xrdb xsetroot iproute2 lxde-lite \
 
 RUN epm i --auto libenchant libjavascriptcoregtk3 libldb libmspack libnetapi libsmbclient \
 libtdb libtevent libwbclient libwebkitgtk3 libwxGTK3.1 nx-libs nxssh \
-samba-client-libs samba-common rx-etersoft \
+samba-client-libs samba-common rx-etersoft cups-pdf \
 && apt-get clean
 
+COPY i18n /etc/sysconfig/
+COPY root.i18n /root/.i18n
+
 RUN useradd guest && usermod -a -G users guest && usermod -a -G lp guest && echo 'guest:123' | chpasswd
+RUN control su public
+RUN control sudo public
 
 {% include "base/Dockerfile.basic.tpl" %}
 
