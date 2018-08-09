@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt13
+Release: alt14
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -91,6 +91,11 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Aug 09 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt14
+- (CI): disabled test build for i586.32 and build for p7
+- (CI): added cups-pdf to 'rxclient' test container
+- (CI): moved templates daas to a special project 'rx-daas-templates'
+
 * Thu Aug 09 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt13
 - (CI): added an event to the telegram channel
 
