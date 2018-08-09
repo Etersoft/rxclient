@@ -1812,15 +1812,15 @@ MySession::isCupsRunning()
     bool
 MySession::prepareCups()
 {
-    long cupsport = wxConfigBase::Get()->Read(wxT("Config/CupsPort"), -1);
+    long cupsport = m_pCfg->iGetCupsPort();
     if (cupsport == -1) {
         cupsport = getFirstFreePort(20000);
         if (0 == cupsport) {
             wxLogWarning(_("Could not assign a free port for CUPS printing"));
             return false;
         }
-        wxConfigBase::Get()->Write(wxT("Config/CupsPort"), cupsport);
     }
+    wxConfigBase::Get()->Write(wxT("Config/CupsPort"), cupsport);
     ::myLogTrace(MYTRACETAG, wxT("Check for cupsd running at port %d"), cupsport);
     if (isCupsRunning())
         return true;
