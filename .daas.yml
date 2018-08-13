@@ -6,6 +6,7 @@ project:
    sources:
      - "rpm ftp://server/pub ALTLinux/p8/branch/x86_64 classic"
      - "rpm ftp://server/pub ALTLinux/p8/branch/noarch classic"
+     - "rpm ftp://server/pvt/Etersoft/RX@Etersoft/unstable x86_64/ALTLinux/p8 main"
      #- rpm http://ftp.altlinux.org/pub/distributions/ALTLinux p8/branch/x86_64 classic
      #- rpm http://ftp.altlinux.org/pub/distributions/ALTLinux p8/branch/noarch classic
 
