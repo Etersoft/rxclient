@@ -21,14 +21,15 @@ build and public:
 
     # вынимаем через ssh, чтобы потом смочь сделать коммит
     - git remote | grep -q gitlab || git remote add gitlab git@gitlab.eterfund.ru:rx-etersoft/rxclient.git
-    - rx_bot_prepare_changes.sh changes.txt
     - /usr/bin/rpmlog -q -r -l
     - korinf -f rxclient.spec x86_64/ALTLinux/p8 /var/ftp/pvt/Etersoft/RX@Etersoft/unstable
     - korinf -f rxclient.spec x86_64/ALTLinux/Sisyphus /var/ftp/pvt/Etersoft/RX@Etersoft/unstable
     - korinf -f rxclient.spec x86_64/ALTLinux/p7 /var/ftp/pvt/Etersoft/RX@Etersoft/unstable
     - git push -f --tags gitlab HEAD:ci/latest-build
     - git push -f --tags gitlab HEAD:master
-    - rx_bot_pub_file.py changes.txt || echo "ignore public bot error.."
+    - |
+      rpmlog -q --last-changelog > last_changes.txt
+      rx_bot_pub_file.py last_changes.txt || echo "ignore event bot error.."
 
   after_script:
     - mkdir -p RPM/log; cp -rf ${HOME}/RPM/log/*rxclient*.log RPM/log/
