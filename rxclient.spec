@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt14
+Release: alt15
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -91,6 +91,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Wed Aug 15 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt15
+- the proxy for the font server is disabled. eterbug #13048
+
 * Thu Aug 09 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt14
 - (CI): disabled test build for i586.32 and build for p7
 - (CI): added cups-pdf to 'rxclient' test container
