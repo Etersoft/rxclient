@@ -6,7 +6,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt4.M70C
+Release: alt5.M70C
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -116,6 +116,10 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Wed Aug 15 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt5.M70C
+- init default cups port from config (eterbug #13075, eterbug #13069)
+- (CI): added package directory info, install rx-etersoft server from unstable repo
+
 * Thu Aug 09 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt4.M70C
 - (CI): (c7): moved templates daas to a special project 'rx-daas-templates'
 
