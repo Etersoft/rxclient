@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt15
+Release: alt16
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -91,6 +91,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Aug 16 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt16
+- (CI): new rpmlog --> new bot message
+
 * Wed Aug 15 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt15
 - the proxy for the font server is disabled. eterbug #13048
 
