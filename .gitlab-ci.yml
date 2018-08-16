@@ -17,12 +17,14 @@ build and public:
   script:
     - export TMPDIR=/tmp/.private/${USER}; export TMP=${TMPDIR}
     - git remote | grep -q gitlab || git remote add gitlab git@gitlab.eterfund.ru:rx-etersoft/rxclient.git
-    - rx_bot_prepare_changes.sh changes.txt
     - /usr/bin/rpmlog -q -r -l
     - korinf -f rxclient.spec x86_64/ALTLinux/c7 /var/ftp/pvt/Etersoft/RX@Etersoft/c7
     - korinf -f rxclient.spec ALTLinux/c7 /var/ftp/pvt/Etersoft/RX@Etersoft/c7
     - git push -f --tags gitlab HEAD:c7
-    - rx_bot_pub_file.py changes.txt || echo "ignore public bot error.."
+    - |
+      echo "build new version (c7):" > last_changes.txt
+      rpmlog -q --last-changelog >> last_changes.txt
+      rx_bot_pub_file.py last_changes.txt || echo "ignore event bot error.."
 
   after_script:
     - mkdir -p RPM/log; cp -rf ${HOME}/RPM/log/*rxclient*.log RPM/log/
