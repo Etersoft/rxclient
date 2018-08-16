@@ -6,7 +6,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt5.M70C
+Release: alt6.M70C
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -116,6 +116,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Aug 16 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt6.M70C
+- (CI): new build event
+
 * Wed Aug 15 2018 Etersoft Builder <builder@etersoft.ru> 0.18-alt5.M70C
 - init default cups port from config (eterbug #13075, eterbug #13069)
 - (CI): added package directory info, install rx-etersoft server from unstable repo
