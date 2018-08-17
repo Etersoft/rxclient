@@ -1,6 +1,6 @@
 variables:
     # Как долго хранить тестовые сборки, дней
-    DEV_EXPIRE_IN: "7"
+    DEV_EXPIRE_IN: "20"
     # Каталог куда собираются тестовые сборки
     DEV_RPMDIR: "/var/ftp/pvt/Etersoft/RX@Etersoft/CI"
     BUILD_ID: "$CI_PIPELINE_ID"
@@ -50,9 +50,9 @@ test build:
   script:
     - export TMPDIR=/tmp/.private/${USER}; export TMP=${TMPDIR}
     - export RPMDIR=${DEV_RPMDIR}/$BUILD_ID
+    - eterremove remove --days $DEV_EXPIRE_IN --notest dirs ${DEV_RPMDIR} || echo "ignore remove error.."
     - mkdir -p $RPMDIR/sources
-    #- eterremove remove --days $DEV_EXPIRE_IN --notest dirs ${DEV_RPMDIR} || echo "ignore remove error.."
-    - /usr/bin/rpmlog -q -r -l
+    - /usr/bin/rpmlog -q -s -l
     - korinf -f rxclient.spec x86_64/ALTLinux/c7 ${RPMDIR}
     # 32 bit
     - korinf -f rxclient.spec ALTLinux/c7 ${RPMDIR}
@@ -97,11 +97,11 @@ Testing:
       cat $CI_PROJECT_DIR/.daas/templates/rx-server.nxs.tpl | sed "s|RX_SERVER_IP|${RX_SERVER_IP}|g" > $DAAS_OUTDIR/rxclient-config/rx-server.nxs
     - chmod a+rw $DAAS_OUTDIR/rxclient-config/rx-server.nxs || echo "ignore chmod error.."
     - | 
-      echo "                  Packages: ${DEV_RPMDIR}/$BUILD_ID"
-      echo "REMOTE CONNECT TO RXCLIENT: ssh -p $CI_BUILD_ID guest@$(hostname -s)"
+      echo "     Packages: ${DEV_RPMDIR}/$BUILD_ID"
+      echo "     RXCLIENT: ssh -p $CI_BUILD_ID guest@$(hostname -s)"
       echo "External info: "
-      echo "               RXCLIENT IP: $RX_CLIENT_IP"
-      echo "               RXSERVER IP: $RX_SERVER_IP"
+      echo "  RXCLIENT IP: $RX_CLIENT_IP"
+      echo "  RXSERVER IP: $RX_SERVER_IP"
 
   only:
     - /^docker-ci-c7-.*/
