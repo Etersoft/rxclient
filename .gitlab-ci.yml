@@ -53,10 +53,8 @@ test build:
     - mkdir -p $RPMDIR/sources
     #- eterremove remove --days $DEV_EXPIRE_IN --notest dirs ${DEV_RPMDIR} || echo "ignore remove error.."
     - /usr/bin/rpmlog -q -r -l
-    - korinf -f rxclient.spec x86_64/ALTLinux/p8 ${RPMDIR}
     - korinf -f rxclient.spec x86_64/ALTLinux/c7 ${RPMDIR}
     # 32 bit
-    - korinf -f rxclient.spec ALTLinux/p8 ${RPMDIR}
     - korinf -f rxclient.spec ALTLinux/c7 ${RPMDIR}
   only:
     - /^ci-c7-.*/
@@ -80,7 +78,7 @@ Testing:
       mkdir -p $CI_PROJECT_DIR/.daas/addons/
       cp $DAAS_ADDONS_DIR/rx-test.list $CI_PROJECT_DIR/.daas/addons/
       subst "s|{{BUILD_ID}}|$BUILD_ID|g" $CI_PROJECT_DIR/.daas/addons/rx-test.list
-      subst "s|Sisyphus|p8|g" $CI_PROJECT_DIR/.daas/addons/rx-test.list
+      subst "s|Sisyphus|c7|g" $CI_PROJECT_DIR/.daas/addons/rx-test.list
     - daas gen 
     - |
       echo "RXCLIENT_NAME=$RXCLIENT_NAME" > "$DAAS_OUTDIR/rxclient-$BUILD_ID/.env"
@@ -103,7 +101,7 @@ Testing:
       echo "REMOTE CONNECT TO RXCLIENT: ssh -p $CI_BUILD_ID guest@$(hostname -s)"
       echo "External info: "
       echo "               RXCLIENT IP: $RX_CLIENT_IP"
-      echo "                 RX-SERVER: $RX_SERVER_IP"
+      echo "               RXSERVER IP: $RX_SERVER_IP"
 
   only:
     - /^docker-ci-c7-.*/

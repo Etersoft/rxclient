@@ -6,17 +6,15 @@ project:
    sources:
      - "rpm ftp://server/pub ALTLinux/p8/branch/x86_64 classic"
      - "rpm ftp://server/pub ALTLinux/p8/branch/noarch classic"
-     - "rpm ftp://server/pvt/Etersoft/RX@Etersoft/unstable x86_64/ALTLinux/p8 main"
-     #- rpm http://ftp.altlinux.org/pub/distributions/ALTLinux p8/branch/x86_64 classic
-     #- rpm http://ftp.altlinux.org/pub/distributions/ALTLinux p8/branch/noarch classic
+     - "rpm ftp://server/pvt/Etersoft/RX@Etersoft/c7 x86_64/ALTLinux/c7 main"
 
+ project_compose_template: 'docker-compose-systemd.yml.tpl'
  groups:
    rx:
      nodes:
        rxclient:
          context: "rxclient-$BUILD_ID"
-         image: x64.p8-rxclient
-         start_command: start-rx-client.sh
+         image: x64.c7-rxclient
          hostname: "rxclient-$BUILD_ID"
          environment:
            - "SERVICE_NAME=$RXCLIENT_NAME"
@@ -40,8 +38,7 @@ project:
 
        rxserver:
          context: "rxclient-rxserver-$BUILD_ID"
-         image: x64.p8-rxserver
-         start_command: start-rx.sh
+         image: x64.c7-rxserver
          hostname: "rx-server-$BUILD_ID"
          environment:
            - "SERVICE_NAME=$RXSERVER_NAME"
