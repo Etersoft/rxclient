@@ -12,8 +12,9 @@ stages:
   - test
   - cleanup
 
-build and public:
+Release:
   stage: build
+  when: manual
   script:
     - export TMPDIR=/tmp/.private/${USER}; export TMP=${TMPDIR}
     - git remote | grep -q gitlab || git remote add gitlab git@gitlab.eterfund.ru:rx-etersoft/rxclient.git
@@ -22,7 +23,9 @@ build and public:
     - korinf -f rxclient.spec ALTLinux/c7 /var/ftp/pvt/Etersoft/RX@Etersoft/c7
     - git push -f --tags gitlab HEAD:c7
     - |
-      echo "build new version (c7):" > last_changes.txt
+      echo "release (c7):" > last_changes.txt
+      echo "-------------" >> last_changes.txt
+      echo "" >> last_changes.txt
       rpmlog -q --last-changelog >> last_changes.txt
       rx_bot_pub_file.py last_changes.txt || echo "ignore event bot error.."
 
