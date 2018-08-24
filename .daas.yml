@@ -4,8 +4,8 @@ project:
  name: "rxclient"
  apt:
    sources:
-     - "rpm ftp://server/pub ALTLinux/p8/branch/x86_64 classic"
-     - "rpm ftp://server/pub ALTLinux/p8/branch/noarch classic"
+     - "rpm ftp://server/pub ALTLinux/c7/branch/x86_64 classic"
+     - "rpm ftp://server/pub ALTLinux/c7/branch/noarch classic"
      - "rpm ftp://server/pvt/Etersoft/RX@Etersoft/c7 x86_64/ALTLinux/c7 main"
 
  project_compose_template: 'docker-compose-systemd.yml.tpl'
