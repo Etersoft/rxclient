@@ -20,7 +20,7 @@ BuildRequires: gcc-c++ imake libSM-devel libXmu-devel
 BuildRequires: libopensc-devel libsmbclient-devel
 BuildRequires: xorg-cf-files zip libcups-devel
 BuildRequires: libXau-devel
-BuildRequires: libwxGTK3.1-devel xxd
+BuildRequires: libwxGTK3.0-devel xxd
 
 # due _ln_sr
 BuildRequires: rpm-build-intro >= 1.9.18
