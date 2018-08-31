@@ -28,7 +28,8 @@ build and public:
     - git push -f --tags gitlab HEAD:ci/latest-build
     - git push -f --tags gitlab HEAD:master
     - |
-      rpmlog -q --last-changelog > last_changes.txt
+      echo "$CI_PROJECT_NAME ($CI_COMMIT_REF_NAME)" > last_changes.txt
+      rpmlog -q --last-changelog >> last_changes.txt
       rx_bot_pub_file.py last_changes.txt || echo "ignore event bot error.."
 
   after_script:
