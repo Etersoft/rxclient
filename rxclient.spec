@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt16
+Release: alt17
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -91,6 +91,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Sat Sep 01 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt17
+- update build require: wxGTK3.1 --> wxGTK3.0 eterbug #12307
+
 * Thu Aug 16 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt16
 - (CI): new rpmlog --> new bot message
 
