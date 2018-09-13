@@ -1,0 +1,120 @@
+#!/bin/bash
+# Etersoft, 2018
+# 2018 (c) Pavel Vainerman, <pv@etersoft.ru>
+# ---------------------
+# rxclient-report - The script for generating a report with information about the system
+# ---------------------
+
+BASE_REPORTDIR=$(mktemp -d -t "rxreport-XXXXXXXXXXXXX")
+DATE=$(date +%Y-%m-%d-%H-%M)
+REPORTDIR="rxclient-report-$DATE"
+ABS_REPORTDIR="$BASE_REPORTDIR/$REPORTDIR"
+WORKDIR=$(pwd)
+
+NX_USER_HOME="$HOME"
+NX_SESS_FILTER=''
+
+usage() {
+	echo "rxclient-report [-h | -u | -s]"
+	echo "-h|--help          - this message"
+	echo "-u|--user username - archiving the session directory for the user 'username'"
+	echo "-s|--session name  - filter for session directory name"
+}
+
+make_temp_directory() {
+	mkdir -p "$ABS_REPORTDIR"
+}
+
+remove_temp_directory() {
+
+	if test -d "$BASE_REPORTDIR"; then
+		rm -rf "$BASE_REPORTDIR"
+	fi
+}
+
+make_archive() {
+	cd "$BASE_REPORTDIR" || return 1
+	tar -cvf "$WORKDIR/rxclient-report-$DATE.tar.gz" "$REPORTDIR"
+	cd -
+}
+
+make_packages_info() {
+
+	echo "Archiving the packages info..."
+	rpm -qa | grep -E "rxclient|nx-|usbip|pcsc|cups" | grep -v 'sphinx' | sort -n >"$ABS_REPORTDIR/packages.txt"
+}
+
+make_sys_configs_info() {
+	local CONFDIR=/etc/rxclient
+	if test -d "$CONFDIR"; then
+		echo "Archiving $CONFDIR.."
+		mkdir -p "$ABS_REPORTDIR/etc/"
+		cp -af "$CONFDIR" "$ABS_REPORTDIR/etc/"
+	fi
+}
+
+copy_nx_user_data() {
+
+	if test -d "$NX_USER_HOME/.nx"; then
+		echo "Archiving the user directory '$NX_USER_HOME/.nx' ..."
+		mkdir -p "$ABS_REPORTDIR/.nx"
+		DLIST=$(find "$NX_USER_HOME/.nx" -type d -name 'S-*' -or -name 'F-*' -or -name 'T-*')
+		for d in ${DLIST}; do
+			if [ -n "$NX_SESS_FILTER" ]; then
+				if echo "$d" | grep -q "$NX_SESS_FILTER"; then
+					cp -af "$d" "$ABS_REPORTDIR/.nx/"
+				fi
+			else
+				cp -af "$d" "$ABS_REPORTDIR/.nx/"
+			fi
+		done
+
+		cp -af "$NX_USER_HOME/.nx/temp" "$ABS_REPORTDIR/.nx/"
+		if test -d "$NX_USER_HOME/.nx/cups"; then
+		    cp -af "$NX_USER_HOME/.nx/cups" "$ABS_REPORTDIR/.nx/"
+		fi
+	fi
+
+	if test -f "$NX_USER_HOME/.opennx"; then
+		echo "Archiving the user config '.opennx' ..."
+		cp -af "$NX_USER_HOME/.opennx" "$ABS_REPORTDIR/"
+	fi
+}
+
+while [[ $# -gt 0 ]]; do
+
+	case $1 in
+	-h | --help)
+		usage
+		exit 0
+		;;
+
+	-u | --user)
+		shift
+		[ -n "$1" ] && NX_USER_HOME="/home/$1"
+		;;
+
+	-s | --session)
+		shift
+		[ -n "$1" ] && NX_SESS_FILTER="$1"
+		;;
+	*) ;;
+	esac
+
+	shift
+
+done
+
+# --------
+make_temp_directory
+# --------
+
+make_packages_info
+make_sys_configs_info
+copy_nx_user_data
+
+make_archive
+
+# --------
+remove_temp_directory
+# --------
