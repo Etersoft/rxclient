@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt18
+Release: alt19
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -91,6 +91,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Sep 13 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt19
+- added rxclient-report util
+
 * Sat Sep 01 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt18
 - (CI): fix event bot message
 
