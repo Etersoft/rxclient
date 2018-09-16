@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 0.19
-Release: alt19
+Release: alt20
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -91,6 +91,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Sun Sep 16 2018 Pavel Vainerman <pv@altlinux.ru> 0.19-alt20
+- new release
+
 * Thu Sep 13 2018 Etersoft Builder <builder@etersoft.ru> 0.19-alt19
 - added rxclient-report util
 
