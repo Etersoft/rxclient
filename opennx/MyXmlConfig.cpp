@@ -475,8 +475,8 @@ MyXmlConfig::sGetProxyParams(const long protocolVersion)
     ret << wxT(",shmem=") << (m_bDisableShmem ? 0 : 1)
         << wxT(",shpix=") << (m_bDisableShpix ? 0 : 1)
         ;
-    // FIXME: use real settings
-    ret << wxT(",font=1");
+    // DISABLED! see https://bugs.etersoft.ru/show_bug.cgi?id=13048
+    // ret << wxT(",font=1");
     return ret;
 }
 
