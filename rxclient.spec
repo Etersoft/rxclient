@@ -6,7 +6,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt1.M70C.10
+Release: alt1.M70C.11
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -116,6 +116,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Oct 25 2018 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.11
+- (c7): disabled default settings for timeout (for ssh)
+
 * Mon Oct 01 2018 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.10
 - added rxclient-report
 - disabled using the local font server
