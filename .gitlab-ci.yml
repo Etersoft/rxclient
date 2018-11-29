@@ -107,7 +107,7 @@ Testing:
     - cd $DAAS_OUTDIR
     - docker-compose build --force-rm
     - docker-compose up -d
-    - sleep 5
+    - sleep 8
     - export RX_CLIENT_IP=$(curl -s http://localhost:8500/v1/catalog/service/$RXCLIENT_NAME | jq '.[].ServiceAddress' | sed 's|"||g')
     - export RX_SERVER_IP=$(curl -s http://localhost:8500/v1/catalog/service/$RXSERVER_NAME | jq '.[].ServiceAddress' | sed 's|"||g')
     - |
