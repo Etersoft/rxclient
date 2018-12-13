@@ -103,6 +103,7 @@ MyIPC::Detach()
     }
 }
 
+
     void
 MyIPC::sendUpEvent(wxCommandEvent &event)
 {
@@ -654,6 +655,33 @@ MyIPC::OnOutReceived(wxCommandEvent &event)
     event.Skip();
 }
 
+wxString MyIPC::getSpecialErrorMessage(const wxString &msg) const
+{
+    if( msg.Contains(wxT("No route to host")) ) {
+
+        wxString txt = _("No route to host");
+
+        if (txt != wxT("No route to host"))
+            return txt;
+
+        return msg;
+    }
+
+    if( msg.Contains(wxT("can't write to file descriptor")) ) {
+
+        wxString txt = _("can't write to file descriptor");
+
+        if (txt != wxT("can't write to file descriptor"))
+            return txt;
+
+        return msg;
+    }
+
+
+    return msg;
+}
+
+
     void
 MyIPC::OnErrReceived(wxCommandEvent &event)
 {
@@ -719,7 +747,8 @@ MyIPC::OnErrReceived(wxCommandEvent &event)
                                 msg.Contains(wxT("No route to host")) ||
                                 msg.Contains(wxT("proxy error:"))
                                 ) {
-                            upevent.SetString(msg);
+
+                            upevent.SetString( getSpecialErrorMessage(msg) );
                             upevent.SetInt(ActionError);
                             sendUpEvent(upevent);
                             break;

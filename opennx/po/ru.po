@@ -1,5 +1,6 @@
-# translation of ru.po to Russian
+# translation of ru.po to
 # Shakirov Lenar <snejok@altlinux.org>, 2010.
+# Pavel Vainerman <pv@etersoft.ru>, 2018.
 # Boris Savelev <boris.savelev@gmail.com>
 # Djelf from linuxforum.ru
 # based on http://linuxforum.ru/index.php?showtopic=100412
@@ -8,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: felfert@users.sf.net\n"
-"POT-Creation-Date: 2016-12-23 23:33+0300\n"
-"PO-Revision-Date: 2016-12-23 15:21+0300\n"
-"Last-Translator: Vitaly Lipatov <lav@etersoft.ru>\n"
-"Language-Team: Russian <ru@li.org>\n"
+"POT-Creation-Date: 2018-12-13 18:35+0300\n"
+"PO-Revision-Date: 2018-12-12 21:30+0300\n"
+"Last-Translator: Pavel Vainerman <pv@etersoft.ru>\n"
+"Language-Team:  <en@li.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -104,11 +105,16 @@ msgstr "&Сохранить"
 msgid "Session Log - RX Client"
 msgstr "Лог сессии - RX Client"
 
+#: LogDialog_symbols.h:22
+#, fuzzy
+msgid "Session Log - OpenNX"
+msgstr "Лог сессии - RX Client"
+
 #: LogDialog_symbols.h:23 TraceLogFrame_symbols.h:25
 msgid "Close"
 msgstr "Закрыть"
 
-#: LoginDialog.cpp:433 LoginDialog.cpp:559 MyWizard.cpp:1369
+#: LoginDialog.cpp:433 LoginDialog.cpp:573 MyWizard.cpp:1369
 #, c-format
 msgid ""
 "Could not save session to\n"
@@ -117,7 +123,7 @@ msgstr ""
 "Не удалось сохранить сессию в\n"
 "%s"
 
-#: LoginDialog.cpp:434 LoginDialog.cpp:560 MyWizard.cpp:1370
+#: LoginDialog.cpp:434 LoginDialog.cpp:574 MyWizard.cpp:1370
 msgid "Error saving - RX Client"
 msgstr "Ошибка при сохранении - RX Client"
 
@@ -143,7 +149,7 @@ msgstr ""
 "Конфигурационный файл '%s' был преобразован но не был сохранён.\n"
 "Пожалуйста, проверьте настройки сжатия изображения"
 
-#: LoginDialog.cpp:501 MySession.cpp:798 MySession.cpp:810 MySession.cpp:824
+#: LoginDialog.cpp:501 MySession.cpp:798 MySession.cpp:815 MySession.cpp:829
 msgid "Warning - RX Client"
 msgstr "Предупреждение - RX Client"
 
@@ -483,9 +489,21 @@ msgstr ""
 msgid "Authorization failed: %s"
 msgstr "Ошибка авторизации: %s"
 
-#: MyIPC.cpp:382
+#: MyIPC.cpp:383
 msgid "Authentication failed"
 msgstr "Ошибка аутентификации"
+
+#: MyIPC.cpp:662
+msgid "No route to host"
+msgstr ""
+"Не удалось подключиться к виртуальной машине. Необходимо обратиться в службу "
+"технической поддержки ЕГР ЗАГС с описанием возникшей проблемы"
+
+#: MyIPC.cpp:672
+msgid "can't write to file descriptor"
+msgstr ""
+"Не удалось подключиться к виртуальной машине. Необходимо обратиться в службу "
+"технической поддержки ЕГР ЗАГС с описанием возникшей проблемы"
 
 #: MySession.cpp:127 MySession.cpp:720
 msgid "Invalid X11 server platform"
@@ -520,7 +538,11 @@ msgstr "Клиент"
 msgid "Unknown"
 msgstr "Неизвестный"
 
-#: MySession.cpp:822
+#: MySession.cpp:807
+msgid "Connection error"
+msgstr "Ошибка подключения"
+
+#: MySession.cpp:827
 msgid ""
 "\n"
 "Do you want to delete the key and retry ?"
@@ -528,90 +550,90 @@ msgstr ""
 "\n"
 "Удалить ключ и попробовать ещё раз? "
 
-#: MySession.cpp:842
+#: MySession.cpp:847
 msgid "Sending username"
 msgstr "Отправка имени пользователя"
 
-#: MySession.cpp:846 MySession.cpp:875
+#: MySession.cpp:851 MySession.cpp:880
 msgid "Authenticating"
 msgstr "Аутентификация"
 
-#: MySession.cpp:853
+#: MySession.cpp:858
 msgid "Authentication successful"
 msgstr "Аутентификация завершена"
 
-#: MySession.cpp:903
+#: MySession.cpp:908
 msgid "Query server-side features"
 msgstr "Запрос функций"
 
-#: MySession.cpp:915
+#: MySession.cpp:920
 msgid "Query server-side sessions"
 msgstr "Запрос сессий"
 
-#: MySession.cpp:932 MySession.cpp:1036 MySession.cpp:1065
+#: MySession.cpp:937 MySession.cpp:1041 MySession.cpp:1071
 msgid "Starting session"
 msgstr "Начало сессии"
 
-#: MySession.cpp:939
+#: MySession.cpp:944
 msgid "Attaching to session"
 msgstr "Начало сессии"
 
-#: MySession.cpp:950
+#: MySession.cpp:955
 msgid "Resuming session"
 msgstr "Возобновление сессии"
 
-#: MySession.cpp:975
+#: MySession.cpp:980
 msgid "Enter PIN for Smart Card access."
 msgstr "Введите PIN для смарт-карты."
 
-#: MySession.cpp:975
+#: MySession.cpp:980
 msgid "Smart Card PIN"
 msgstr "PIN Смарт-карты"
 
-#: MySession.cpp:980
+#: MySession.cpp:985
 msgid "Enter passphrase"
 msgstr "Введите секретный код"
 
-#: MySession.cpp:982
+#: MySession.cpp:987
 msgid "Empty passphrase"
 msgstr "Пустой секретный код"
 
-#: MySession.cpp:988 MySession.cpp:992 MySession.cpp:996 MySession.cpp:1000
-#: MySession.cpp:1004 MySession.cpp:1008 MySession.cpp:1012 MySession.cpp:1016
-#: MySession.cpp:1020 MySession.cpp:1024 MySession.cpp:1028
+#: MySession.cpp:993 MySession.cpp:997 MySession.cpp:1001 MySession.cpp:1005
+#: MySession.cpp:1009 MySession.cpp:1013 MySession.cpp:1017 MySession.cpp:1021
+#: MySession.cpp:1025 MySession.cpp:1029 MySession.cpp:1033
 msgid "Negotiating session parameter"
 msgstr "Передача параметров сессии"
 
-#: MySession.cpp:1058
+#: MySession.cpp:1064
 msgid "Unexpected termination of nxssh"
 msgstr "Неожиданное завершение nxssh"
 
-#: MySession.cpp:1314
+#: MySession.cpp:1320
 msgid "There are no sessions which can be attached to."
 msgstr "Нет сессий, к которым можно подключиться."
 
-#: MySession.cpp:1315 MySession.cpp:1325
+#: MySession.cpp:1321 MySession.cpp:1331
 msgid "Error - RX Client"
 msgstr "Ошибка - RX Client"
 
-#: MySession.cpp:1324
+#: MySession.cpp:1330
 msgid "You have reached your session limit. No more sessions allowed"
 msgstr "Вы достигли предела на лимит сессий. Новая сессия не разрешена"
 
-#: MySession.cpp:1516 MySession.cpp:1560
+#: MySession.cpp:1522 MySession.cpp:1566
 msgid "Could not create X11 authentication cookie"
 msgstr "Не удалось создать X11 авторизацию"
 
-#: MySession.cpp:1596
+#: MySession.cpp:1602
 msgid "No X server found."
 msgstr "Не найден X-сервер"
 
-#: MySession.cpp:1604
+#: MySession.cpp:1610
 #, c-format
 msgid "Could not execute %s: %s\n"
 msgstr "Не удалось запустить %s: %s\n"
 
-#: MySession.cpp:1697
+#: MySession.cpp:1706
 #, c-format
 msgid ""
 "Could not create session directory\n"
@@ -620,7 +642,7 @@ msgstr ""
 "Не удалось создать каталог для сессий\n"
 "%s\n"
 
-#: MySession.cpp:1728
+#: MySession.cpp:1737
 #, c-format
 msgid ""
 "Could not write session options\n"
@@ -629,49 +651,49 @@ msgstr ""
 "Не удалось сохранить параметры сессии в\n"
 "%s\n"
 
-#: MySession.cpp:1816 MySession.cpp:1830
+#: MySession.cpp:1825 MySession.cpp:1839
 msgid "Could not assign a free port for CUPS printing"
 msgstr "Не удалось назначить свободный порт для CUPS"
 
-#: MySession.cpp:2175
+#: MySession.cpp:2213
 #, c-format
 msgid "Could not write %s"
 msgstr "Не удалось записать %s"
 
-#: MySession.cpp:2275
+#: MySession.cpp:2318
 msgid "Could not start local X server"
 msgstr "Не удалось запустить локальный X сервер"
 
-#: MySession.cpp:2296 MySession.cpp:2368 MySession.cpp:2382
+#: MySession.cpp:2339 MySession.cpp:2411 MySession.cpp:2425
 #, c-format
 msgid "Connecting to %s ..."
 msgstr "Соединение с %s ..."
 
-#: MySession.cpp:2300
+#: MySession.cpp:2343
 msgid "Preparing multimedia service ..."
 msgstr "Подготовка мультимедиа сервисов ..."
 
-#: MySession.cpp:2314 MySession.cpp:2360 MySession.cpp:2364
+#: MySession.cpp:2357 MySession.cpp:2403 MySession.cpp:2407
 msgid "Could not start multimedia support"
 msgstr "Не удалось запустить мультимедиа сервисы"
 
-#: MySession.cpp:2317 MySession.cpp:2362
+#: MySession.cpp:2360 MySession.cpp:2405
 msgid "Could not assign a free port for multimedia support"
 msgstr "Не удалось назначить свободный порт для мультимедиа сервисов"
 
-#: MySession.cpp:2379
+#: MySession.cpp:2422
 msgid "Preparing CUPS service ..."
 msgstr "Подготовка CUPS ..."
 
-#: MySession.cpp:2381
+#: MySession.cpp:2424
 msgid "Could not start CUPS printing"
 msgstr "Не удалось запустить CUPS"
 
-#: MySession.cpp:2433
+#: MySession.cpp:2476
 msgid "Called command was: "
 msgstr "Комманда: "
 
-#: MySession.cpp:2434
+#: MySession.cpp:2477
 msgid "Could not start nxssh."
 msgstr "Не удалось запустить nxssh."
 
@@ -889,29 +911,20 @@ msgstr "Назад"
 msgid "Next"
 msgstr "Далее"
 
-
-#: MyWizard_symbols.h:61
-msgid "< Back"
-msgstr "< Назад"
-
-#: MyWizard_symbols.h:62
-msgid "Next >"
-msgstr "Далее >"
-
 #: MyWizard_symbols.h:63
 msgid "Finish"
 msgstr "Закончить"
 
-#: MyXmlConfig.cpp:592
+#: MyXmlConfig.cpp:595
 msgid "Could not find application window"
 msgstr "Окно приложения не найдено"
 
-#: MyXmlConfig.cpp:1263
+#: MyXmlConfig.cpp:1269
 #, c-format
 msgid "Error %d while fetching session configuration"
 msgstr "Ошибка %d при получении настроек сессии"
 
-#: MyXmlConfig.cpp:1268
+#: MyXmlConfig.cpp:1274
 #, c-format
 msgid ""
 "Error while fetching session configuration:\n"
@@ -1125,8 +1138,8 @@ msgid ""
 "There are multiple sessions available, please select one or click New to "
 "create a session."
 msgstr ""
-"Доступно несколько сессий. Выберите одну или нажмите «Новая» для "
-"создания новой сессии."
+"Доступно несколько сессий. Выберите одну или нажмите «Новая» для создания "
+"новой сессии."
 
 #: ResumeDialog_symbols.h:24
 msgid "Refresh"
@@ -1224,6 +1237,11 @@ msgstr "Обновить список сессий"
 msgid "Help"
 msgstr "Помощь"
 
+#: SessionAdmin_symbols.h:37
+#, fuzzy
+msgid "About RX Client ..."
+msgstr "О RX Client"
+
 #: SessionAdmin_symbols.h:38
 msgid "New NX session"
 msgstr "Новая NX сессия"
@@ -1319,7 +1337,7 @@ msgstr "Нет доступного сервера CUPS."
 msgid "Select System CUPS daemon"
 msgstr "Выберите системный сервер CUPS"
 
-#: SessionProperties.cpp:2050 opennxApp.cpp:1323
+#: SessionProperties.cpp:2050 opennxApp.cpp:1341
 msgid "libusb is not available. No USB devices will be exported"
 msgstr "libusb не доступна. USB устройства не смогут быть проброшены."
 
@@ -1975,34 +1993,34 @@ msgstr "Отправить XDM-запрос"
 msgid "Get a list of available X desktop managers"
 msgstr "Получить список доступных X-серверов"
 
-#: opennxApp.cpp:270
+#: opennxApp.cpp:272
 msgid "Launch NX Session"
 msgstr "Запустить сессию NX"
 
-#: opennxApp.cpp:337
+#: opennxApp.cpp:339
 msgid "Could not create link on Desktop."
 msgstr "Не удалось создать ярлык на рабочем столе."
 
-#: opennxApp.cpp:440
+#: opennxApp.cpp:442
 msgid "Could not get PATH environment"
 msgstr "Не удалось получить переменную окружения PATH"
 
-#: opennxApp.cpp:455
+#: opennxApp.cpp:457
 #, c-format
 msgid "Could not find %s in PATH"
 msgstr "%s не найдена в PATH"
 
-#: opennxApp.cpp:465
+#: opennxApp.cpp:467
 #, c-format
 msgid "Could not stat %s"
 msgstr "Не удалось зафиксировать %s"
 
-#: opennxApp.cpp:471
+#: opennxApp.cpp:473
 #, c-format
 msgid "Could not read link %s"
 msgstr "Не удалось прочитать ссылку %s"
 
-#: opennxApp.cpp:820 watchReaderApp.cpp:125 watchUsbIpApp.cpp:216
+#: opennxApp.cpp:825 watchReaderApp.cpp:125 watchUsbIpApp.cpp:216
 msgid ""
 "\n"
 "\n"
@@ -2012,83 +2030,92 @@ msgstr ""
 "\n"
 "Поддерживаемые тэги трассировки: "
 
-#: opennxApp.cpp:823
+#: opennxApp.cpp:828
 msgid "Automatically login to the specified session."
 msgstr "Автоматически входить в указанную сессию"
 
-#: opennxApp.cpp:825
+#: opennxApp.cpp:830
+msgid "Disable changing session by user."
+msgstr ""
+
+#: opennxApp.cpp:832
 msgid "Automatically resume/takeover a session with the same name."
 msgstr "Автоматически возобновлять сессию с таким же названием."
 
-#: opennxApp.cpp:827
+#: opennxApp.cpp:834
 msgid "Automatically destroy error dialogs at termination."
 msgstr "Автоматически закрыть диалоги об ошибках при завершении."
 
-#: opennxApp.cpp:829
+#: opennxApp.cpp:836
+#, fuzzy
+msgid "Run autologin in silent mode."
+msgstr "Запустить в режиме dialog."
+
+#: opennxApp.cpp:838
 msgid "Start the session administration tool."
 msgstr "Запустить утилиту администрирования сессий."
 
-#: opennxApp.cpp:831
+#: opennxApp.cpp:840
 msgid "Specify alternate CA cert for fetching configuration via https."
 msgstr "Указать другой CA-сертификат для получения настроек по https."
 
-#: opennxApp.cpp:833
+#: opennxApp.cpp:842
 msgid "Specify window title for dialog mode."
 msgstr "Заголовок окна в dialog режиме."
 
-#: opennxApp.cpp:835
+#: opennxApp.cpp:844
 msgid "Specify dialog style for dialog mode."
 msgstr "Стиль диалога в dialog режиме."
 
-#: opennxApp.cpp:837
+#: opennxApp.cpp:846
 msgid "Run in dialog mode."
 msgstr "Запустить в режиме dialog."
 
-#: opennxApp.cpp:839
+#: opennxApp.cpp:848
 msgid "Compatibility option for dialog mode (ignored)."
 msgstr "Режим совместимости для dialog режима (игнорируется)."
 
-#: opennxApp.cpp:841
+#: opennxApp.cpp:850
 msgid "Export builtin GUI resources to zip file and exit."
 msgstr ""
 
-#: opennxApp.cpp:843
+#: opennxApp.cpp:852
 msgid "Dialog mode proxy."
 msgstr "Прокси dialog режима."
 
-#: opennxApp.cpp:845
+#: opennxApp.cpp:854
 msgid "Specify message for dialog mode."
 msgstr "Сообщение для dialog режима."
 
-#: opennxApp.cpp:847
+#: opennxApp.cpp:856
 msgid "Specify parent PID for dialog mode."
 msgstr "PID родительского процесса для dialog режима."
 
-#: opennxApp.cpp:849
+#: opennxApp.cpp:858
 msgid "Run a session importing configuration settings from FILENAME."
 msgstr "Запустить сессию <str>."
 
-#: opennxApp.cpp:851
+#: opennxApp.cpp:860
 msgid "Specify window-ID for dialog mode."
 msgstr "Window-ID для запуска в dialog режиме."
 
-#: opennxApp.cpp:853 watchReaderApp.cpp:132 watchUsbIpApp.cpp:225
+#: opennxApp.cpp:862 watchReaderApp.cpp:132 watchUsbIpApp.cpp:225
 msgid "Specify wxWidgets trace mask."
 msgstr "Укажите маску трассировки wxWidgets."
 
-#: opennxApp.cpp:856
+#: opennxApp.cpp:865
 msgid "Test CardWaiterDialog"
 msgstr "Протестировать CardWaiterDialog"
 
-#: opennxApp.cpp:859
+#: opennxApp.cpp:868
 msgid "Guide the user through the steps to configure a session."
 msgstr "Руководит пользователем во время конфигурирования сессии."
 
-#: opennxApp.cpp:927 watchReaderApp.cpp:270
+#: opennxApp.cpp:936 watchReaderApp.cpp:270
 msgid "Smart card removed"
 msgstr "Смарт-карта удалена"
 
-#: opennxApp.cpp:929 watchReaderApp.cpp:269
+#: opennxApp.cpp:938 watchReaderApp.cpp:269
 msgid ""
 "RX Client session has been suspended, because\n"
 "the authenticating smart card has been removed."
@@ -2096,16 +2123,16 @@ msgstr ""
 "Сессия RX Client была приостановлена,\n"
 "потому что была вытащена смарт-карта."
 
-#: opennxApp.cpp:1337
+#: opennxApp.cpp:1355
 msgid "USBIP tunnel registration timeout"
 msgstr "Тайм-аут регистрации туннеля USBIP"
 
-#: opennxApp.cpp:1341
+#: opennxApp.cpp:1359
 #, c-format
 msgid "Unable to export USB device %s"
 msgstr "Не удалось экспортировать USB устройство '%s'"
 
-#: opennxApp.cpp:1347
+#: opennxApp.cpp:1365
 msgid "Could not connect to usbipd2. No USB devices will be exported"
 msgstr ""
 "Не удалось подключиться к usbipd2. USB устройства не будут экспортированы"
@@ -2122,7 +2149,7 @@ msgstr "Включить удалённую отладку"
 msgid "E&xit"
 msgstr "&Выход"
 
-#: tracelogApp.cpp:249
+#: tracelogApp.cpp:247
 msgid "RX Client"
 msgstr "RX Client"
 
@@ -2142,48 +2169,34 @@ msgstr "NX SessionID для слежения."
 msgid "Path of session config file."
 msgstr "Путь к конфигурационному файлу сессии."
 
-#: watchUsbIpApp.cpp:342
+#: watchUsbIpApp.cpp:340
 msgid "An empty session ID is not allowed"
 msgstr "Пустой ID сессии не допускается"
 
-#: watchUsbIpApp.cpp:347
+#: watchUsbIpApp.cpp:345
 msgid "Could not load session config file"
 msgstr "Не удалось загрузить конфигурационный файл сессии"
 
-#: watchUsbIpApp.cpp:373
+#: watchUsbIpApp.cpp:371
 msgid "Could not register at usbipd2! No hotplugging functionality."
 msgstr "Не удалось зарегистрироваться на usbipd2! Нет функции автоопределения."
 
-#: watchUsbIpApp.cpp:380
+#: watchUsbIpApp.cpp:378
 msgid "Could not connect to usbipd2! No hotplugging functionality."
 msgstr "Не удалось подключиться к usbipd2! Нет функции автоопределения."
 
-#: watchUsbIpApp.cpp:433
+#: watchUsbIpApp.cpp:431
 msgid "Got hotplug event, but device is not available in libusb"
 msgstr "Получено событие автоопределения, но устройство в libusb отсутствует"
 
-#: watchUsbIpApp.cpp:441
+#: watchUsbIpApp.cpp:439
 msgid "Could not send hotplug response"
 msgstr "Не удалось отправить ответ автоопределения"
 
-#: watchUsbIpApp.cpp:497
+#: watchUsbIpApp.cpp:495
 msgid "Could not save session config"
 msgstr "Не удалось сохранить конфигурацию сессии"
 
-#: watchUsbIpApp.cpp:506
+#: watchUsbIpApp.cpp:504
 msgid "Could not export USB device"
 msgstr "Не удалось экспортировать USB устройство"
-
-#~ msgid ""
-#~ "Found a CUPS daemon binary in %s, however it is not executable.\n"
-#~ "In order to use CUPS printing, you need to fix its permissions."
-#~ msgstr ""
-#~ "В %s найден демон CUPS , однако он не исполняемый.\n"
-#~ "Вы должны исправить его права, чтобы печатать через CUPS."
-
-#~ msgid ""
-#~ "Could not find any CUPS daemon binary.\n"
-#~ "In order to use CUPS printing, you need to install cups."
-#~ msgstr ""
-#~ "Не найдено ни одного исполняемого файла демона CUPS.\n"
-#~ "Вы должны установить cups, чтобы печатать через службу CUPS."

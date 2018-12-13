@@ -91,6 +91,8 @@ public:
     long GetPID();
     void Detach();
 
+    wxString getSpecialErrorMessage( const wxString& txt ) const;
+
 private:
     typedef enum {
         TypeNone,

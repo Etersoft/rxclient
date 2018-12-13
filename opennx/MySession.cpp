@@ -799,9 +799,14 @@ MySession::OnSshEvent(wxCommandEvent &event)
                 d.ShowConditional(cfgid.Append(msg.Left(15)), wxID_OK);
             }
             break;
+
         case MyIPC::ActionError:
-            wxLogError(msg);
-            m_bGotError = true;
+            {
+                  m_bGotError = true;
+//                wxLogError(msg);
+                  wxMessageDialog d(m_pParent, msg, _("Connection error"), wxOK|wxICON_ERROR);
+                  d.ShowModal();
+            }
             break;
         case MyIPC::ActionPromptYesNo:
             {
@@ -1054,6 +1059,7 @@ MySession::OnSshEvent(wxCommandEvent &event)
             }
             break;
         case MyIPC::ActionTerminated:
+
             if ((m_eConnectState <= STATE_PARSE_SESSIONS) && (!m_bGotError) && (!m_bRemoveKey) && (m_sOffendingKey.IsEmpty())) {
                 msg = _("Unexpected termination of nxssh");
                 wxLogError(msg);
