@@ -54,6 +54,7 @@
 #include "SupressibleMessageDialog.h"
 #include "PulseAudio.h"
 #include "FakeModule.h"
+#include "MyMessageDialog.h"
 
 #include <wx/filename.h>
 #include <wx/regex.h>
@@ -804,7 +805,8 @@ MySession::OnSshEvent(wxCommandEvent &event)
             {
                   m_bGotError = true;
 //                wxLogError(msg);
-                  wxMessageDialog d(m_pParent, msg, _("Connection error"), wxOK|wxICON_ERROR);
+                  // special message dialog located under the parent window
+                  MyMessageDialog d(m_pParent, msg, _("Connection error"), wxOK|wxICON_ERROR);
                   d.ShowModal();
             }
             break;

@@ -37,6 +37,7 @@ class ConnectDialog;
 class MyIPC;
 class SessionWatch;
 class MyXmlConfig;
+class MyMessageDialog;
 
 class MySession : public wxEvtHandler
 {
