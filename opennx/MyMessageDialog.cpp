@@ -40,6 +40,9 @@ MyMessageDialog::~MyMessageDialog()
 void MyMessageDialog::Create( wxWindow *parent,
                              const wxString &text, const wxString &title, long style)
 {
+    wxPoint p_pos = parent->GetScreenPosition();
+    wxSize p_sz = parent->GetSize();
+
     int border = 10;
 
     wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
@@ -65,15 +68,21 @@ void MyMessageDialog::Create( wxWindow *parent,
         break;
     }
 
-   wxBitmap bmp = wxArtProvider::GetBitmap(aID, wxART_MESSAGE_BOX);
+    wxBitmap bmp = wxArtProvider::GetBitmap(aID, wxART_MESSAGE_BOX);
+    wxStaticBitmap* sbmp = new wxStaticBitmap(this, wxID_ANY, bmp, wxDefaultPosition, wxDefaultSize, 0);
 
     hbox1->Add(
-          new wxStaticBitmap(this, wxID_ANY, bmp, wxDefaultPosition, wxDefaultSize, 0),
+          sbmp,
           0, wxLEFT | wxTOP, 0
     );
 
+    wxSize bmp_sz = sbmp->GetSize();
+    wxSize txt_sz = wxDefaultSize;
+
+    txt_sz.SetWidth( p_sz.GetWidth() - 3*border - bmp_sz.GetWidth() );
+
     hbox1->Add(
-          new wxStaticText( this, -1, text, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE ),
+          new wxStaticText( this, -1, text, wxDefaultPosition, txt_sz, wxTE_MULTILINE ),
           1, wxLEFT, border
     );
 
@@ -86,9 +95,6 @@ void MyMessageDialog::Create( wxWindow *parent,
     vbox->Add(-1, border);
 
     SetSizerAndFit(vbox);
-
-    wxPoint p_pos = parent->GetScreenPosition();
-    wxSize p_sz = parent->GetSize();
 
     wxPoint dlgpos = p_pos;
     dlgpos.y = dlgpos.y + p_sz.GetHeight();

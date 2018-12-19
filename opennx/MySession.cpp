@@ -805,6 +805,11 @@ MySession::OnSshEvent(wxCommandEvent &event)
             {
                   m_bGotError = true;
 //                wxLogError(msg);
+
+                  // hide Connection Dialog
+                  if( m_pDlg )
+                      m_pDlg->Hide();
+
                   // special message dialog located under the parent window
                   MyMessageDialog d(m_pParent, msg, _("Connection error"), wxOK|wxICON_ERROR);
                   d.ShowModal();
