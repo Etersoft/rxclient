@@ -1,2 +1,3 @@
 tar: opennx base=rxclient-@version@
 copy: rxclient.conf
+copy: *.patch
