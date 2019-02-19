@@ -302,6 +302,8 @@ static bool addDeviceInfo( const USBInfo& u )
         return false;
 
     dbDeviceInfo[u.key()] = u;
+    
+    return true;
 }
 // ----------------------------------------------------------------------------
 static USBInfo findDeviceInfo( const wxString &vendorID, const wxString &deviceID )
