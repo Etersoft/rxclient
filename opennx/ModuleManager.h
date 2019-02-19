@@ -16,7 +16,6 @@ private:
     ModulesMap modules;
 
     ModuleManager(ModuleManager const&) {} //delete
-    ModuleManager& operator= (ModuleManager const&) {} //delete
 public:
 
     static ModuleManager& instance();
