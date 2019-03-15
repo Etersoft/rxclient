@@ -6,6 +6,8 @@ DIST_SUBDIRS = po docs packaging/win32 packaging/MacOSX
 
 noinst_PROGRAMS = pulsetest $(TESTXAUTH) $(MACTESTKBD)
 
+bin_SCRIPTS = rxclient-report
+
 bin_PROGRAMS = rxclient pconnect $(TRACELOG) $(WATCHREADER) \
 	       $(MACFINDREADER) $(MACUNINSTALL)
 

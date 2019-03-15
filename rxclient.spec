@@ -75,6 +75,7 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 
 %files -f %name.lang
 %_bindir/%name
+%_bindir/%name-report
 %_bindir/nxssh.sh
 %_bindir/pconnect
 %_bindir/watchreader
