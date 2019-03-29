@@ -6,7 +6,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt1.M70C.11
+Release: alt1.M70C.12
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -116,6 +116,11 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Fri Mar 29 2019 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.12
+- added special error message (eterbug #13484)
+- (c7): special error message dialog located under the parent window eterbug #13507
+- (c7): added limit for width of error message, hide connection dialog (eterbug #13507)
+
 * Thu Oct 25 2018 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.11
 - (c7): disabled default settings for timeout (for ssh)
 
