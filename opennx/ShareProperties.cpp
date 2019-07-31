@@ -485,6 +485,8 @@ void ShareProperties::OnOkClick( wxCommandEvent& event )
                 sg[m_iCurrentShare].m_sPassword = m_sSmbPrintPassword;
                 if (nPrinters > 0)
                     askForDefault(sg, sg[m_iCurrentShare]);
+                else
+                    sg[m_iCurrentShare].m_bDefault = true;
                 break;
             case SharedResource::SHARE_CUPS_PRINTER:
                 sg[m_iCurrentShare].m_sUsername = wxGetUserId();
@@ -492,6 +494,8 @@ void ShareProperties::OnOkClick( wxCommandEvent& event )
                 sg[m_iCurrentShare].m_bPublic = m_bCupsPublic;
                 if (nPrinters > 0)
                     askForDefault(sg, sg[m_iCurrentShare]);
+                else
+                    sg[m_iCurrentShare].m_bDefault = true;
                 break;
         }
         m_pCfg->aSetShareGroups(sg);
@@ -520,6 +524,8 @@ void ShareProperties::OnOkClick( wxCommandEvent& event )
                 g.m_sPassword = m_sSmbPrintPassword;
                 if (nPrinters > 0)
                     askForDefault(sg, g);
+                else
+                    g.m_bDefault = true;
                 break;
             case SharedResource::SHARE_CUPS_PRINTER:
                 g.m_sUsername = wxGetUserId();
@@ -527,6 +533,8 @@ void ShareProperties::OnOkClick( wxCommandEvent& event )
                 g.m_bPublic = m_bCupsPublic;
                 if (nPrinters > 0)
                     askForDefault(sg, g);
+                else
+                    g.m_bDefault = true;
                 break;
         }
         sg.Add(g);
