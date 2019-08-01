@@ -6,7 +6,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt1.M70C.12
+Release: alt1.M70C.13
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -116,6 +116,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Aug 01 2019 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.13
+- set first shared printer as default (eterbug #14094)
+
 * Fri Mar 29 2019 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.12
 - added special error message (eterbug #13484)
 - (c7): special error message dialog located under the parent window eterbug #13507
