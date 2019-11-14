@@ -48,7 +48,7 @@ encodeString(const wxString &s)
         ret = wxT(":");
         for (i = 0; i < s.Length(); i++)
 #if wxCHECK_VERSION(2,9,0)
-            ret += wxString::Format(wxT("%d:"), s[i].GetValue() + i + 1);
+           ret += wxString::Format(wxT("%d:"),  s[i].GetValue() + (int) i + 1);
 #else
             ret += wxString::Format(wxT("%d:"), (int) s[i] + (int) i + 1);
 #endif
