@@ -16,8 +16,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %oname-%version.tar
 Source1: rxclient.conf
 
-Patch0:  %name-g++8.patch
-
 # Automatically added by buildreq on Sat Sep 19 2009
 BuildRequires: gcc-c++ imake libSM-devel libXmu-devel
 BuildRequires: libopensc-devel libsmbclient-devel
@@ -42,7 +40,6 @@ RX Client is a NX 3.5 compatible client based on OpenNX code.
 
 %prep
 %setup
-%patch0 -p2
 
 %build
 %autoreconf
