@@ -1,8 +1,8 @@
 %define oname opennx
 
 Name: rxclient
-Version: 1.0.0
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -87,6 +87,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Mon Nov 18 2019 Konstantin Kondratyuk <kondratyuk@altlinux.org> 1.0.1-alt1
+- fix assert during saving password (eterbug #13646)
+
 * Wed Feb 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.0-alt2
 - no return statement in the non-void function fixed (according g++8)
 
