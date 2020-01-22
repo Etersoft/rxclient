@@ -503,7 +503,7 @@ void ShareProperties::OnOkClick( wxCommandEvent& event )
 
         g.m_eType = res->sharetype;
         g.m_sShareName = res->name;
-        g.m_sGroupName = wxString::Format(wxT("Share%d"), sg.GetCount());
+        g.m_sGroupName = wxString::Format(wxT("Share%ld"), sg.GetCount());
         g.m_bDefault = false;
         switch (res->sharetype) {
             case SharedResource::SHARE_UNKNOWN:
