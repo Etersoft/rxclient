@@ -6,7 +6,7 @@
 
 Name: rxclient
 Version: 0.18
-Release: alt1.M70C.13
+Release: alt1.M81C.13
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -116,6 +116,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Sun Oct 18 2020 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M81C.13
+- build for c8.1
+
 * Thu Aug 01 2019 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M70C.13
 - set first shared printer as default (eterbug #14094)
 
