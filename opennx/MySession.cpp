@@ -2246,8 +2246,8 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         nxsshcmd << wxT(" -p ") << m_pCfg->iGetServerPort()
             << wxT(" -o 'RhostsAuthentication no'")
             << wxT(" -o 'PasswordAuthentication no'")
-            << wxT(" -o 'RSAAuthentication no'")
-            << wxT(" -o 'RhostsRSAAuthentication no'")
+            << wxT(" -o 'UserKnownHostsFile /dev/null'")
+            << wxT(" -o 'StrictHostKeyChecking no'")
             << wxT(" -o 'PubkeyAuthentication yes'");
 
         // get users options for nxssh
