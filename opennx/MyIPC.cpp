@@ -730,6 +730,10 @@ MyIPC::OnErrReceived(wxCommandEvent &event)
                             break;
                         }
                         if (msg.Contains(wxT("Warning:"))) {
+                            // Turn off message about adding host key in known_hosts
+                            if (msg.StartsWith(wxT("Warning: Permanently added"))) {
+                                break;
+                            }
                             upevent.SetString(msg.Mid(8));
                             upevent.SetInt(ActionWarning);
                             sendUpEvent(upevent);
