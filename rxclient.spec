@@ -1,7 +1,7 @@
 %define oname opennx
 
 Name: rxclient
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
@@ -87,6 +87,11 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Sun Feb 20 2022 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
+- fix assertion during add cups printer (eterbug #14390)
+- change nxssh prompt options for disable ssh host key checking
+- turn off message about adding ssh host key in known_hosts
+
 * Mon Nov 18 2019 Konstantin Kondratyuk <kondratyuk@altlinux.org> 1.0.1-alt1
 - fix assert during saving password (eterbug #13646)
 
