@@ -2225,6 +2225,19 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         wxString nxsshcmd = fn.GetShortPath();
         nxsshcmd << appendcmd;
         nxsshcmd << wxT(" -nx -x -2");
+
+        // Ports tunneling (eterbug #15556)
+        if (m_pCfg->bGetUseCups()) {
+            nxsshcmd << wxT(" -R 4631:localhost:631");
+        }
+        if (m_pCfg->bGetEnableSmbSharing()) {
+            nxsshcmd << wxT(" -R 4445:localhost:445");
+        }
+
+        if (m_pCfg->bGetEnableSharedSmartCard()) {
+            nxsshcmd << wxT(" -R /tmp/.pcscd.comm:/var/run/pcscd/pcscd.comm");
+        }
+
         switch (m_pCfg->eGetLoginType()) {
             case MyXmlConfig::LOGIN_KERBEROS:
                 nxsshcmd << wxT(" -K");
