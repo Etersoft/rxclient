@@ -1799,6 +1799,10 @@ MySession::startProxy()
 MySession::getActiveCupsPrinters()
 {
     ArrayOfShareGroups ret;
+
+    // HACK: disable using printers list for forwarding (eterbug #15556)
+    return ret;
+
     if (!m_pCfg->bGetUseCups())
         return ret;
     CupsClient cc;
