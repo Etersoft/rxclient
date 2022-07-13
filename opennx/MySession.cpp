@@ -1881,7 +1881,7 @@ MySession::prepareCups()
         }
     }
     wxConfigBase::Get()->Write(wxT("Config/CupsPort"), cupsport);
-    ::myLogTrace(MYTRACETAG, wxT("Check for cupsd running at port %d"), cupsport);
+    ::myLogTrace(MYTRACETAG, wxT("Check for cupsd running at port %ld"), cupsport);
     if (isCupsRunning())
         return true;
 

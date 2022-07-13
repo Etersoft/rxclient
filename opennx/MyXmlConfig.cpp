@@ -2337,7 +2337,7 @@ MyXmlConfig::SaveToFile()
         iAddOption(g, wxT("Share number"), m_iUsedShareGroups);
         wxString sDefaultPrinter = wxEmptyString;
         for (i = 0; i < m_aUsedShareGroups.GetCount(); i++) {
-            optval = wxString::Format(wxT("Share%d"), i);
+            optval = wxString::Format(wxT("Share%ld"), i);
             sAddOption(g, optval, m_aUsedShareGroups[i]);
             switch (findShare(optval).m_eType) {
                 case SharedResource::SHARE_UNKNOWN:
