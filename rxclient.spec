@@ -1,7 +1,7 @@
 %define oname opennx
 
 Name: rxclient
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
@@ -87,6 +87,10 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Wed Jul 13 2022 Konstantin Kondratyuk <kondratyuk@altlinux.org> 1.0.4-alt1
+- fix assertions by using d for long in strings
+- hack for disable using printers list for forwarding (eterbug #15556)
+
 * Fri Jul 08 2022 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
 - ports tunneling during main nxssh connection (eterbug #15556)
 
