@@ -1,7 +1,7 @@
 %define oname opennx
 
 Name: rxclient
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
@@ -87,6 +87,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Mon Jan 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.5-alt1
+- add --noprogressbar option for disable progress bar during connection
+
 * Wed Jul 13 2022 Konstantin Kondratyuk <kondratyuk@altlinux.org> 1.0.4-alt1
 - fix assertions by using d for long in strings
 - hack for disable using printers list for forwarding (eterbug #15556)
