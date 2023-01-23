@@ -107,6 +107,7 @@ IMPLEMENT_APP(opennxApp);
     ,m_bAutoResume(false)
     ,m_bKillErrors(false)
     ,m_bSilent(false)
+    ,m_bNoProgressBar(false)
     ,m_bNoGui(false)
     ,m_pLoginDialog(NULL)
 {
@@ -815,6 +816,8 @@ void opennxApp::OnInitCmdLine(wxCmdLineParser& parser)
             _("Automatically destroy error dialogs at termination."));
     parser.AddSwitch(wxEmptyString, wxT("silent"),
             _("Run autologin in silent mode."));
+    parser.AddSwitch(wxEmptyString, wxT("noprogressbar"),
+            _("Turn progress bar during connection."));
     parser.AddSwitch(wxEmptyString, wxT("admin"),
             _("Start the session administration tool."));
     parser.AddOption(wxEmptyString, wxT("cacert"),
@@ -856,10 +859,10 @@ void opennxApp::OnInitCmdLine(wxCmdLineParser& parser)
     // between option and option-value. The original however
     // *requires* the separator to be a space instead.
 #ifdef __WXMSW__
-    wxRegEx re(wxT("^--((exportres)|(cacert)|(caption)|(style)|(dialog)|(display)|(message)|(parent)|(session)|(window)|(trace)|(silent))$"));
+    wxRegEx re(wxT("^--((exportres)|(cacert)|(caption)|(style)|(dialog)|(display)|(message)|(parent)|(session)|(window)|(trace))$"));
 #else
     // On Unix, --display is a toolkit option
-    wxRegEx re(wxT("^--((exportres)|(cacert)|(caption)|(style)|(dialog)|(message)|(parent)|(session)|(window)|(trace)|(silent))$"));
+    wxRegEx re(wxT("^--((exportres)|(cacert)|(caption)|(style)|(dialog)|(message)|(parent)|(session)|(window)|(trace))$"));
 #endif
 
 #if wxCHECK_VERSION(2,9,0)
@@ -1010,6 +1013,8 @@ bool opennxApp::OnCmdLineParsed(wxCmdLineParser& parser)
         m_bAutoLogin = true;
         m_bSilent = true;
     }
+    if (parser.Found(wxT("noprogressbar")))
+        m_bNoProgressBar = true;
     if (parser.Found(wxT("waittest")))
         m_bTestCardWaiter = true;
     (void)parser.Found(wxT("session"), &m_sSessionName);

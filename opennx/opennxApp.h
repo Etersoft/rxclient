@@ -60,6 +60,8 @@ class opennxApp : public wxApp
         bool AutoLogin() { return m_bAutoLogin; }
         bool ReadOnly() { return m_bConfigReadOnly; }
         bool Silent() { return m_bSilent; }
+        bool NoProgressBar() { return m_bNoProgressBar; }
+
         bool AutoResume() { return m_bAutoResume; }
 
         void SetRequireWatchReader(bool b) { m_bRequireWatchReader = b; }
@@ -126,6 +128,7 @@ class opennxApp : public wxApp
         bool m_bAutoResume;
         bool m_bKillErrors;
         bool m_bSilent;
+        bool m_bNoProgressBar;
         bool m_bNoGui;
         LoginDialog *m_pLoginDialog;
 
