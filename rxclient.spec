@@ -1,12 +1,13 @@
 #
 # Enable USBIP support
 %def_without usbip
+%add_optflags -Wno-unused-local-typedefs -Wno-return-type
 
 %define oname opennx
 
 Name: rxclient
 Version: 0.18
-Release: alt1.M81C.13
+Release: alt13.c9f2.14
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -58,7 +59,7 @@ RX Client is a NX 3.5 compatible client based on OpenNX code.
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std VERBOSE=1
 
 # install workaround for eterbug #11493
 install -D -m0755 bin/nxssh.sh %buildroot%_bindir/nxssh.sh
@@ -116,6 +117,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Mon Jun 19 2023 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt13.c9f2.14
+- build for c9f2
+
 * Sun Oct 18 2020 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt1.M81C.13
 - build for c8.1
 
