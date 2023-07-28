@@ -2226,7 +2226,12 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         m_pSshLog = new wxLogStream(log);
         wxLog::SetLogLevel(wxLOG_Max);
 
-        wxString nxsshcmd = fn.GetShortPath();
+        wxString nxsshcmd = wxT("");
+
+        if (wxGetApp().UserMode() && m_pCfg->eGetLoginType() == MyXmlConfig::LOGIN_PASSWORD)
+            nxsshcmd << wxT("/usr/bin/sshpass -p ") << m_pCfg->sGetSessionPassword() << wxT(" ");
+
+        nxsshcmd << fn.GetShortPath();
         nxsshcmd << appendcmd;
         nxsshcmd << wxT(" -nx -x -2");
 
@@ -2363,7 +2368,18 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         if (m_pCfg->bGetEnableSSL())
             nxsshcmd << wxT(" -B");
 
-        nxsshcmd << wxT(" -E") << wxT(" nx@") << m_pCfg->sGetServerHost();
+        nxsshcmd << wxT(" -E ");
+
+        if (wxGetApp().UserMode())
+            nxsshcmd << m_pCfg->sGetSessionUser();
+        else
+            nxsshcmd << wxT("nx");
+
+        nxsshcmd << wxT("@") << m_pCfg->sGetServerHost();
+
+        if (wxGetApp().UserMode())
+            nxsshcmd << wxT(" /usr/bin/nxserver-usermode");
+
         m_sHost = m_pCfg->sGetServerHost();
 
         wxString stmp;

@@ -108,6 +108,7 @@ IMPLEMENT_APP(opennxApp);
     ,m_bKillErrors(false)
     ,m_bSilent(false)
     ,m_bNoProgressBar(false)
+    ,m_bUserMode(false)
     ,m_bNoGui(false)
     ,m_pLoginDialog(NULL)
 {
@@ -818,6 +819,8 @@ void opennxApp::OnInitCmdLine(wxCmdLineParser& parser)
             _("Run autologin in silent mode."));
     parser.AddSwitch(wxEmptyString, wxT("noprogressbar"),
             _("Turn progress bar during connection."));
+    parser.AddSwitch(wxEmptyString, wxT("usermode"),
+            _("Use direct connection to server in usermode."));
     parser.AddSwitch(wxEmptyString, wxT("admin"),
             _("Start the session administration tool."));
     parser.AddOption(wxEmptyString, wxT("cacert"),
@@ -1015,6 +1018,8 @@ bool opennxApp::OnCmdLineParsed(wxCmdLineParser& parser)
     }
     if (parser.Found(wxT("noprogressbar")))
         m_bNoProgressBar = true;
+    if (parser.Found(wxT("usermode")))
+        m_bUserMode = true;
     if (parser.Found(wxT("waittest")))
         m_bTestCardWaiter = true;
     (void)parser.Found(wxT("session"), &m_sSessionName);
