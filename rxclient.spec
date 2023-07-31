@@ -1,12 +1,12 @@
 %define oname opennx
 
 Name: rxclient
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
 
-License: LGPL/GPL
+License: LGPLv2 AND GPLv2
 Group: Networking/Remote access
 Url: https://wiki.etersoft.ru/RX
 
@@ -35,8 +35,11 @@ Obsoletes: opennx
 # dynamic loading
 Requires: libcups libsmbclient
 
+# used in user mode
+Requires: sshpass
+
 %description
-RX Client is a NX 3.5 compatible client based on OpenNX code.
+RX@Etersoft Client is a NX 3.5 compatible client based on OpenNX code.
 
 %prep
 %setup
@@ -87,6 +90,10 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Mon Jul 31 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt1
+- Implement direct connection using nxserver-usermode.
+- add Requires: sshpass
+
 * Mon Jan 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.5-alt1
 - add --noprogressbar option for disable progress bar during connection
 
