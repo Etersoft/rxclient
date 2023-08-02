@@ -22,6 +22,7 @@ BuildRequires: libopensc-devel libsmbclient-devel
 BuildRequires: xorg-cf-files zip libcups-devel
 BuildRequires: libXau-devel
 BuildRequires: libwxGTK3.0-devel xxd
+BuildRequires: libpulseaudio-devel
 
 # due _ln_sr
 BuildRequires: rpm-build-intro >= 1.9.18
@@ -37,6 +38,9 @@ Requires: libcups libsmbclient
 
 # used in user mode
 Requires: sshpass
+
+# find-req don't want find libpulse!?
+Requires: libpulseaudio pulseaudio-daemon
 
 %description
 RX@Etersoft Client is a NX 3.5 compatible client based on OpenNX code.
