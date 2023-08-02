@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 1.0.6
-Release: alt1
+Release: alt2
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -90,6 +90,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Wed Aug 02 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.6-alt2
+- the first try of new PulseAudio sound forwarding
+
 * Mon Jul 31 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt1
 - Implement direct connection using nxserver-usermode.
 - add Requires: sshpass
