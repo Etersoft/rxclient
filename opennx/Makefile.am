@@ -31,7 +31,8 @@ rxclient_SOURCES = AboutDialog.cpp AsyncProcess.cpp LibOpenSC.cpp \
 	VncImageSettingsDialog.cpp VncPropertyDialog.cpp \
 	wxprec.cpp WinShare.cpp X11PropertyDialog.cpp xh_richtext.cpp \
 	MacOSX.c WrappedStatic.cpp SupressibleMessageDialog.cpp \
-	XdmPropertyDialog.cpp PCSCModule.cpp UsbIpModule.cpp ModuleManager.cpp
+	XdmPropertyDialog.cpp PCSCModule.cpp UsbIpModule.cpp ModuleManager.cpp \
+	PulsePortChecker.cpp
 
 noinst_HEADERS = AboutDialog.h AboutDialog_symbols.h AsyncProcess.h \
 	LibOpenSC.h CardWaiterDialog.h CardWaiterDialog_symbols.h \
@@ -61,12 +62,13 @@ noinst_HEADERS = AboutDialog.h AboutDialog_symbols.h AsyncProcess.h \
 	TraceLogRemote_symbols.h TraceLogRemote.h \
 	opensc/errors.h opensc/opensc.h opensc/scconf.h opensc/types.h opensc/pkcs15.h \
 	libsmbclient.h \
-	XdmPropertyDialog.h XdmPropertyDialog_symbols.h
+	XdmPropertyDialog.h XdmPropertyDialog_symbols.h PulsePortChecker.h
 
 pconnect_SOURCES = pconnect.c
 pconnect_LDADD = $(WS2LIB) $(RESLIB)
 
-pulsetest_SOURCES = pulseTest.cpp PulseAudio.cpp MyDynlib.cpp mylog.cpp osdep.c MacOSX.c
+pulsetest_SOURCES = pulseTest.cpp PulseAudio.cpp PulsePortChecker.cpp \
+	MyDynlib.cpp mylog.cpp osdep.c MacOSX.c
 pulsetest_LDADD = $(WX_LIBS) $(X_LIBS) $(X_PRE_LIBS) $(X_EXTRA_LIBS) $(APP_LDADD)
 pulsetest_CPPFLAGS = $(WX_CPPFLAGS) $(PLATFORM_INCLUDES) -DAPP_PULSETEST
 pulsetest_DEPENDENCIES = $(OPENNX_RES) $(PLATFORM_DEPENDENCIES)

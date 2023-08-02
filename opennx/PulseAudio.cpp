@@ -47,6 +47,7 @@
 #include <wx/wfstream.h>
 #include <wx/txtstrm.h>
 #include <wx/process.h>
+#include <wx/tokenzr.h>
 
 #ifdef APP_OPENNX
 # include "opennxApp.h"
@@ -82,6 +83,7 @@ typedef int (*Tpa_context_connect)(pa_context *, const char *, pa_context_flags_
 typedef void (*Tpa_context_disconnect)(pa_context *);
 typedef pa_operation* (*Tpa_context_drain)(pa_context *, pa_context_notify_cb_t, void *);
 typedef pa_context_state_t (*Tpa_context_get_state)(pa_context *);
+typedef pa_operation* (*Tpa_context_get_server_info)(pa_context *, pa_server_info_cb_t, void *);
 typedef pa_operation* (*Tpa_context_get_module_info_list)(pa_context *, pa_module_info_cb_t, void *);
 typedef pa_operation* (*Tpa_context_load_module)(pa_context *, const char*, const char *, pa_context_index_cb_t, void *);
 typedef pa_operation* (*Tpa_context_unload_module)(pa_context *, uint32_t, pa_context_success_cb_t, void *);
@@ -108,6 +110,7 @@ FPTR(pa_context_drain);
 FPTR(pa_context_get_state);
 FPTR(pa_context_unref);
 FPTR(pa_operation_unref);
+FPTR(pa_context_get_server_info);
 FPTR(pa_context_get_module_info_list);
 FPTR(pa_context_load_module);
 FPTR(pa_context_unload_module);
@@ -130,6 +133,7 @@ static int _set_pasyms(MyDynamicLibrary *dll) {
     LOADPTR(pa_context_get_state);
     LOADPTR(pa_context_unref);
     LOADPTR(pa_operation_unref);
+    LOADPTR(pa_context_get_server_info);
     LOADPTR(pa_context_get_module_info_list);
     LOADPTR(pa_context_load_module);
     LOADPTR(pa_context_unload_module);
@@ -167,6 +171,11 @@ class pawrapper {
         {
             m_bError = false;
             m_bConnected = false;
+#ifdef __WXMSW__
+            const char * server = "127.0.0.1";
+#else
+            const char * server = NULL;
+#endif
             m_pLoop = Ppa_threaded_mainloop_new();
             m_pApi = Ppa_threaded_mainloop_get_api(m_pLoop);
             m_pContext = Ppa_context_new(m_pApi, "RX Client");
@@ -187,26 +196,44 @@ class pawrapper {
 
         ~pawrapper()
         {
+#ifndef __WXMSW__
             if (m_bConnected)
                 Ppa_context_disconnect(m_pContext);
-            Ppa_threaded_mainloop_stop(m_pLoop);
-            Ppa_threaded_mainloop_free(m_pLoop);
+#endif
+            if (m_pLoop) {
+                Ppa_threaded_mainloop_stop(m_pLoop);
+                Ppa_threaded_mainloop_free(m_pLoop);
+            }
             if (NULL != m_pContext)
                 Ppa_context_unref(m_pContext);
         }
 
-        bool findmodule(const wxChar *name, wxString &args, unsigned int &index)
+        bool getdefaults(wxString &Sink, wxString &Source)
+        {
+            m_bComplete = false;
+            Ppa_operation_unref(Ppa_context_get_server_info(m_pContext, get_server_info_callback_if, this));
+            bool ret = waitcmd();
+            if (ret && m_bComplete) {
+                Sink = m_DefSink;
+                Source = m_DefSource;
+            }
+            return ret && m_bComplete;
+        }
+
+        bool findmodules(const wxChar *name, wxArrayString &indexes, wxArrayString &args)
+//        bool findmodule(const wxChar *name, wxString &args, unsigned int &index)
         {
             m_sStr = name;
             m_bSearch = true;
             m_bFound = false;
             m_bComplete = false;
             m_bError = false;
+            m_asIndexes.Empty(); m_asArgs.Empty();
             Ppa_operation_unref(Ppa_context_get_module_info_list(m_pContext, get_module_info_callback_if, this));
             bool ret = waitcmd();
             if (ret && m_bFound) {
-                args = m_sStr;
-                index = m_iIndex;
+                args = m_asArgs;
+                indexes = m_asIndexes;
             }
             return ret && m_bFound;
         }
@@ -319,6 +346,20 @@ class pawrapper {
             }
         }
 
+        void get_server_info_callback(pa_context *c, const pa_server_info *i)
+        {
+            if (!i) {
+                myLogTrace(MYTRACETAG, wxT("Failed to get server information: %s"), Ppa_strerror(Ppa_context_errno(c)));
+                m_bError = true;
+                m_pApi->quit(m_pApi, 0);
+                return;
+            }
+
+            wxString dsink(i->default_sink_name ? i->default_sink_name : "", wxConvUTF8);
+            wxString dsrc(i->default_source_name ? i->default_source_name : "", wxConvUTF8);
+            m_DefSink = dsink; m_DefSource = dsrc; m_bComplete = true;
+        }
+
         void get_module_info_callback(pa_context *c, const pa_module_info *i, int is_last)
         {
             if (is_last < 0) {
@@ -400,6 +441,12 @@ class pawrapper {
             static_cast<pawrapper *>(udata)->get_module_info_callback(c, i, last);
         }
 
+        static void get_server_info_callback_if(pa_context *c, const pa_server_info *i, void *udata) {
+            if (NULL == udata)
+                return;
+            static_cast<pawrapper *>(udata)->get_server_info_callback(c, i);
+        }
+
         static void context_state_callback_if(pa_context *c, void *udata) {
             if (NULL == udata)
                 return;
@@ -417,6 +464,10 @@ class pawrapper {
         pa_context *m_pContext;
         wxString m_sStr;
 
+        wxString m_DefSink;
+        wxString m_DefSource;
+        wxArrayString m_asIndexes;
+        wxArrayString m_asArgs;
 };
 
 # if defined(__WXMSW__) || defined(__WXMAC__)
@@ -443,11 +494,31 @@ bool PulseAudio::AutoSpawn()
     int papid;
     int retry = 3;
     // On windows and mac, we do our own autospawn
-    wxString piddir = wxGetHomeDir() + wxFileName::GetPathSeparator()
-        + wxT(".pulse") + wxFileName::GetPathSeparator()
+    wxString piddir = ::wxGetHomeDir() + wxFileName::GetPathSeparator()
+        + wxT(".config") + wxFileName::GetPathSeparator()
+        + wxT("pulse") + wxFileName::GetPathSeparator()
         + MachineID() + wxT("-runtime");
     wxString pidfile = piddir + wxFileName::GetPathSeparator() + wxT("pid");
+        wxString pacmd;
+        wxConfigBase::Get()->Read(wxT("Config/SystemNxDir"), &pacmd);
+        pacmd << wxFileName::GetPathSeparator() << wxT("bin")
+            << wxFileName::GetPathSeparator() << wxT("pulseaudio");
+#  ifdef __WXMSW__
+        pacmd << wxT(".exe --exit-idle-time=-1 --log-target=file:\"")
+            << ::wxGetHomeDir() << wxFileName::GetPathSeparator()
+            << wxT(".config") << wxFileName::GetPathSeparator()
+            << wxT("pulse") <<  wxFileName::GetPathSeparator()
+            << wxT("pa.log\"");
+#  endif
     do {
+#  ifdef __WXMSW__
+        ::myLogTrace(MYTRACETAG, wxT("PulseAudio::AutoSpawn: checking pulseaudio process"));
+        papid = getpidof("pulseaudio.exe");
+        if (papid != 0) {
+                myLogTrace(MYTRACETAG, wxT("PulseAudio::AutoSpawn: process %d is running"), papid);
+                return true;
+        }
+#  else
         ::myLogTrace(MYTRACETAG, wxT("PulseAudio::AutoSpawn: checking '%s'"), to_c_str(pidfile));
         wxFileInputStream sPid(pidfile);
         if (sPid.IsOk()) {
@@ -460,28 +531,25 @@ bool PulseAudio::AutoSpawn()
                 return true;
             }
         }
-
-        wxString pacmd;
-        wxConfigBase::Get()->Read(wxT("Config/SystemNxDir"), &pacmd);
-        pacmd << wxFileName::GetPathSeparator() << wxT("bin")
-            << wxFileName::GetPathSeparator() << wxT("pulseaudio");
-#  ifdef __WXMSW__
-        pacmd << wxT(".exe");
 #  endif
         ::myLogTrace(MYTRACETAG, wxT("PulseAudio::AutoSpawn: trying to start '%s'"), to_c_str(pacmd));
 #  ifdef __WXMSW__
-        CreateDetachedProcess((const char *)pacmd.mb_str());
-        // Don't report an error here, as CreateDetachedProcess may
-        // fail if pulseaudio is already running
+        wxProcess *nxpa = wxProcess::Open(pacmd,
+                                        wxEXEC_ASYNC|wxEXEC_MAKE_GROUP_LEADER);
+        wxThread::Sleep(100);
+        if (nxpa) {
+            nxpa->CloseOutput();
+            nxpa->Detach();
+        }
 #  else
-        wxExecute(pacmd, wxEXEC_ASYNC|wxEXEC_MAKE_GROUP_LEADER);
+        ::wxExecute(pacmd, wxEXEC_ASYNC|wxEXEC_MAKE_GROUP_LEADER);
 #  endif
-        wxThread::Sleep(500);
+        wxThread::Sleep(1000);
     } while (retry-- > 0);
     ::myLogTrace(MYTRACETAG, wxT("PulseAudio::AutoSpawn: spawn failed"));
     return false;
 # else
-    ::myLogTrace(MYTRACETAG, wxT("Not spawning pulseaudio on this platform"));
+    myLogTrace(MYTRACETAG, wxT("Not spawning pulseaudio on this platform"));
     return true;
 # endif // defined(__WXMSW__) || defined(__WXMAC__)
 #else
@@ -492,6 +560,7 @@ bool PulseAudio::AutoSpawn()
     PulseAudio::PulseAudio()
 : pa(NULL), dll(NULL), m_bPulseAvailable(false)
 {
+    m_iPortEsound = 0; m_iPortNative = 0;
 #ifdef WITH_PULSEAUDIO
     wxLogNull ignoreErrors;
     if (AutoSpawn()) {
@@ -532,40 +601,224 @@ bool PulseAudio::IsAvailable()
     return m_bPulseAvailable;
 }
 
+int PulseAudio::FoundModuleIDs(wxString modname, wxString s_argstpl,
+                                wxArrayString &a_indexes, wxArrayString &a_args,
+                                bool HardAccordance = false)
+{
+#ifdef WITH_PULSEAUDIO
+    wxRegEx re;
+    wxArrayString indexes, args_args; indexes.Empty(); args_args.Empty();
+    if (!pa->findmodules(modname.wc_str(), indexes, args_args))
+        return 0;
+    wxArrayString argstpl = ::wxStringTokenize(s_argstpl);
+    myLogTrace(MYTRACETAG, wxT("Found modules named %s (argstpl=%d): idx/args_args count  = %d/%d"),
+                to_c_str(modname),(int)argstpl.GetCount(),(int)indexes.GetCount(),
+                (int)args_args.GetCount());
+    //wxLogInfo(wxT("modename %s, s_argstpl %s, a_indexes %s, a_args %s"),
+    //            to_c_str(modname),(int)argstpl.GetCount(),(int)indexes.GetCount(),
+    //            (int)args_args.GetCount());
+    a_indexes.Empty(); a_args.Empty(); int c = 0;
+    for (int i = 0; i < indexes.GetCount(); i++)
+    {
+        if (argstpl.IsEmpty() && !HardAccordance) {
+            a_indexes.Add(indexes[i]); a_args.Add(args_args[i]); c++;
+            continue;
+        }
+        wxArrayString margs = ::wxStringTokenize(args_args[i]);
+#ifdef PA_ADEBUG
+        myLogTrace(MYTRACETAG, wxT("Checking mod[%s], in args = '%s';  count = %d "),
+                    to_c_str(indexes[i]), to_c_str(args_args[i]),(int)margs.GetCount());
+    //    wxLogInfo(MYTRACETAG, wxT("Checking mod[%s], in args = '%s';  count = %d "),
+    //                to_c_str(indexes[i]), to_c_str(args_args[i]),(int)margs.GetCount());
+#endif
+        if (HardAccordance && (argstpl.GetCount() != margs.GetCount()))
+            continue;
+        bool Accordance = true;
+        for (int j = 0; j < argstpl.GetCount(); j++) {
+#ifdef PA_ADEBUG
+            myLogTrace(MYTRACETAG, wxT("Checking template '%s'"), to_c_str(argstpl[j]));
+    //        wxLogInfo(MYTRACETAG, wxT("Checking template '%s'"), to_c_str(argstpl[j]));
+#endif
+            re.Compile(argstpl[j], wxRE_ADVANCED);
+            bool rfound = false;
+            for (int k = 0; k < margs.GetCount(); k++) {
+                rfound = re.Matches(margs[k]);
+#ifdef PA_ADEBUG
+                myLogTrace(MYTRACETAG, wxT("Checking arg '%s' -> res = %d"),
+                                                        to_c_str(margs[k]), rfound);
+        //        wxLogInfo(MYTRACETAG, wxT("Checking arg '%s' -> res = %d"),
+        //                                                to_c_str(margs[k]), rfound);
+#endif
+                if (rfound)
+                    break;
+            }
+            if (!rfound) {
+                Accordance = false; break;
+            }
+        }
+        if (Accordance) {
+            a_indexes.Add(indexes[i]); a_args.Add(args_args[i]); c++;
+        }
+    }
+    myLogTrace(MYTRACETAG, wxT("Matches %d modules named %s: idxs/args = %d/%d"),
+                c, to_c_str(modname), (int)a_indexes.GetCount(),(int)a_args.GetCount());
+    //wxLogInfo(MYTRACETAG, wxT("Matches %d modules named %s: idxs/args = %d/%d"),
+    //            c, to_c_str(modname), (int)a_indexes.GetCount(),(int)a_args.GetCount());
+    return c;
+#else
+    wxUnusedVar(modname);
+    wxUnusedVar(s_argstpl);
+    wxUnusedVar(HardAccordance);
+    return -1;
+#endif
+}
+
+bool PulseAudio::UnloadExistingModules(wxString modname, wxString s_argstpl,
+                                        bool HardAccordance = false)
+{
+    if (!m_bPulseAvailable)
+        return false;
+#ifdef WITH_PULSEAUDIO
+    wxArrayString mis,mas; mis.Empty(); mas.Empty();
+    bool res = true; bool res0;
+    if (FoundModuleIDs(modname,s_argstpl,mis,mas,HardAccordance) > 0) {
+        for (int i = 0; i < mis.GetCount(); i++) {
+            long  mid; mis[i].ToLong(&mid);
+            res0 = pa->unloadmodule(mid);
+            myLogTrace(MYTRACETAG, wxT("unloading %s module[%d] -> res = %d"),
+                        to_c_str(modname), (int)mid, (int)res);
+            res = res ? res0 : res;
+        }
+    }
+    return res;
+#else
+    wxUnusedVar(modname);
+    wxUnusedVar(s_argstpl);
+    wxUnusedVar(HardAccordance);
+    return false;
+#endif
+}
+
 bool PulseAudio::ActivateEsound(int port)
 {
     if (!m_bPulseAvailable)
         return false;
 #ifdef WITH_PULSEAUDIO
-    wxString ma;
-    unsigned int mi = -1;
-    if (pa->findmodule(wxT("module-esound-protocol-tcp"), ma, mi)) {
-        ::myLogTrace(MYTRACETAG, wxT("found esdmod, idx=%u args='%s'"), mi, to_c_str(ma));
-        long mport = 16001;
-        wxString laddr(wxT("0.0.0.0"));
-        wxRegEx rePort(wxT("port=(\\d+)"), wxRE_ADVANCED);
-        if (rePort.Matches(ma)) {
-            rePort.GetMatch(ma, 1).ToLong(&mport);
-            ::myLogTrace(MYTRACETAG, wxT("matched port arg p=%d"), mport);
-        }
-        wxRegEx reListen(wxT("listen=(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})"), wxRE_ADVANCED);
-        if (reListen.Matches(ma)) {
-            laddr = reListen.GetMatch(ma, 1);
-            ::myLogTrace(MYTRACETAG, wxT("matched listen arg a=%s"), to_c_str(laddr));
-        }
-        // Must disable cookie auth here, because esddsp runs on the NX server
-        // and we don't have access to the user's ~/.esd_auth on that machine.
-        if (ma.Contains(wxT("auth-anonymous=1")) && (mport == port) && (laddr.IsSameAs(wxT("0.0.0.0")) || laddr.IsSameAs(wxT("127.0.0.1"))))
-            return true;
-        ::myLogTrace(MYTRACETAG, wxT("unloading"));
-        if (!pa->unloadmodule(mi))
-            return false;
-    }
-    ::myLogTrace(MYTRACETAG, wxT("loading"));
-    return pa->loadmodule(wxT("module-esound-protocol-tcp"),
-            wxString::Format(wxT("auth-anonymous=1 port=%d listen=127.0.0.1"), port));
+    wxString mname = wxT("module-esound-protocol-tcp");
+    UnloadExistingModules(mname,wxT(""));
+    wxString ma = wxString::Format(wxT("port=%d"), port);
+    UnloadExistingModules(wxT("module-native-protocol-tcp"),ma);
+    ma.Append(wxString::Format(wxT(" listen=127.0.0.1 auth-anonymous=1"), port));
+    bool res = pa->loadmodule(mname,ma);
+    myLogTrace(MYTRACETAG, wxT("loading %s module -> res = %d"),
+                                        to_c_str(mname), res);
+    return res;
 #else
     wxUnusedVar(port);
     return false;
 #endif
 }
+bool PulseAudio::ActivateNative(int port, int rrate, bool mono)
+{
+    if (!m_bPulseAvailable)
+        return false;
+#ifdef WITH_PULSEAUDIO
+    UnloadExistingModules(wxT("module-esound-protocol-tcp"),wxT(""));
+    wxString mname = wxT("module-native-protocol-tcp");
+    wxString ma = wxString::Format(wxT("port=%d"), port);
+    wxArrayString mis,mas; bool res;
+    bool bNativeModulePort = (FoundModuleIDs(mname,ma,mis,mas) > 0);
+    wxString mname_fake = wxT("module-null-sink");
+    wxString mname_conn = wxT("module-loopback");
+    if (!bNativeModulePort) {
+        ma.Append(wxString::Format(wxT(" listen=127.0.0.1 auth-anonymous=1")));
+        res = pa->loadmodule(mname,ma);
+        myLogTrace(MYTRACETAG, wxT("loading %s module -> res = %d (args = '%s')"),
+                    to_c_str(mname), (int)res, to_c_str(ma));
+    }
+    //Strange indented if-statements but it works. Why?
+    if (!res) {
+        if (PulsePortChecker::isPortBusy(port))
+            return true;
+        return res;
+    }
+    wxString ma_fake = wxString::Format(wxT(" rate=%d channels=%s"),rrate,
+                                        mono ?wxT("1"):wxT("2"));
+    if ((rrate == 0) || (FoundModuleIDs(mname_fake,ma_fake,mis,mas) == 0)) {
+        wxString deltpl = wxT("(sink|sink_name|source)=(ts_sender|ts_receiver)");
+        UnloadExistingModules(mname_conn,deltpl);
+        UnloadExistingModules(mname_fake,deltpl);
+        if (rrate == 0)
+            return res;
+    }
+#ifndef __WXMSW__
+    wxString dsi,dso; dsi.Empty(); dso.Empty();
+    pa->getdefaults(dsi,dso);
+    myLogTrace(MYTRACETAG, wxT("Get defaults: Sink ='%s'; Source ='%s'"),
+                    to_c_str(dsi), to_c_str(dso));
+    if ((dsi.IsEmpty()) || (dso.IsEmpty()))
+        return true; // modules for resample are optional now
+#else
+    // on win we check availability of sink and source only
+    // because old resample scheme not work
+    // on systems >=w7 is necessary try to load sink and source
+    // separately since audio devices are present according to
+    // speakers/headset/microphone connect status
+    // Also these modules always must be reloaded in case
+    // recent jacks reconnection
+    bool IsSink, IsSource;
+    mname = wxT("module-waveout");
+    ma = wxT("sink_name=output");
+    UnloadExistingModules(mname,ma);
+    ma.Append(wxT(" record=0"));
+    IsSink = pa->loadmodule(mname,ma);
+    myLogTrace(MYTRACETAG, wxT("loading %s module -> res = %d (args = '%s')"),
+                to_c_str(mname), (int)IsSink, to_c_str(ma));
+    ma = wxT("source_name=input");
+    UnloadExistingModules(mname,ma);
+    ma.Append(wxT(" playback=0"));
+    IsSource = pa->loadmodule(mname,ma);
+    myLogTrace(MYTRACETAG, wxT("loading %s module -> res = %d (args = '%s')"),
+                to_c_str(mname), (int)IsSource, to_c_str(ma));
+    res = (IsSink || IsSource);
+    return res;
+#endif
+
+#ifndef __WXMSW__
+    ma = wxT("sink_name=ts_sender") + ma_fake;
+    if (!FoundModuleIDs(mname_fake,wxT("sink_name=ts_sender"),mis,mas)) {
+        res = pa->loadmodule(mname_fake,ma);
+        myLogTrace(MYTRACETAG, wxT("loading %s module -> res = %d (args = '%s')"),
+                    to_c_str(mname_fake), (int)res, to_c_str(ma));
+    }
+
+    ma = wxT("source=") + dso + wxT(" sink=ts_sender");
+    if (!FoundModuleIDs(mname_conn,wxT("sink=ts_sender"),mis,mas)) {
+        res = pa->loadmodule(mname_conn,ma);
+        myLogTrace(MYTRACETAG, wxT("loading %s module -> res = %d (args = '%s')"),
+                    to_c_str(mname_conn), (int)res, to_c_str(ma));
+    }
+
+    ma = wxT("sink_name=ts_receiver") + ma_fake;
+    if (!FoundModuleIDs(mname_fake,wxT("sink_name=ts_receiver"),mis,mas)) {
+        res = pa->loadmodule(mname_fake,ma);
+        myLogTrace(MYTRACETAG, wxT("loading %s module -> res = %d (args = '%s')"),
+                    to_c_str(mname_fake), (int)res, to_c_str(ma));
+    }
+
+    ma = wxT("source=ts_receiver.monitor sink=") + dsi;
+    if (!FoundModuleIDs(mname_conn,wxT("source=ts_receiver.monitor"),mis,mas)) {
+        res = pa->loadmodule(mname_conn,ma);
+        myLogTrace(MYTRACETAG, wxT("loading %s module -> res = %d (args = '%s')"),
+                    to_c_str(mname_conn), (int)res, to_c_str(ma));
+    }
+    return true;
+#endif
+#else
+    wxUnusedVar(port);
+    wxUnusedVar(rrate);
+    wxUnusedVar(mono);
+    return false;
+#endif
+}
+

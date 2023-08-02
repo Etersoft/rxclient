@@ -2243,6 +2243,10 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
             nxsshcmd << wxT(" -R 4445:localhost:445");
         }
 
+        if (m_pCfg->bGetEnableMultimedia()) {
+            nxsshcmd << wxT(" -R 44714:localhost:4714");
+        }
+
         if (m_pCfg->bGetEnableSharedSmartCard()) {
             nxsshcmd << wxT(" -R /tmp/.pcscd.comm:/var/run/pcscd/pcscd.comm");
         }
@@ -2486,9 +2490,16 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
                 if (m_lEsdPort < 0)
                     m_lEsdPort = getFirstFreePort(6000);
                 if (0 < m_lEsdPort) {
-                    wxLogInfo(wxT("Activating ESD Module in pulseaudio on port %ld"), m_lEsdPort);
-                    if (pa.ActivateEsound(m_lEsdPort)) {
-                        m_bEsdRunning = true;
+                    bool pa_started = false;
+                //if (m_pCfg->bGetEnableNativePA()) {
+                    wxLogInfo(wxT("Activating Native Module in pulseaudio on port %ld"), m_lEsdPort);
+                    pa_started = m_bEsdRunning = pa.ActivateNative(m_lEsdPort, 48000, false);
+                //} else {
+                //    wxLogInfo(wxT("Activating ESD Module in pulseaudio on port %ld"), m_lEsdPort);
+                //    pa_started = m_bEsdRunning = pa.ActivateEsound(m_lEsdPort);
+                //}
+                    if (pa_started) {
+                        wxLogInfo(wxT("PA is started on %ld"), m_lEsdPort);
                         wxConfigBase::Get()->Write(wxT("State/nxesdPort"), m_lEsdPort);
                         wxConfigBase::Get()->Write(wxT("State/nxesdPID"), -1);
                     } else {
