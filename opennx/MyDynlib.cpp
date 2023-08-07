@@ -43,6 +43,7 @@
 #include <wx/log.h>
 #include <wx/utils.h>
 #include <wx/tokenzr.h>
+#include <wx/filefn.h>
 
 #include "trace.h"
 ENABLE_TRACE;
@@ -64,8 +65,9 @@ bool MyDynamicLibrary::Load(const wxString& name, int flags /* = wxDL_DEFAULT */
         wxStringTokenizer t(ldpath, wxT(":"));
         while (t.HasMoreTokens()) {
             wxString abslib = t.GetNextToken() + wxFileName::GetPathSeparator() + name;
+            wxString sharedlib = FindSharedLib(abslib);
             ::myLogTrace(MYTRACETAG, wxT("Trying to load(%s 0x%0x)"), to_c_str(abslib), flags);
-            if (wxDynamicLibrary::Load(abslib, flags))
+            if (wxDynamicLibrary::Load(sharedlib, flags))
                 return true;
 #ifdef __WXMAC__
             if (!abslib.EndsWith(wxT(".dylib"))) {
@@ -92,4 +94,9 @@ bool MyDynamicLibrary::Load(const wxString& name, int flags /* = wxDL_DEFAULT */
     ::myLogTrace(MYTRACETAG, wxT("Failed to load %s"), to_c_str(name));
     return false;
 #endif
+}
+
+wxString MyDynamicLibrary::FindSharedLib(const wxString& name){
+    wxString find_pattern = name + ".so.?";
+    return wxFindFirstFile(find_pattern);
 }

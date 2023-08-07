@@ -34,6 +34,9 @@ class MyDynamicLibrary : public wxDynamicLibrary
         MyDynamicLibrary() : wxDynamicLibrary() {}
         MyDynamicLibrary(const wxString& name, int flags = wxDL_DEFAULT) : wxDynamicLibrary() { Load(name, flags); }
         bool Load(const wxString& name, int flags = wxDL_DEFAULT);
+
+    private:
+        wxString FindSharedLib(const wxString& name);
 };
 
 #endif
