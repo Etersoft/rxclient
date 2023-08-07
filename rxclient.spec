@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 1.0.6
-Release: alt3
+Release: alt4
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -94,6 +94,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Mon Aug 07 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.6-alt4
+- Find pulseaudio shared object
+
 * Wed Aug 02 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.6-alt3
 - add pulseaudio-devel Buildreq
 - add libpuse and pulseadio-daemon reqs
