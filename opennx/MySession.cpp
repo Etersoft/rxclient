@@ -2486,9 +2486,11 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
             PulseAudio pa;
             if (pa.IsAvailable()) {
                 wxLogInfo(wxT("using existing pulseaudio"));
-                m_lEsdPort = wxConfigBase::Get()->Read(wxT("State/nxesdPort"), -1);
+                // FIXME: Don't forget to bring back later
+                //m_lEsdPort = wxConfigBase::Get()->Read(wxT("State/nxesdPort"), -1);
+                m_lEsdPort = 4714;
                 if (m_lEsdPort < 0)
-                    m_lEsdPort = getFirstFreePort(6000);
+                    m_lEsdPort = 4714;
                 if (0 < m_lEsdPort) {
                     bool pa_started = false;
                 //if (m_pCfg->bGetEnableNativePA()) {
