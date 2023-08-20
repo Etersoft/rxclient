@@ -67,8 +67,13 @@ bool MyDynamicLibrary::Load(const wxString& name, int flags /* = wxDL_DEFAULT */
             wxString abslib = t.GetNextToken() + wxFileName::GetPathSeparator() + name;
             wxString sharedlib = FindSharedLib(abslib);
             ::myLogTrace(MYTRACETAG, wxT("Trying to load(%s 0x%0x)"), to_c_str(abslib), flags);
-            if (wxDynamicLibrary::Load(sharedlib, flags))
-                return true;
+            if (sharedlib.length() > 0) {
+                if (wxDynamicLibrary::Load(sharedlib, flags))
+                    return true;
+            } else {
+                if (wxDynamicLibrary::Load(abslib, flags))
+                    return true;
+            }
 #ifdef __WXMAC__
             if (!abslib.EndsWith(wxT(".dylib"))) {
                 abslib += wxT(".dylib");
