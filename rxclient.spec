@@ -2,7 +2,7 @@
 
 Name: rxclient
 Version: 1.0.6
-Release: alt4
+Release: alt5
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -94,6 +94,10 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Sun Aug 20 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.6-alt5
+- Fix port binding bug
+- Fix library loading for non-linux OSes
+
 * Mon Aug 07 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.6-alt4
 - Find pulseaudio shared object
 
