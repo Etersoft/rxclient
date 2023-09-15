@@ -2243,10 +2243,6 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
             nxsshcmd << wxT(" -R 4445:localhost:445");
         }
 
-        if (m_pCfg->bGetEnableMultimedia()) {
-            nxsshcmd << wxT(" -R 44714:localhost:4714");
-        }
-
         if (m_pCfg->bGetEnableSharedSmartCard()) {
             nxsshcmd << wxT(" -R /tmp/.pcscd.comm:/var/run/pcscd/pcscd.comm");
         }
