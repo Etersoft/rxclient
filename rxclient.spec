@@ -1,8 +1,8 @@
 %define oname opennx
 
 Name: rxclient
-Version: 1.0.6
-Release: alt5
+Version: 1.0.7
+Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
 
@@ -94,6 +94,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Fri Sep 15 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.7-alt1
+- Bring channels back
+
 * Sun Aug 20 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.6-alt5
 - Fix port binding bug
 - Fix library loading for non-linux OSes
