@@ -1799,8 +1799,7 @@ MySession::startProxy()
 MySession::getActiveCupsPrinters()
 {
     ArrayOfShareGroups ret;
-
-    // HACK: disable using printers list for forwarding (eterbug #15556)
+    ret.Add(ShareGroup());
     return ret;
 
     if (!m_pCfg->bGetUseCups())
@@ -2552,6 +2551,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 #endif
             return false;
         }
+        // TODO: Implement CUPS_DIRECT_MODE 
         if (getActiveCupsPrinters().GetCount() > 0) {
             dlg.SetStatusText(_("Preparing CUPS service ..."));
             if (!prepareCups())
