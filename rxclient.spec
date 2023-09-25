@@ -1,7 +1,7 @@
 %define oname opennx
 
 Name: rxclient
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
@@ -94,6 +94,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Mon Sep 25 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.8-alt1
+- fix of disable printer list hack
+
 * Fri Sep 15 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.7-alt1
 - Bring channels back
 
