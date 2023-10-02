@@ -776,7 +776,7 @@
 									<style>wxTAB_TRAVERSAL</style>
 									<object class="wxFlexGridSizer">
 										<cols>1</cols>
-										<rows>6</rows>
+										<rows>7</rows>
 										<vgap>0</vgap>
 										<hgap>0</hgap>
 										<growablecols>0</growablecols>
@@ -929,7 +929,51 @@
 											</object>
 										</object>
 										<object class="sizeritem">
-											<flag>wxGROW|wxALIGN_CENTER_VERTICAL|wxALL</flag>
+											<option>1</option>
+											<flag>wxEXPAND</flag>
+											<border>5</border>
+											<object class="wxBoxSizer">
+												<orient>wxHORIZONTAL</orient>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL</flag>
+													<border>5</border>
+													<object class="wxStaticText" name="ID_LABEL_RATE_PA">
+														<label>Rate</label>
+														<wrap>-1</wrap>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL</flag>
+													<border>5</border>
+													<object class="wxComboBox" name="ID_COMBOBOX_RATE_PA">
+														<style>wxCB_DROPDOWN</style>
+														<value></value>
+														<content>
+                                                            <item>No change</item>
+															<item>48000</item>
+															<item>44100</item>
+															<item>32000</item>
+															<item>16000</item>
+															<item>8000</item>
+														</content>
+													</object>
+												</object>
+												<object class="sizeritem">
+													<option>0</option>
+													<flag>wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL</flag>
+													<border>5</border>
+													<object class="wxCheckBox" name="ID_CHECKBOX_MONO_PA">
+														<label>Mono</label>
+														<checked>0</checked>
+													</object>
+												</object>
+											</object>
+										</object>
+										<object class="sizeritem">
+											<option>0</option>
+											<flag>wxEXPAND|wxALIGN_CENTER_VERTICAL|wxALL</flag>
 											<border>5</border>
 											<object class="wxBoxSizer">
 												<orient>wxHORIZONTAL</orient>

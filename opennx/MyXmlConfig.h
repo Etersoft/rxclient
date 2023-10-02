@@ -169,6 +169,15 @@ class MyXmlConfig
             LOGIN_SSHKEY,
         } LoginType;
 
+        typedef enum RatePA {
+            RATEPA_NORESAMPLE = 0,
+            RATEPA_48000,
+            RATEPA_44100,
+            RATEPA_32000,
+            RATEPA_16000,
+            RATEPA_8000,
+        } RatePA;
+
         MyXmlConfig();
         MyXmlConfig(const wxString &);
         virtual ~MyXmlConfig();
@@ -204,6 +213,7 @@ class MyXmlConfig
         bool bGetDisableXagent() { return m_bDisableXagent; }
         bool bGetDisableZlibCompression() { return m_bDisableZlibCompression; }
         bool bGetEnableMultimedia() { return m_bEnableMultimedia; }
+        bool bGetEnableMonoPA() { return m_bEnableMonoPA; }
         bool bGetEnableSharedSmartCard() const { return m_bEnableSharedSmartCard; }
         bool bGetEnableSmbSharing() { return m_bEnableSmbSharing; }
         bool bGetEnableSSL() { return m_bEnableSSL; }
@@ -237,6 +247,7 @@ class MyXmlConfig
         MyXmlConfig::CacheMemory eGetCacheMemory() { return m_eCacheMemory; }
         MyXmlConfig::CacheDisk eGetCacheDisk() { return m_eCacheDisk; }
         MyXmlConfig::XdmMode eGetXdmMode() { return m_eXdmMode; }
+        MyXmlConfig::RatePA eGetRatePA() { return m_eRatePA; }
         MyXmlConfig::LoginType eGetLoginType() { return m_eLoginType; }
 
         int iGetClipFilter() { return m_iClipFilter; }
@@ -307,6 +318,7 @@ class MyXmlConfig
         void bSetDisableXagent(const bool b) { m_bDisableXagent = b; }
         void bSetDisableZlibCompression(const bool b) { m_bDisableZlibCompression = b; }
         void bSetEnableMultimedia(const bool b) { m_bEnableMultimedia = b; }
+        void bSetEnableMonoPA(const bool b) { m_bEnableMonoPA = b; }
         void bSetEnableSharedSmartCard(const bool b) { m_bEnableSharedSmartCard = b; }
         void bSetEnableSmbSharing(const bool b) { m_bEnableSmbSharing = b; }
         void bSetEnableSSL(const bool b) { m_bEnableSSL = b; }
@@ -340,6 +352,7 @@ class MyXmlConfig
         void eSetDisplayType(MyXmlConfig::DisplayType e) { m_eDisplayType = e; }
         void eSetSessionType(MyXmlConfig::SessionType e) { m_eSessionType = e; }
         void eSetXdmMode(MyXmlConfig::XdmMode e) { m_eXdmMode = e; }
+        void eSetRatePA(MyXmlConfig::RatePA e) { m_eRatePA = e; }
         void eSetLoginType(MyXmlConfig::LoginType e) { m_eLoginType = e; }
 
         void iSetClipFilter(int i) { m_iClipFilter = i; }
@@ -438,6 +451,7 @@ class MyXmlConfig
         bool m_bDisableXagent;
         bool m_bDisableZlibCompression;
         bool m_bEnableMultimedia;
+        bool m_bEnableMonoPA;
         bool m_bEnableSharedSmartCard;
         bool m_bEnableSmbSharing;
         bool m_bEnableSSL;
@@ -524,6 +538,7 @@ class MyXmlConfig
         CacheDisk m_eCacheDisk;
         XdmMode m_eXdmMode;
         LoginType m_eLoginType;
+        RatePA m_eRatePA;
 
         ArrayOfShareGroups m_aShareGroups;
         wxArrayString m_aUsedShareGroups;

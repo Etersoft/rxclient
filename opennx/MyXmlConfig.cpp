@@ -238,6 +238,7 @@ MyXmlConfig::init()
     m_bDisableXagent = false;
     m_bDisableZlibCompression = false;
     m_bEnableMultimedia = false;
+    m_bEnableMonoPA = false;
     m_bEnableSharedSmartCard = false;
     m_bEnableSmbSharing = false;
     m_bEnableSSL = true;
@@ -298,6 +299,7 @@ MyXmlConfig::init()
     m_eSessionType = STYPE_UNIX;
     m_eXdmMode = XDM_MODE_SERVER;
     m_eLoginType = LOGIN_PASSWORD;
+    m_eRatePA = RATEPA_NORESAMPLE;
 
     m_sCommandLine = wxEmptyString;
     wxConfigBase::Get()->Read(wxT("Config/CupsPath"), &m_sCupsPath);
@@ -376,6 +378,7 @@ MyXmlConfig::operator =(const MyXmlConfig &other)
     m_bDisableXagent = other.m_bDisableXagent;
     m_bDisableZlibCompression = other.m_bDisableZlibCompression;
     m_bEnableMultimedia = other.m_bEnableMultimedia;
+    m_bEnableMonoPA = other.m_bEnableMonoPA;
     m_bEnableSharedSmartCard = other.m_bEnableSharedSmartCard;
     m_bEnableSmbSharing = other.m_bEnableSmbSharing;
     m_bEnableSSL = other.m_bEnableSSL;
@@ -436,6 +439,7 @@ MyXmlConfig::operator =(const MyXmlConfig &other)
     m_eSessionType = other.m_eSessionType;
     m_eXdmMode = other.m_eXdmMode;
     m_eLoginType = other.m_eLoginType;
+    m_eRatePA = other.m_eRatePA;
 
     m_sCommandLine = other.m_sCommandLine;
     m_sCupsPath = other.m_sCupsPath;
@@ -939,7 +943,24 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
 #endif
     ret << wxT(" --media=\"") << (m_bEnableMultimedia ? 1 : 0) << wxT("\"");
     if (m_bEnableMultimedia) {
-        ret << wxT(" --mediahelper=\"esd\"");
+            ret << wxT(" --mediahelper=\"esd");
+            if (m_eRatePA != RATEPA_NORESAMPLE) {
+                switch (m_eRatePA) {
+                    case RATEPA_48000:
+                        ret << wxT("-48000"); break;
+                    case RATEPA_44100:
+                        ret << wxT("-44100"); break;
+                    case RATEPA_32000:
+                        ret << wxT("-32000"); break;
+                    case RATEPA_16000:
+                        ret << wxT("-16000"); break;
+                    case RATEPA_8000:
+                        ret << wxT("-8000"); break;
+                }
+                if (m_bEnableMonoPA)
+                        ret << wxT("-1");
+            }
+            ret << wxT("\"");
     }
 
     // Original always uses those?!
@@ -1104,6 +1125,7 @@ MyXmlConfig::operator ==(const MyXmlConfig &other)
     if (m_bDisableXagent != other.m_bDisableXagent) return false;
     if (m_bDisableZlibCompression != other.m_bDisableZlibCompression) return false;
     if (m_bEnableMultimedia != other.m_bEnableMultimedia) return false;
+    if (m_bEnableMonoPA != other.m_bEnableMonoPA) return false;
     if (m_bEnableSharedSmartCard != other.m_bEnableSharedSmartCard) return false;
     if (m_bEnableSmbSharing != other.m_bEnableSmbSharing) return false;
     if (m_bEnableSSL != other.m_bEnableSSL) return false;
@@ -1163,6 +1185,7 @@ MyXmlConfig::operator ==(const MyXmlConfig &other)
     if (m_eSessionType != other.m_eSessionType) return false;
     if (m_eXdmMode != other.m_eXdmMode) return false;
     if (m_eLoginType != other.m_eLoginType) return false;
+    if (m_eRatePA != other.m_eRatePA) return false;
 
     if (m_sCommandLine != other.m_sCommandLine) return false;
     if (m_sCupsPath != other.m_sCupsPath) return false;
@@ -1778,6 +1801,22 @@ MyXmlConfig::loadFromStream(wxInputStream &is, bool isPush)
                         m_bUseCups = getBool(opt, wxT("IPPPrinting"), m_bUseCups);
                         m_bEnableSmbSharing = getBool(opt, wxT("Shares"), m_bEnableSmbSharing);
                         m_iPcscPort = getLong(opt, wxT("PcscDefaultPort"), m_iPcscPort);
+                        //TODO: need refactoring
+                        tmp = getString(opt, wxT("RatePA"));
+                        if (tmp == wxT("NoResample"))
+                            m_eRatePA = RATEPA_NORESAMPLE;
+                        if (tmp == wxT("48000"))
+                            m_eRatePA = RATEPA_48000;
+                        if (tmp == wxT("44100"))
+                            m_eRatePA = RATEPA_44100;
+                        if (tmp == wxT("32000"))
+                            m_eRatePA = RATEPA_32000;
+                        if (tmp == wxT("16000"))
+                            m_eRatePA = RATEPA_16000;
+                        if (tmp == wxT("8000"))
+                            m_eRatePA = RATEPA_8000;
+                        // end refactoring section
+                        m_bEnableMonoPA = getBool(opt, wxT("MonoPA"), m_bEnableMonoPA);
                         opt = opt->GetNext();
                     }
                     cfgnode = cfgnode->GetNext();
@@ -2323,6 +2362,30 @@ MyXmlConfig::SaveToFile()
 
     g = AddGroup(r, wxT("Services"));
     bAddOption(g, wxT("Audio"), m_bEnableMultimedia);
+    //TODO: need of refactoring
+    switch (m_eRatePA) {
+        case RATEPA_NORESAMPLE:
+            optval = wxT("NoResample");
+            break;
+        case RATEPA_48000:
+            optval = wxT("48000");
+            break;
+        case RATEPA_44100:
+            optval = wxT("44100");
+            break;
+        case RATEPA_32000:
+            optval = wxT("32000");
+            break;
+        case RATEPA_16000:
+            optval = wxT("16000");
+            break;
+        case RATEPA_8000:
+            optval = wxT("8000");
+            break;
+    }
+    sAddOption(g, wxT("RatePA"), optval);
+    //end of refactoring section
+    bAddOption(g, wxT("MonoPA"), m_bEnableMonoPA);
     bAddOption(g, wxT("SharingSmartCard"), m_bEnableSharedSmartCard);
     bAddOption(g, wxT("Shares"), m_bEnableSmbSharing);
     bAddOption(g, wxT("IPPPrinting"), m_bUseCups);

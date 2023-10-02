@@ -2477,7 +2477,23 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
                     bool pa_started = false;
                 //if (m_pCfg->bGetEnableNativePA()) {
                     wxLogInfo(wxT("Activating Native Module in pulseaudio on port %ld"), m_lEsdPort);
-                    pa_started = m_bEsdRunning = pa.ActivateNative(m_lEsdPort, 48000, false);
+                    int pa_rate = 0;
+                    switch (m_pCfg->eGetRatePA()) {
+                        case MyXmlConfig::RATEPA_NORESAMPLE:
+                            pa_rate = 0; break;
+                        case MyXmlConfig::RATEPA_48000:
+                            pa_rate = 48000; break;
+                        case MyXmlConfig::RATEPA_44100:
+                            pa_rate = 44100; break;
+                        case MyXmlConfig::RATEPA_32000:
+                            pa_rate = 32000; break;
+                        case MyXmlConfig::RATEPA_16000:
+                            pa_rate = 16000; break;
+                        case MyXmlConfig::RATEPA_8000:
+                            pa_rate = 8000; break;
+                    }
+                    bool pa_mono =  pa_rate > 0 ? m_pCfg->bGetEnableMonoPA() : false;
+                    pa_started = m_bEsdRunning = pa.ActivateNative(m_lEsdPort, pa_rate, pa_mono);
                 //} else {
                 //    wxLogInfo(wxT("Activating ESD Module in pulseaudio on port %ld"), m_lEsdPort);
                 //    pa_started = m_bEsdRunning = pa.ActivateEsound(m_lEsdPort);

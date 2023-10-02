@@ -227,6 +227,10 @@ BEGIN_EVENT_TABLE( SessionProperties, wxDialog )
 
     EVT_CHECKBOX( XRCID("ID_CHECKBOX_MMEDIA"), SessionProperties::OnCheckboxMmediaClick )
 
+    EVT_COMBOBOX( XRCID("ID_COMBOBOX_RATE_PA"), SessionProperties::OnComboboxRatePASelected )
+
+    EVT_CHECKBOX( XRCID("ID_CHECKBOX_MONO_PA"), SessionProperties::OnCheckboxMonoPAClick )
+
     EVT_CHECKBOX( XRCID("ID_CHECKBOX_SHRSMARDCARD"), SessionProperties::OnCheckboxShrsmartcardClick )
 
     EVT_CHECKBOX( XRCID("ID_CHECKBOX_USBENABLE"), SessionProperties::OnCHECKBOXUSBENABLEClick )
@@ -383,6 +387,8 @@ SessionProperties::CheckChanged()
         // variables on 'Services' tab
         m_pCfg->bSetEnableSmbSharing(m_bEnableSmbSharing);
         m_pCfg->bSetEnableMultimedia(m_bEnableMultimedia);
+        m_pCfg->eSetRatePA((MyXmlConfig::RatePA)m_iRatePA);
+        m_pCfg->bSetEnableMonoPA(m_bEnableMonoPA);
         m_pCfg->bSetEnableSharedSmartCard(m_bEnableSharedSmartCard);
         m_pCfg->bSetUseCups(m_bUseCups);
         m_pCfg->iSetCupsPort(m_iCupsPort);
@@ -467,6 +473,8 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
     m_pCtrlShareModify = NULL;
     m_pCtrlShareDelete = NULL;
     m_pCtrlEnableMultimedia = NULL;
+    m_pCtrlRatePA = NULL;
+    m_pCtrlEnableMonoPA = NULL;
     m_pCtrlUsbEnable = NULL;
     m_pCtrlUsbFilter = NULL;
     m_pCtrlUsbAdd = NULL;
@@ -546,6 +554,8 @@ bool SessionProperties::Create( wxWindow* parent, wxWindowID WXUNUSED(id), const
         }
 #endif
 #endif
+        m_iRatePA = m_pCfg->eGetRatePA();
+        m_bEnableMonoPA = m_pCfg->bGetEnableMonoPA();
         m_bEnableSharedSmartCard = m_pCfg->bGetEnableSharedSmartCard();
 #ifdef __UNIX__
         m_bUseCups = m_pCfg->bGetUseCups();
@@ -976,6 +986,10 @@ void SessionProperties::UpdateDialogConstraints(bool getValues)
     m_pCtrlSmbPort->Enable(m_bEnableSmbSharing);
     m_pCtrlCupsPort->Enable(m_bUseCups);
 
+    m_pCtrlRatePA->Enable(m_bEnableMultimedia);
+    m_pCtrlEnableMonoPA->Enable(m_bEnableMultimedia
+                                && (MyXmlConfig::RATEPA_NORESAMPLE != m_iRatePA));
+
     if( ModuleManager::instance().exists("usbip") ) {
         // 'USB' tab
         m_pCtrlUsbFilter->Enable(m_bEnableUSBIP);
@@ -1025,6 +1039,8 @@ void SessionProperties::CreateControls()
     m_pCtrlShareModify = XRCCTRL(*this, "ID_BUTTON_SMB_MODIFY", wxButton);
     m_pCtrlShareDelete = XRCCTRL(*this, "ID_BUTTON_SMB_DELETE", wxButton);
     m_pCtrlEnableMultimedia = XRCCTRL(*this, "ID_CHECKBOX_MMEDIA", wxCheckBox);
+    m_pCtrlRatePA = XRCCTRL(*this, "ID_COMBOBOX_RATE_PA", wxComboBox);
+    m_pCtrlEnableMonoPA = XRCCTRL(*this, "ID_CHECKBOX_MONO_PA", wxCheckBox);
     m_pCtrlUsbEnable = XRCCTRL(*this, "ID_CHECKBOX_USBENABLE", wxCheckBox);
     m_pCtrlUsbFilter = XRCCTRL(*this, "ID_LISTCTRL_USBFILTER", wxListCtrl);
     m_pCtrlUsbAdd = XRCCTRL(*this, "ID_BUTTON_USBADD", wxButton);
@@ -1104,6 +1120,10 @@ void SessionProperties::CreateControls()
         FindWindow(XRCID("ID_SPINCTRL_CUPSPORT"))->SetValidator( MyValidator(MyValidator::MYVAL_NUMERIC, & m_iCupsPort) );
     if (FindWindow(XRCID("ID_CHECKBOX_MMEDIA")))
         FindWindow(XRCID("ID_CHECKBOX_MMEDIA"))->SetValidator( wxGenericValidator(& m_bEnableMultimedia) );
+    if (FindWindow(XRCID("ID_COMBOBOX_RATE_PA")))
+        FindWindow(XRCID("ID_COMBOBOX_RATE_PA"))->SetValidator( wxGenericValidator(& m_iRatePA) );
+    if (FindWindow(XRCID("ID_CHECKBOX_MONO_PA")))
+        FindWindow(XRCID("ID_CHECKBOX_MONO_PA"))->SetValidator( wxGenericValidator(& m_bEnableMonoPA) );
     if (FindWindow(XRCID("ID_CHECKBOX_SHRSMARDCARD")))
         FindWindow(XRCID("ID_CHECKBOX_SHRSMARDCARD"))->SetValidator( wxGenericValidator(& m_bEnableSharedSmartCard) );
     if (FindWindow(XRCID("ID_CHECKBOX_USBENABLE")))
@@ -1922,6 +1942,29 @@ void SessionProperties::OnCheckboxMmediaClick( wxCommandEvent& event )
     UpdateDialogConstraints(true);
     CheckChanged();
 }
+
+/*!
+ * wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_RATE_PA
+ */
+
+void SessionProperties::OnComboboxRatePASelected( wxCommandEvent& event )
+{
+    wxUnusedVar(event);
+    UpdateDialogConstraints(true);
+    CheckChanged();
+}
+
+/*!
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_MONO_PA
+ */
+
+void SessionProperties::OnCheckboxMonoPAClick( wxCommandEvent& event )
+{
+    wxUnusedVar(event);
+    UpdateDialogConstraints(true);
+    CheckChanged();
+}
+
 
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SHRSMARDCARD
