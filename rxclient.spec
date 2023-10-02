@@ -1,7 +1,7 @@
 %define oname opennx
 
 Name: rxclient
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
@@ -94,6 +94,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Tue Oct 03 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.9-alt1
+- added PulseAudio sample rate and mono state
+
 * Mon Sep 25 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.8-alt1
 - fix of disable printer list hack
 
