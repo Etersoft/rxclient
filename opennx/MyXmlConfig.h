@@ -214,6 +214,7 @@ class MyXmlConfig
         bool bGetDisableZlibCompression() { return m_bDisableZlibCompression; }
         bool bGetEnableMultimedia() { return m_bEnableMultimedia; }
         bool bGetEnableMonoPA() { return m_bEnableMonoPA; }
+        bool bGetEnableMicPA() { return m_bEnableMicPA; }
         bool bGetEnableSharedSmartCard() const { return m_bEnableSharedSmartCard; }
         bool bGetEnableSmbSharing() { return m_bEnableSmbSharing; }
         bool bGetEnableSSL() { return m_bEnableSSL; }
@@ -319,6 +320,7 @@ class MyXmlConfig
         void bSetDisableZlibCompression(const bool b) { m_bDisableZlibCompression = b; }
         void bSetEnableMultimedia(const bool b) { m_bEnableMultimedia = b; }
         void bSetEnableMonoPA(const bool b) { m_bEnableMonoPA = b; }
+        void bSetEnableMicPA(const bool b) { m_bEnableMicPA = b; }
         void bSetEnableSharedSmartCard(const bool b) { m_bEnableSharedSmartCard = b; }
         void bSetEnableSmbSharing(const bool b) { m_bEnableSmbSharing = b; }
         void bSetEnableSSL(const bool b) { m_bEnableSSL = b; }
@@ -452,6 +454,7 @@ class MyXmlConfig
         bool m_bDisableZlibCompression;
         bool m_bEnableMultimedia;
         bool m_bEnableMonoPA;
+        bool m_bEnableMicPA;
         bool m_bEnableSharedSmartCard;
         bool m_bEnableSmbSharing;
         bool m_bEnableSSL;

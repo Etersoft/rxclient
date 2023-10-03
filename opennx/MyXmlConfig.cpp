@@ -239,6 +239,7 @@ MyXmlConfig::init()
     m_bDisableZlibCompression = false;
     m_bEnableMultimedia = false;
     m_bEnableMonoPA = false;
+    m_bEnableMicPA = true;
     m_bEnableSharedSmartCard = false;
     m_bEnableSmbSharing = false;
     m_bEnableSSL = true;
@@ -379,6 +380,7 @@ MyXmlConfig::operator =(const MyXmlConfig &other)
     m_bDisableZlibCompression = other.m_bDisableZlibCompression;
     m_bEnableMultimedia = other.m_bEnableMultimedia;
     m_bEnableMonoPA = other.m_bEnableMonoPA;
+    m_bEnableMicPA = other.m_bEnableMicPA;
     m_bEnableSharedSmartCard = other.m_bEnableSharedSmartCard;
     m_bEnableSmbSharing = other.m_bEnableSmbSharing;
     m_bEnableSSL = other.m_bEnableSSL;
@@ -957,8 +959,11 @@ MyXmlConfig::sGetSessionParams(const long protocolVersion, bool bNew, const wxSt
                     case RATEPA_8000:
                         ret << wxT("-8000"); break;
                 }
-                if (m_bEnableMonoPA)
-                        ret << wxT("-1");
+                //if (m_bEnableMonoPA)
+                //        ret << wxT("-1");
+                m_bEnableMonoPA == true ? ret << wxT("-1") : ret << wxT("-");
+                if (!m_bEnableMicPA)
+                        ret << wxT("-MuteMic");
             }
             ret << wxT("\"");
     }
@@ -1126,6 +1131,7 @@ MyXmlConfig::operator ==(const MyXmlConfig &other)
     if (m_bDisableZlibCompression != other.m_bDisableZlibCompression) return false;
     if (m_bEnableMultimedia != other.m_bEnableMultimedia) return false;
     if (m_bEnableMonoPA != other.m_bEnableMonoPA) return false;
+    if (m_bEnableMicPA != other.m_bEnableMicPA) return false;
     if (m_bEnableSharedSmartCard != other.m_bEnableSharedSmartCard) return false;
     if (m_bEnableSmbSharing != other.m_bEnableSmbSharing) return false;
     if (m_bEnableSSL != other.m_bEnableSSL) return false;
@@ -1817,6 +1823,7 @@ MyXmlConfig::loadFromStream(wxInputStream &is, bool isPush)
                             m_eRatePA = RATEPA_8000;
                         // end refactoring section
                         m_bEnableMonoPA = getBool(opt, wxT("MonoPA"), m_bEnableMonoPA);
+                        m_bEnableMicPA = getBool(opt, wxT("MicPA"), m_bEnableMicPA);
                         opt = opt->GetNext();
                     }
                     cfgnode = cfgnode->GetNext();
@@ -2386,6 +2393,7 @@ MyXmlConfig::SaveToFile()
     sAddOption(g, wxT("RatePA"), optval);
     //end of refactoring section
     bAddOption(g, wxT("MonoPA"), m_bEnableMonoPA);
+    bAddOption(g, wxT("MicPA"), m_bEnableMicPA);
     bAddOption(g, wxT("SharingSmartCard"), m_bEnableSharedSmartCard);
     bAddOption(g, wxT("Shares"), m_bEnableSmbSharing);
     bAddOption(g, wxT("IPPPrinting"), m_bUseCups);
