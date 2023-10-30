@@ -2233,6 +2233,14 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
         nxsshcmd << fn.GetShortPath();
         nxsshcmd << appendcmd;
         nxsshcmd << wxT(" -nx -x -2");
+        if (m_pCfg->bGetEnableSharedSmartCard()) {
+            // FIXME: bring back after pcsc channel fix
+            // socket path = /tmp/.$USERNAME.pcscd.comm
+            wxString pcsc_sock("." + m_pCfg->sGetUsername() + ".pcscd.comm");
+            nxsshcmd << wxT(" -R /tmp/") << pcsc_sock
+                << wxT(":/var/run/pcscd/pcscd.comm");
+        }
+
         switch (m_pCfg->eGetLoginType()) {
             case MyXmlConfig::LOGIN_KERBEROS:
                 nxsshcmd << wxT(" -K");
