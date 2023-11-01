@@ -1,7 +1,7 @@
 %define oname opennx
 
 Name: rxclient
-Version: 1.0.10
+Version: 1.0.11
 Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
@@ -94,6 +94,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Wed Nov 01 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.11-alt1
+- PCSC: socket forward hack
+
 * Wed Oct 04 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.10-alt1
 - added microphone muting
 
