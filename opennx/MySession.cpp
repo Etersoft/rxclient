@@ -398,6 +398,19 @@ class MyHTTP : public wxHTTP {
             return inp_stream;
         }
 
+        bool TestPort()
+        {
+            bool res = false;
+
+            if (!m_addr)
+                return false;
+
+            if (wxProtocol::Connect(*m_addr))
+                res = true;
+
+            return res;
+        }
+
     protected:
         bool BuildRequest(const wxString& path, wxHTTP_Req req)
         {
@@ -1852,20 +1865,15 @@ MySession::isCupsRunning()
     bool ret = false;
     if (cupsport > 0) {
         // Try connecting to cupsd
-        wxHTTP http;
+        MyHTTP http;
         wxString cupspw = decodeString(wxConfigBase::Get()->Read(wxT("Config/CupsPasswd"), wxEmptyString));
         if (!cupspw.IsEmpty()) {
             http.SetUser(wxGetUserId());
             http.SetPassword(cupspw);
         }
         http.Connect(wxT("127.0.0.1"), cupsport);
-        wxInputStream *is = http.GetInputStream(wxT("/"));
-        int res = http.GetResponse();
-        wxString svr = http.GetHeader(wxT("server"));
-        ::myLogTrace(MYTRACETAG, wxT("isCupsRunning RC=%d SVR=%s"), res, to_c_str(svr));
-        if ((res == 200) && svr.Contains(wxT("CUPS")))
+        if (http.TestPort())
             ret = true;
-        delete is;
     }
     m_bCupsRunning = ret;
     ::myLogTrace(MYTRACETAG, wxT("isCupsRunning returning %s"), (ret ? wxT("true") : wxT("false")));
