@@ -1,7 +1,7 @@
 %define oname opennx
 
 Name: rxclient
-Version: 1.0.11
+Version: 1.0.12
 Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
@@ -94,6 +94,9 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Thu Nov 09 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.12-alt1
+- check cups port
+
 * Wed Nov 01 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.11-alt1
 - PCSC: socket forward hack
 
