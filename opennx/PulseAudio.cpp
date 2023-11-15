@@ -66,11 +66,7 @@ ENABLE_TRACE;
 
 #ifdef WITH_PULSEAUDIO
 
-#ifdef __WXMSW__
-#include "packaging/win32/pulse/include/pulseaudio.h"
-#else
 #include <pulse/pulseaudio.h>
-#endif
 
 typedef pa_threaded_mainloop* (*Tpa_threaded_mainloop_new)(void);
 typedef pa_mainloop_api* (*Tpa_threaded_mainloop_get_api)(pa_threaded_mainloop*);
@@ -513,7 +509,7 @@ bool PulseAudio::AutoSpawn()
     do {
 #  ifdef __WXMSW__
         ::myLogTrace(MYTRACETAG, wxT("PulseAudio::AutoSpawn: checking pulseaudio process"));
-        papid = getpidof("pulseaudio.exe");
+        papid = 0;//getpidof("pulseaudio.exe");
         if (papid != 0) {
                 myLogTrace(MYTRACETAG, wxT("PulseAudio::AutoSpawn: process %d is running"), papid);
                 return true;

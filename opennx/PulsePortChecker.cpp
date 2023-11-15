@@ -1,6 +1,7 @@
 #include "PulsePortChecker.h"
 
 bool PulsePortChecker::isPortBusy(int port){
+#ifndef __WIN32
     struct sockaddr_in address;
     int socketdesc = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     address.sin_family      = AF_INET;
@@ -15,4 +16,7 @@ bool PulsePortChecker::isPortBusy(int port){
 
     //wxLogInfo(wxT("Port %s is free"), port);
     return false;
+#else
+    return false;
+#endif
 }

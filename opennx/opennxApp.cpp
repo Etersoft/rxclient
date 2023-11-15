@@ -55,6 +55,7 @@
 #include <wx/regex.h>
 #include <wx/dir.h>
 #include <wx/cshelp.h>
+#include <wx/version.h>
 
 #include "opennxApp.h"
 #include "SessionAdmin.h"
@@ -727,6 +728,7 @@ int opennxApp::FilterEvent(wxEvent& event)
 
 void opennxApp::checkNxSmartCardSupport()
 {
+#if (defined(__x86_64) || defined(__IA64__)) && (wxCHECK_VERSION(3, 1, 5))
     LibOpenSC l;
     if (!l.HasOpenSC()) {
         m_bNxSmartCardSupport = false;
@@ -775,6 +777,13 @@ void opennxApp::checkNxSmartCardSupport()
         }
         wxConfigBase::Get()->Flush();
     }
+#else
+    m_bNxSmartCardSupport = false;
+    myLogTrace(MYTRACETAG, wxT("64 bit build requires wxWidgets >= 3.1.5, disabling SmartCard support"));
+    wxConfigBase::Get()->Write(wxT("Config/NxSshSmartCardSupport"), m_bNxSmartCardSupport);
+    wxConfigBase::Get()->Flush();
+    return;
+#endif
 }
 
 void opennxApp::checkNxProxy()

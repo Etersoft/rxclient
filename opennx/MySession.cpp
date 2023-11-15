@@ -61,6 +61,7 @@
 #include <wx/txtstrm.h>
 #include <wx/socket.h>
 #include <wx/config.h>
+#include <wx/fileconf.h>
 #include <wx/utils.h>
 #include <wx/tokenzr.h>
 #include <wx/regex.h>

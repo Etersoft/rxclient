@@ -48,3 +48,6 @@ packaging/win32/dejavu-fonts-ttf*
 packaging/win32/font-misc-misc*
 packaging/win32/pulse/dist/*
 packaging/win32/setupdir/*
+
+build/
+pulse/*.h

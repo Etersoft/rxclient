@@ -159,7 +159,7 @@ wxString USB::GetUSBIPPath()
 {
 #ifdef __WXMSW__
     // \todo It has not been tested under windows yet!
-    return wxT("usbip.exe")
+    return wxT("usbip.exe");
 #else
     wxString cmd;
 

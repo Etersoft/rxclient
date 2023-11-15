@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.61)
+AC_PREREQ([2.71])
 AC_INIT([rxclient],[0.17],[felfert@users.sf.net])
 AC_CONFIG_AUX_DIR([conf])
 AC_CONFIG_SRCDIR([opennxApp.cpp])
@@ -75,7 +75,7 @@ AC_SUBST(PAHEADER)
 AC_PROG_CXX([$preferred_cxx])
 AC_PROG_CC([$preferred_cc])
 AC_DISABLE_SHARED
-AC_PROG_LIBTOOL
+LT_INIT
 AC_PROG_LN_S
 dnl AM_GNU_GETTEXT_VERSION(0.14.5)
 AM_GNU_GETTEXT([external])
@@ -295,7 +295,7 @@ case $target_os in
         # must add that prefic to the linker flags.
         [_wx_libpath="`$WX_CONFIG_WITH_ARGS --prefix`/lib"]
         test "$_wx_libpath" != "/mingw/lib" && LDFLAGS="$LDFLAGS -L$_wx_libpath"
-        APP_LDADD="-lole32 -luuid -lversion"
+        APP_LDADD="-lversion"
         OPENNX_RES='opennx.$(OBJEXT)'
         TRACELOG='tracelog$(EXEEXT)'
         TRACELOG_RES='tracelog.$(OBJEXT)'
