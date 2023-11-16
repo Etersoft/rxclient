@@ -1453,7 +1453,9 @@ MySession::startSharing()
                     << MyXmlConfig::UrlEsc(wxGetFullHostName()) << wxT("\"")
                     << wxT(" --session_id=\"") << m_sSessionID.Right(32) << wxT("\"") 
                     << wxT(" --dir=\"")
-                    << MyXmlConfig::UrlEsc(sg[i].m_sAlias) << wxT("\"");
+                    << MyXmlConfig::UrlEsc(sg[i].m_sAlias) << wxT("\"")
+                    << wxT(" --encoding=\"")
+                    << wxLocale::GetSystemEncodingName() << wxT("\"");
                 printSsh(shcmd);
                 break;
             case SharedResource::SHARE_SMB_PRINTER:
