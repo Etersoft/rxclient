@@ -2584,6 +2584,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
 #endif
             return false;
         }
+#ifndef __WXMSW__
         // TODO: Implement CUPS_DIRECT_MODE 
         if (getActiveCupsPrinters().GetCount() > 0) {
             dlg.SetStatusText(_("Preparing CUPS service ..."));
@@ -2592,6 +2593,7 @@ MySession::Create(MyXmlConfig &cfgpar, const wxString password, wxWindow *parent
             dlg.SetStatusText(wxString::Format(_("Connecting to %s ..."),
                         m_pCfg->sGetServerHost().c_str()));
         }
+#endif
 
         MyIPC nxssh;
         m_pNxSsh = &nxssh;

@@ -1121,10 +1121,23 @@ void SessionProperties::CreateControls()
         FindWindow(XRCID("ID_CHECKBOX_SMB"))->SetValidator( wxGenericValidator(& m_bEnableSmbSharing) );
     if (FindWindow(XRCID("ID_SPINCTRL_SMBPORT")))
         FindWindow(XRCID("ID_SPINCTRL_SMBPORT"))->SetValidator( MyValidator(MyValidator::MYVAL_NUMERIC, & m_iSmbPort) );
+#ifdef __WXMSW__
+    if (FindWindow(XRCID("ID_STATIC_CUPS_IMG")))
+        FindWindow(XRCID("ID_STATIC_CUPS_IMG"))->Show(false);
+    if (FindWindow(XRCID("ID_CHECKBOX_CUPSENABLE")))
+        FindWindow(XRCID("ID_CHECKBOX_CUPSENABLE"))->Show(false);
+    if (FindWindow(XRCID("ID_SPINCTRL_CUPSPORT"))){
+        FindWindow(XRCID("ID_SPINCTRL_CUPSPORT"))->SetValidator( MyValidator(MyValidator::MYVAL_NUMERIC, & m_iCupsPort) );
+        FindWindow(XRCID("ID_SPINCTRL_CUPSPORT"))->Show(false);
+    }
+    if (FindWindow(XRCID("wxID_STATIC_CUPS_TEXT")))
+        FindWindow(XRCID("wxID_STATIC_CUPS_TEXT"))->Show(false);
+#else
     if (FindWindow(XRCID("ID_CHECKBOX_CUPSENABLE")))
         FindWindow(XRCID("ID_CHECKBOX_CUPSENABLE"))->SetValidator( wxGenericValidator(& m_bUseCups) );
     if (FindWindow(XRCID("ID_SPINCTRL_CUPSPORT")))
         FindWindow(XRCID("ID_SPINCTRL_CUPSPORT"))->SetValidator( MyValidator(MyValidator::MYVAL_NUMERIC, & m_iCupsPort) );
+#endif
     if (FindWindow(XRCID("ID_CHECKBOX_MMEDIA")))
         FindWindow(XRCID("ID_CHECKBOX_MMEDIA"))->SetValidator( wxGenericValidator(& m_bEnableMultimedia) );
     if (FindWindow(XRCID("ID_COMBOBOX_RATE_PA")))
