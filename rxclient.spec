@@ -1,7 +1,7 @@
 %define oname opennx
 
 Name: rxclient
-Version: 1.0.12
+Version: 1.0.13
 Release: alt1
 
 Summary: A client for RX@Etersoft Terminal Server
@@ -94,6 +94,11 @@ cp %SOURCE1 %buildroot%_sysconfdir/%name/
 %config %_sysconfdir/%name/*.conf
 
 %changelog
+* Mon Nov 27 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.13-alt1
+- support for building on Windows in msys2 mingw32/ucrt64 environments
+- do not run CUPS in windows
+- fix GetPID long strings assertion
+
 * Thu Nov 09 2023 Konstantin Artyushkin <akv@altlinux.org> 1.0.12-alt1
 - check cups port
 
